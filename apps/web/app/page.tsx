@@ -21,7 +21,7 @@ export default function HomePage() {
             <span>Platform Online</span>
           </div>
 
-          <h1 className="text-6xl md:text-8xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 leading-[1.1]">
+          <h1 className="text-6xl md:text-8xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-br from-gray-900 via-gray-800 to-blue-900 leading-[1.1]">
             Unlocking <br />
             <span className="text-blue-600">Adaptive</span> Mastery.
           </h1>
@@ -36,7 +36,7 @@ export default function HomePage() {
               href="/session/demo-session-id"
               className="group relative px-8 py-4 bg-gray-900 text-white rounded-2xl font-bold text-lg shadow-2xl transition-all hover:scale-105 active:scale-95 hover:shadow-blue-500/20"
             >
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 rounded-2xl bg-linear-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               Launch Learning Session
             </a>
 

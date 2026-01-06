@@ -10,7 +10,7 @@ export default function SessionPage({ params }: { params: { id: string } }) {
     // Since 'use client', params comes as prop but might need proper typing.
     // Let's assume standard behavior for now.
 
-    const { id } = React.use(params);
+    const { id } = params;
     const { data: session, isLoading, error } = useSession(id);
 
     if (isLoading) return <div className="p-8">Loading session...</div>;
