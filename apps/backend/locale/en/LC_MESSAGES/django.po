@@ -1,0 +1,60 @@
+# English Translation File (OPTIONAL UI)
+# Users can switch to English UI while still learning French
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+# Activity Instructions
+msgid "activity.mcq.translate_word"
+msgstr "What is the translation of '{word}'?"
+
+msgid "activity.fill_blank.complete_phrase"
+msgstr "Complete the phrase: {phrase}"
+
+msgid "activity.dictee.instruction"
+msgstr "Listen and write what you hear"
+
+msgid "activity.conjugation.instruction"
+msgstr "Conjugate {verb} in {tense} for {pronoun}"
+
+msgid "activity.matching.instruction"
+msgstr "Match the French words with their translations"
+
+msgid "activity.drag_order.instruction"
+msgstr "Arrange the words to form a correct French sentence"
+
+msgid "activity.text_input.translate"
+msgstr "Type the French translation of '{word}'"
+
+msgid "activity.multiple_answer.select_all"
+msgstr "Select all correct answers for '{category}'"
+
+# Vocabulary (for reference in choices_keys)
+msgid "word.apple"
+msgstr "apple"
+
+msgid "word.orange"
+msgstr "orange"
+
+msgid "word.book"
+msgstr "book"
+
+msgid "word.cat"
+msgstr "cat"
+
+msgid "word.house"
+msgstr "house"
+
+msgid "word.dog"
+msgstr "dog"
+
+msgid "word.table"
+msgstr "table"
+
+msgid "word.door"
+msgstr "door"
+
+msgid "word.window"
+msgstr "window"

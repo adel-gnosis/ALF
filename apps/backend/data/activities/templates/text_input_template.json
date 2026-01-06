@@ -1,0 +1,46 @@
+{
+    "activity_type": "TextInputActivity",
+    "template_version": "1.0",
+    "description": "Text input activity where users type the French translation of an English word or phrase.",
+    "usage": "User must type the exact French translation. Multiple correct answers can be provided.",
+    "fields": {
+        "question_text": "Type the French translation of '{word}'",
+        "question_text_key": "activity.text_input.translate",
+        "translation_data": {
+            "word": "ENGLISH_WORD_OR_PHRASE"
+        },
+        "correct_answers": [
+            "PRIMARY_FRENCH_TRANSLATION",
+            "ALTERNATIVE_TRANSLATION"
+        ],
+        "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+        "subject": "Vocabulaire"
+    },
+    "examples": [
+        {
+            "question_text": "Type the French translation of 'hello'",
+            "question_text_key": "activity.text_input.translate",
+            "translation_data": {
+                "word": "hello"
+            },
+            "correct_answers": [
+                "bonjour",
+                "salut"
+            ],
+            "difficulty": "BEGINNER",
+            "subject": "Vocabulaire"
+        },
+        {
+            "question_text": "Type the French translation of 'thank you'",
+            "question_text_key": "activity.text_input.translate",
+            "translation_data": {
+                "word": "thank you"
+            },
+            "correct_answers": [
+                "merci"
+            ],
+            "difficulty": "BEGINNER",
+            "subject": "Vocabulaire"
+        }
+    ]
+}

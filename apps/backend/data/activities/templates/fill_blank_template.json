@@ -1,0 +1,38 @@
+{
+    "activity_type": "FillBlankActivity",
+    "template_version": "1.0",
+    "description": "Fill in the blank activity for completing French phrases. The blank is represented by ___.",
+    "usage": "Replace placeholders with French phrases containing ___. Ensure correct_answer fits grammatically.",
+    "fields": {
+        "question_text": "Complete the phrase: FRENCH_PHRASE_WITH_BLANK",
+        "question_text_key": "activity.fill_blank.complete_phrase",
+        "translation_data": {
+            "phrase": "FRENCH_PHRASE_WITH_BLANK"
+        },
+        "correct_answer": "MISSING_FRENCH_WORD",
+        "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+        "subject": "Grammaire"
+    },
+    "examples": [
+        {
+            "question_text": "Complete the phrase: Je suis ___",
+            "question_text_key": "activity.fill_blank.complete_phrase",
+            "translation_data": {
+                "phrase": "Je suis ___"
+            },
+            "correct_answer": "étudiant",
+            "difficulty": "BEGINNER",
+            "subject": "Grammaire"
+        },
+        {
+            "question_text": "Complete the phrase: Elle ___ une pomme",
+            "question_text_key": "activity.fill_blank.complete_phrase",
+            "translation_data": {
+                "phrase": "Elle ___ une pomme"
+            },
+            "correct_answer": "mange",
+            "difficulty": "BEGINNER",
+            "subject": "Conjugaison"
+        }
+    ]
+}

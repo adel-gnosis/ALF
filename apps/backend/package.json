@@ -1,0 +1,11 @@
+{
+    "name": "backend",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": ".\\venv\\Scripts\\python.exe manage.py runserver 0.0.0.0:8000",
+        "migrate": ".\\venv\\Scripts\\python.exe manage.py migrate",
+        "makemigrations": ".\\venv\\Scripts\\python.exe manage.py makemigrations"
+    }
+
+}

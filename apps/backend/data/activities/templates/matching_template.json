@@ -1,0 +1,60 @@
+{
+    "activity_type": "MatchingActivity",
+    "template_version": "1.0",
+    "description": "Matching activity where users pair French words with their English translations.",
+    "usage": "Create pairs of [French, English] words. Ensure pairs are related but not too obvious.",
+    "fields": {
+        "question_text": "Match the French words with their English translations",
+        "question_text_key": "activity.matching.instruction",
+        "translation_data": {},
+        "pairs": [
+            [
+                "FRENCH_WORD_1",
+                "ENGLISH_TRANSLATION_1"
+            ],
+            [
+                "FRENCH_WORD_2",
+                "ENGLISH_TRANSLATION_2"
+            ],
+            [
+                "FRENCH_WORD_3",
+                "ENGLISH_TRANSLATION_3"
+            ],
+            [
+                "FRENCH_WORD_4",
+                "ENGLISH_TRANSLATION_4"
+            ]
+        ],
+        "values_are_translatable": false,
+        "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+        "subject": "Vocabulaire"
+    },
+    "examples": [
+        {
+            "question_text": "Match the French words with their English translations",
+            "question_text_key": "activity.matching.instruction",
+            "translation_data": {},
+            "pairs": [
+                [
+                    "pomme",
+                    "apple"
+                ],
+                [
+                    "chat",
+                    "cat"
+                ],
+                [
+                    "maison",
+                    "house"
+                ],
+                [
+                    "livre",
+                    "book"
+                ]
+            ],
+            "values_are_translatable": false,
+            "difficulty": "BEGINNER",
+            "subject": "Vocabulaire"
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+  "subject": "Prononciation",
+  "lesson_order": 1,
+  "levels": [
+    {
+      "level_code": "FR-L4",
+      "activities": [
+        {
+          "type": "DicteeActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Écoutez et écrivez la phrase",
+          "question_text_key": "activity.dictee.instruction",
+          "translation_data": {},
+          "audio_urls": [
+            "https://placeholder.com/audio/je_m_appelle_paul.mp3"
+          ],
+          "correct_text": "Je m'appelle Paul",
+          "case_sensitive": false
+        }
+      ]
+    }
+  ]
+}

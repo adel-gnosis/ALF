@@ -1,0 +1,651 @@
+{
+  "subject": "Grammaire",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "activities": [
+    {
+      "level": 1,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Je",
+        "mange",
+        "une",
+        "pomme"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Je mange une pomme",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Le",
+        "chat",
+        "est",
+        "noir"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Le chat est noir",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Tu",
+        "aimes",
+        "le",
+        "chocolat"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Tu aimes le chocolat",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Il",
+        "a",
+        "un",
+        "chien"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Il a un chien",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Elle",
+        "habite",
+        "à",
+        "Paris"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Elle habite à Paris",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Nous",
+        "allons",
+        "à",
+        "l'école"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Nous allons à l'école",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Vous",
+        "parlez",
+        "français"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Phrase correcte: Vous parlez français",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Ils",
+        "regardent",
+        "la",
+        "télé"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Ils regardent la télé",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 9,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Ne",
+        "mange",
+        "pas",
+        "ça"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Ne mange pas ça",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 10,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Je",
+        "ne",
+        "sais",
+        "pas"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Je ne sais pas",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 11,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Où",
+        "est",
+        "la",
+        "gare"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Où est la gare",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 12,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Comment",
+        "ça",
+        "va"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Phrase correcte: Comment ça va",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 13,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Quel",
+        "âge",
+        "as-tu"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Phrase correcte: Quel âge as-tu",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 14,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Il",
+        "fait",
+        "beau",
+        "aujourd'hui"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Il fait beau aujourd'hui",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 15,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Je",
+        "voudrais",
+        "un",
+        "café"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Je voudrais un café",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Est-ce",
+        "que",
+        "tu",
+        "viens"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Est-ce que tu viens",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Qu'est-ce",
+        "que",
+        "c'est"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Phrase correcte: Qu'est-ce que c'est",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 18,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "C'est",
+        "une",
+        "bonne",
+        "idée"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: C'est une bonne idée",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 19,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Je",
+        "suis",
+        "en",
+        "retard"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Je suis en retard",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 20,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Il",
+        "faut",
+        "travailler",
+        "dur"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Il faut travailler dur",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 21,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "J'ai",
+        "acheté",
+        "du",
+        "pain"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: J'ai acheté du pain",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 22,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Elle",
+        "est",
+        "partie",
+        "hier"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Phrase correcte: Elle est partie hier",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 23,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Nous",
+        "avons",
+        "fini",
+        "le",
+        "travail"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "explanation": "Phrase correcte: Nous avons fini le travail",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 24,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Je",
+        "vais",
+        "te",
+        "le",
+        "dire"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "explanation": "Phrase correcte: Je vais te le dire",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 25,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Il",
+        "ne",
+        "faut",
+        "pas",
+        "fumer"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "explanation": "Phrase correcte: Il ne faut pas fumer",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 26,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Je",
+        "pense",
+        "donc",
+        "je",
+        "suis"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "explanation": "Phrase correcte: Je pense donc je suis",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 27,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Mieux",
+        "vaut",
+        "tard",
+        "que",
+        "jamais"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "explanation": "Phrase correcte: Mieux vaut tard que jamais",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 28,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Tout",
+        "est",
+        "bien",
+        "qui",
+        "finit",
+        "bien"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "explanation": "Phrase correcte: Tout est bien qui finit bien",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 29,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Pierre",
+        "qui",
+        "roule",
+        "n'amasse",
+        "pas",
+        "mousse"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "explanation": "Phrase correcte: Pierre qui roule n'amasse pas mousse",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 30,
+      "type": "DragOrderActivity",
+      "question_text": "Mettez les mots dans l'ordre:",
+      "words": [
+        "Les",
+        "chiens",
+        "aboient",
+        "la",
+        "caravane",
+        "passe"
+      ],
+      "correct_order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "explanation": "Phrase correcte: Les chiens aboient la caravane passe",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    }
+  ]
+}

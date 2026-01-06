@@ -1,0 +1,487 @@
+{
+  "subject": "Conjugaison",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "activities": [
+    {
+      "level": 1,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 2,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 3,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 4,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 5,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 6,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 7,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 8,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 9,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 10,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 18,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 19,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 20,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 21,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 22,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 23,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 24,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 25,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 26,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 27,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 28,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 29,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 30,
+      "type": "MCQActivity",
+      "question_text": "Quel est le participe passé de 'Manger'?",
+      "choices": [
+        "Mangé",
+        "Mangeais",
+        "Mangerai",
+        "Mangeant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Mangé.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    }
+  ]
+}

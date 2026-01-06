@@ -1,0 +1,1497 @@
+{
+  "subject": "Vocabulaire",
+  "level": 30,
+  "total_activities": 100,
+  "activities": [
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "s'épanouir": "to flourish",
+        "nuance": "nuance",
+        "paradoxe": "paradox",
+        "enjeu": "issue/stake"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'remettre en question' en anglais?",
+      "choices": [
+        "to flourish",
+        "in spite of",
+        "issue/stake",
+        "to question/challenge"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "en dépit de": "in spite of",
+        "remettre en question": "to question/challenge",
+        "d'autant plus que": "especially since",
+        "paradoxe": "paradox"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'nuance' en anglais?",
+      "choices": [
+        "nuance",
+        "especially since",
+        "issue/stake",
+        "relevant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'nuance' signifie 'nuance' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'enjeu' en anglais?",
+      "choices": [
+        "relevant",
+        "especially since",
+        "to flourish",
+        "issue/stake"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'enjeu' signifie 'issue/stake' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "enjeu": "issue/stake",
+        "pertinent": "relevant",
+        "s'épanouir": "to flourish",
+        "en dépit de": "in spite of"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'relevant' en français?",
+      "correct_answers": [
+        "pertinent",
+        "un pertinent",
+        "une pertinent",
+        "le pertinent",
+        "la pertinent"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "remettre en question": "to question/challenge",
+        "d'autant plus que": "especially since",
+        "paradoxe": "paradox",
+        "pertinent": "relevant"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'especially since' en français?",
+      "correct_answers": [
+        "d'autant plus que",
+        "un d'autant plus que",
+        "une d'autant plus que",
+        "le d'autant plus que",
+        "la d'autant plus que"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "issue/stake",
+        "especially since",
+        "paradox",
+        "nuance"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "en dépit de": "in spite of",
+        "s'épanouir": "to flourish",
+        "d'autant plus que": "especially since",
+        "paradoxe": "paradox"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'paradoxe' en anglais?",
+      "choices": [
+        "relevant",
+        "to flourish",
+        "paradox",
+        "especially since"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to question/challenge' en français?",
+      "correct_answers": [
+        "remettre en question",
+        "un remettre en question",
+        "une remettre en question",
+        "le remettre en question",
+        "la remettre en question"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'en dépit de' en anglais?",
+      "choices": [
+        "nuance",
+        "to question/challenge",
+        "especially since",
+        "in spite of"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "nuance",
+        "to question/challenge",
+        "to flourish",
+        "especially since"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'enjeu' (Placeholder - needs real synonym data):",
+      "choices": [
+        "copain",
+        "ennemi",
+        "ami",
+        "camarade",
+        "étranger"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'nuance' en anglais?",
+      "choices": [
+        "nuance",
+        "to flourish",
+        "in spite of",
+        "paradox"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'nuance' signifie 'nuance' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'paradox' en français?",
+      "correct_answers": [
+        "paradoxe",
+        "un paradoxe",
+        "une paradoxe",
+        "le paradoxe",
+        "la paradoxe"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "d'autant plus que": "especially since",
+        "paradoxe": "paradox",
+        "nuance": "nuance",
+        "pertinent": "relevant"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "nuance": "nuance",
+        "s'épanouir": "to flourish",
+        "d'autant plus que": "especially since",
+        "enjeu": "issue/stake"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pertinent' en anglais?",
+      "choices": [
+        "in spite of",
+        "relevant",
+        "to question/challenge",
+        "to flourish"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'issue/stake' en français?",
+      "correct_answers": [
+        "enjeu",
+        "un enjeu",
+        "une enjeu",
+        "le enjeu",
+        "la enjeu"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'enjeu' signifie 'issue/stake' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'especially since' en français?",
+      "correct_answers": [
+        "d'autant plus que",
+        "un d'autant plus que",
+        "une d'autant plus que",
+        "le d'autant plus que",
+        "la d'autant plus que"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "s'épanouir": "to flourish",
+        "pertinent": "relevant",
+        "paradoxe": "paradox",
+        "en dépit de": "in spite of"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'en dépit de' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "ennemi",
+        "copain",
+        "camarade",
+        "ami"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'en dépit de' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "ennemi",
+        "ami",
+        "copain",
+        "camarade"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'd'autant plus que' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "étranger",
+        "copain",
+        "ami",
+        "camarade"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "relevant",
+        "especially since",
+        "issue/stake",
+        "to flourish"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to flourish' en français?",
+      "correct_answers": [
+        "s'épanouir",
+        "un s'épanouir",
+        "une s'épanouir",
+        "le s'épanouir",
+        "la s'épanouir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'paradox' en français?",
+      "correct_answers": [
+        "paradoxe",
+        "un paradoxe",
+        "une paradoxe",
+        "le paradoxe",
+        "la paradoxe"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'nuance' en français?",
+      "correct_answers": [
+        "nuance",
+        "un nuance",
+        "une nuance",
+        "le nuance",
+        "la nuance"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'nuance' signifie 'nuance' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to flourish' en français?",
+      "correct_answers": [
+        "s'épanouir",
+        "un s'épanouir",
+        "une s'épanouir",
+        "le s'épanouir",
+        "la s'épanouir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'paradoxe' en anglais?",
+      "choices": [
+        "to question/challenge",
+        "paradox",
+        "especially since",
+        "in spite of"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to flourish' en français?",
+      "correct_answers": [
+        "s'épanouir",
+        "un s'épanouir",
+        "une s'épanouir",
+        "le s'épanouir",
+        "la s'épanouir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'nuance' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "ami",
+        "camarade",
+        "étranger",
+        "copain"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to flourish' en français?",
+      "correct_answers": [
+        "s'épanouir",
+        "un s'épanouir",
+        "une s'épanouir",
+        "le s'épanouir",
+        "la s'épanouir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'enjeu' en anglais?",
+      "choices": [
+        "especially since",
+        "to flourish",
+        "relevant",
+        "issue/stake"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'enjeu' signifie 'issue/stake' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pertinent' en anglais?",
+      "choices": [
+        "to flourish",
+        "issue/stake",
+        "relevant",
+        "paradox"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "d'autant plus que": "especially since",
+        "nuance": "nuance",
+        "enjeu": "issue/stake",
+        "pertinent": "relevant"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'remettre en question' en anglais?",
+      "choices": [
+        "especially since",
+        "issue/stake",
+        "to question/challenge",
+        "paradox"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'en dépit de' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "ami",
+        "étranger",
+        "copain",
+        "ennemi"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pertinent' en anglais?",
+      "choices": [
+        "to flourish",
+        "relevant",
+        "issue/stake",
+        "in spite of"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to flourish' en français?",
+      "correct_answers": [
+        "s'épanouir",
+        "un s'épanouir",
+        "une s'épanouir",
+        "le s'épanouir",
+        "la s'épanouir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'épanouir' en anglais?",
+      "choices": [
+        "to question/challenge",
+        "to flourish",
+        "in spite of",
+        "paradox"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'remettre en question' en anglais?",
+      "choices": [
+        "to flourish",
+        "to question/challenge",
+        "issue/stake",
+        "in spite of"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'paradoxe' en anglais?",
+      "choices": [
+        "paradox",
+        "relevant",
+        "issue/stake",
+        "especially since"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to question/challenge' en français?",
+      "correct_answers": [
+        "remettre en question",
+        "un remettre en question",
+        "une remettre en question",
+        "le remettre en question",
+        "la remettre en question"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "enjeu": "issue/stake",
+        "pertinent": "relevant",
+        "d'autant plus que": "especially since",
+        "s'épanouir": "to flourish"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'en dépit de' en anglais?",
+      "choices": [
+        "in spite of",
+        "nuance",
+        "issue/stake",
+        "to question/challenge"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'relevant' en français?",
+      "correct_answers": [
+        "pertinent",
+        "un pertinent",
+        "une pertinent",
+        "le pertinent",
+        "la pertinent"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'enjeu' en anglais?",
+      "choices": [
+        "issue/stake",
+        "relevant",
+        "especially since",
+        "to flourish"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'enjeu' signifie 'issue/stake' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'enjeu' en anglais?",
+      "choices": [
+        "paradox",
+        "issue/stake",
+        "nuance",
+        "especially since"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'enjeu' signifie 'issue/stake' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'especially since' en français?",
+      "correct_answers": [
+        "d'autant plus que",
+        "un d'autant plus que",
+        "une d'autant plus que",
+        "le d'autant plus que",
+        "la d'autant plus que"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'paradoxe' en anglais?",
+      "choices": [
+        "relevant",
+        "paradox",
+        "nuance",
+        "to flourish"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'paradox' en français?",
+      "correct_answers": [
+        "paradoxe",
+        "un paradoxe",
+        "une paradoxe",
+        "le paradoxe",
+        "la paradoxe"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to question/challenge' en français?",
+      "correct_answers": [
+        "remettre en question",
+        "un remettre en question",
+        "une remettre en question",
+        "le remettre en question",
+        "la remettre en question"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "remettre en question": "to question/challenge",
+        "nuance": "nuance",
+        "d'autant plus que": "especially since",
+        "s'épanouir": "to flourish"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "en dépit de": "in spite of",
+        "s'épanouir": "to flourish",
+        "enjeu": "issue/stake",
+        "pertinent": "relevant"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'paradoxe' en anglais?",
+      "choices": [
+        "to question/challenge",
+        "especially since",
+        "paradox",
+        "in spite of"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'épanouir' en anglais?",
+      "choices": [
+        "paradox",
+        "to question/challenge",
+        "to flourish",
+        "issue/stake"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'relevant' en français?",
+      "correct_answers": [
+        "pertinent",
+        "un pertinent",
+        "une pertinent",
+        "le pertinent",
+        "la pertinent"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'in spite of' en français?",
+      "correct_answers": [
+        "en dépit de",
+        "un en dépit de",
+        "une en dépit de",
+        "le en dépit de",
+        "la en dépit de"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "paradoxe": "paradox",
+        "enjeu": "issue/stake",
+        "nuance": "nuance",
+        "pertinent": "relevant"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "s'épanouir": "to flourish",
+        "paradoxe": "paradox",
+        "remettre en question": "to question/challenge",
+        "pertinent": "relevant"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "issue/stake",
+        "to question/challenge",
+        "especially since",
+        "paradox"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'en dépit de' en anglais?",
+      "choices": [
+        "in spite of",
+        "nuance",
+        "relevant",
+        "to flourish"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to question/challenge' en français?",
+      "correct_answers": [
+        "remettre en question",
+        "un remettre en question",
+        "une remettre en question",
+        "le remettre en question",
+        "la remettre en question"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "nuance",
+        "issue/stake",
+        "especially since",
+        "to flourish"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pertinent' en anglais?",
+      "choices": [
+        "relevant",
+        "especially since",
+        "nuance",
+        "to flourish"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "d'autant plus que": "especially since",
+        "s'épanouir": "to flourish",
+        "remettre en question": "to question/challenge",
+        "nuance": "nuance"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'nuance' en anglais?",
+      "choices": [
+        "to flourish",
+        "to question/challenge",
+        "nuance",
+        "especially since"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'nuance' signifie 'nuance' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'en dépit de' en anglais?",
+      "choices": [
+        "to question/challenge",
+        "relevant",
+        "in spite of",
+        "nuance"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'in spite of' en français?",
+      "correct_answers": [
+        "en dépit de",
+        "un en dépit de",
+        "une en dépit de",
+        "le en dépit de",
+        "la en dépit de"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'nuance' (Placeholder - needs real synonym data):",
+      "choices": [
+        "copain",
+        "ami",
+        "étranger",
+        "camarade",
+        "ennemi"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'remettre en question' en anglais?",
+      "choices": [
+        "issue/stake",
+        "to question/challenge",
+        "to flourish",
+        "nuance"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "nuance",
+        "especially since",
+        "paradox",
+        "issue/stake"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'relevant' en français?",
+      "correct_answers": [
+        "pertinent",
+        "un pertinent",
+        "une pertinent",
+        "le pertinent",
+        "la pertinent"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "d'autant plus que": "especially since",
+        "en dépit de": "in spite of",
+        "paradoxe": "paradox",
+        "nuance": "nuance"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'relevant' en français?",
+      "correct_answers": [
+        "pertinent",
+        "un pertinent",
+        "une pertinent",
+        "le pertinent",
+        "la pertinent"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pertinent' en anglais?",
+      "choices": [
+        "nuance",
+        "to flourish",
+        "relevant",
+        "in spite of"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'en dépit de' en anglais?",
+      "choices": [
+        "issue/stake",
+        "nuance",
+        "to question/challenge",
+        "in spite of"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to flourish' en français?",
+      "correct_answers": [
+        "s'épanouir",
+        "un s'épanouir",
+        "une s'épanouir",
+        "le s'épanouir",
+        "la s'épanouir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "nuance",
+        "especially since",
+        "to flourish",
+        "paradox"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'in spite of' en français?",
+      "correct_answers": [
+        "en dépit de",
+        "un en dépit de",
+        "une en dépit de",
+        "le en dépit de",
+        "la en dépit de"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'en dépit de' signifie 'in spite of' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "issue/stake",
+        "to question/challenge",
+        "especially since",
+        "in spite of"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'especially since' en français?",
+      "correct_answers": [
+        "d'autant plus que",
+        "un d'autant plus que",
+        "une d'autant plus que",
+        "le d'autant plus que",
+        "la d'autant plus que"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'paradoxe' en anglais?",
+      "choices": [
+        "to question/challenge",
+        "issue/stake",
+        "especially since",
+        "paradox"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'remettre en question' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "copain",
+        "ennemi",
+        "camarade",
+        "ami"
+      ],
+      "correct_indices": [
+        1,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'pertinent' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "ennemi",
+        "ami",
+        "camarade",
+        "copain"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'issue/stake' en français?",
+      "correct_answers": [
+        "enjeu",
+        "un enjeu",
+        "une enjeu",
+        "le enjeu",
+        "la enjeu"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'enjeu' signifie 'issue/stake' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'paradox' en français?",
+      "correct_answers": [
+        "paradoxe",
+        "un paradoxe",
+        "une paradoxe",
+        "le paradoxe",
+        "la paradoxe"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'paradoxe' signifie 'paradox' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "d'autant plus que": "especially since",
+        "pertinent": "relevant",
+        "enjeu": "issue/stake",
+        "paradoxe": "paradox"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'épanouir' en anglais?",
+      "choices": [
+        "paradox",
+        "to flourish",
+        "to question/challenge",
+        "nuance"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 's'épanouir' signifie 'to flourish' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "remettre en question": "to question/challenge",
+        "nuance": "nuance",
+        "pertinent": "relevant",
+        "en dépit de": "in spite of"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "en dépit de": "in spite of",
+        "paradoxe": "paradox",
+        "pertinent": "relevant",
+        "remettre en question": "to question/challenge"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "d'autant plus que": "especially since",
+        "paradoxe": "paradox",
+        "nuance": "nuance",
+        "remettre en question": "to question/challenge"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'relevant' en français?",
+      "correct_answers": [
+        "pertinent",
+        "un pertinent",
+        "une pertinent",
+        "le pertinent",
+        "la pertinent"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pertinent' signifie 'relevant' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'd'autant plus que' en anglais?",
+      "choices": [
+        "especially since",
+        "to question/challenge",
+        "issue/stake",
+        "to flourish"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'd'autant plus que' signifie 'especially since' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'paradoxe' (Placeholder - needs real synonym data):",
+      "choices": [
+        "copain",
+        "étranger",
+        "camarade",
+        "ami",
+        "ennemi"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'remettre en question' en anglais?",
+      "choices": [
+        "to question/challenge",
+        "paradox",
+        "especially since",
+        "relevant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'remettre en question' signifie 'to question/challenge' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    }
+  ]
+}

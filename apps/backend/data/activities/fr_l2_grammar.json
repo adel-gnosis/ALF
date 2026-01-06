@@ -1,0 +1,257 @@
+{
+  "subject": "Grammaire",
+  "lesson_order": 1,
+  "levels": [
+    {
+      "level_code": "FR-L1",
+      "activities": [
+        {
+          "type": "FillBlankActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Je ___ étudiant",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "suis"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Choisissez le bon article : ___ pomme",
+          "question_text_key": "activity.mcq.article",
+          "translation_data": {},
+          "choices": ["la", "le", "les", "un"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Il ___ français",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "est"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Quel est le pluriel de « le livre » ?",
+          "question_text_key": "activity.mcq.plural",
+          "translation_data": {},
+          "choices": ["les livre", "les livres", "le livres", "des livre"],
+          "correct_answer_index": 1
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Écrivez le féminin de « étudiant »",
+          "question_text_key": "activity.text_input.gender",
+          "translation_data": {},
+          "correct_answers": ["étudiante"]
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Remettez les mots dans le bon ordre",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["suis", "Je", "français"],
+          "correct_order": [1, 0, 2]
+        }
+      ]
+    },
+
+    {
+      "level_code": "FR-L2",
+      "activities": [
+        {
+          "type": "FillBlankActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Nous ___ à l’école",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "allons"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Quel est le bon déterminant ? ___ enfants",
+          "question_text_key": "activity.mcq.article",
+          "translation_data": {},
+          "choices": ["le", "la", "les", "un"],
+          "correct_answer_index": 2
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Elle ___ une voiture",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "a"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Quel est le féminin de « content » ?",
+          "question_text_key": "activity.mcq.gender",
+          "translation_data": {},
+          "choices": ["contente", "contents", "contentes", "content"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Écrivez le pluriel de « la maison »",
+          "question_text_key": "activity.text_input.plural",
+          "translation_data": {},
+          "correct_answers": ["les maisons"]
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Formez une phrase correcte",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["une", "Elle", "pomme", "mange"],
+          "correct_order": [1, 3, 0, 2]
+        }
+      ]
+    },
+
+    {
+      "level_code": "FR-L3",
+      "activities": [
+        {
+          "type": "FillBlankActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Ils ___ contents",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "sont"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Quel est le contraire de « grand » ?",
+          "question_text_key": "activity.mcq.antonym",
+          "translation_data": {},
+          "choices": ["petit", "long", "haut", "fort"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Écrivez l’adjectif au féminin : « heureux »",
+          "question_text_key": "activity.text_input.gender",
+          "translation_data": {},
+          "correct_answers": ["heureuse"]
+        },
+        {
+          "type": "MCQActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Quel mot est un adjectif ?",
+          "question_text_key": "activity.mcq.grammar_type",
+          "translation_data": {},
+          "choices": ["vite", "beau", "manger", "hier"],
+          "correct_answer_index": 1
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : La voiture est ___",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "rouge"
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Remettez la phrase en ordre",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["très", "est", "Il", "grand"],
+          "correct_order": [2, 1, 0, 3]
+        }
+      ]
+    },
+
+    {
+      "level_code": "FR-L4",
+      "activities": [
+        {
+          "type": "FillBlankActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Nous ___ fatigués",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "sommes"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Quel est l’adverbe dans la phrase ? « Il parle lentement »",
+          "question_text_key": "activity.mcq.adverb",
+          "translation_data": {},
+          "choices": ["il", "parle", "lentement", "phrase"],
+          "correct_answer_index": 2
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Transformez au féminin : « petit »",
+          "question_text_key": "activity.text_input.gender",
+          "translation_data": {},
+          "correct_answers": ["petite"]
+        },
+        {
+          "type": "MCQActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Quel est le pluriel correct ?",
+          "question_text_key": "activity.mcq.plural",
+          "translation_data": {},
+          "choices": ["des cheval", "les chevaux", "les chevals", "des chevaux"],
+          "correct_answer_index": 1
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Elle est ___ intelligente",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "très"
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Formez une phrase correcte",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["le", "est", "chat", "noir"],
+          "correct_order": [2, 1, 0, 3]
+        }
+      ]
+    }
+  ]
+}

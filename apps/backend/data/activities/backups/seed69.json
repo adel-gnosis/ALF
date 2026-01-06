@@ -1,0 +1,1497 @@
+{
+  "subject": "Vocabulaire",
+  "level": 9,
+  "total_activities": 100,
+  "activities": [
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'dormir' en anglais?",
+      "choices": [
+        "work",
+        "to sleep",
+        "to eat",
+        "shop"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'dormir' signifie 'to sleep' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'famille' en anglais?",
+      "choices": [
+        "tomorrow",
+        "family",
+        "to eat",
+        "station"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'famille' signifie 'family' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'famille' en anglais?",
+      "choices": [
+        "yesterday",
+        "work",
+        "phone",
+        "family"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'famille' signifie 'family' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'demain' en anglais?",
+      "choices": [
+        "yesterday",
+        "station",
+        "computer",
+        "tomorrow"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "magasin": "shop",
+        "hier": "yesterday",
+        "travail": "work",
+        "manger": "to eat"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'travail' en anglais?",
+      "choices": [
+        "work",
+        "to sleep",
+        "shop",
+        "yesterday"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'work' en français?",
+      "correct_answers": [
+        "travail",
+        "un travail",
+        "une travail",
+        "le travail",
+        "la travail"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'manger' en anglais?",
+      "choices": [
+        "yesterday",
+        "phone",
+        "to eat",
+        "tomorrow"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'manger' signifie 'to eat' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'magasin' en anglais?",
+      "choices": [
+        "work",
+        "family",
+        "phone",
+        "shop"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "téléphone": "phone",
+        "gare": "station",
+        "travail": "work",
+        "magasin": "shop"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'station' en français?",
+      "correct_answers": [
+        "gare",
+        "un gare",
+        "une gare",
+        "le gare",
+        "la gare"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'ordinateur' en anglais?",
+      "choices": [
+        "to sleep",
+        "tomorrow",
+        "family",
+        "computer"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'ordinateur' signifie 'computer' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'tomorrow' en français?",
+      "correct_answers": [
+        "demain",
+        "un demain",
+        "une demain",
+        "le demain",
+        "la demain"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'ordinateur' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "copain",
+        "camarade",
+        "étranger",
+        "ami"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "téléphone": "phone",
+        "hier": "yesterday",
+        "demain": "tomorrow",
+        "gare": "station"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "to sleep",
+        "phone",
+        "to eat",
+        "family"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "famille": "family",
+        "magasin": "shop",
+        "ordinateur": "computer",
+        "dormir": "to sleep"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'demain' en anglais?",
+      "choices": [
+        "tomorrow",
+        "to sleep",
+        "station",
+        "computer"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'work' en français?",
+      "correct_answers": [
+        "travail",
+        "un travail",
+        "une travail",
+        "le travail",
+        "la travail"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "manger": "to eat",
+        "famille": "family",
+        "magasin": "shop",
+        "ordinateur": "computer"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'ordinateur' en anglais?",
+      "choices": [
+        "computer",
+        "shop",
+        "station",
+        "to sleep"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'ordinateur' signifie 'computer' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'magasin' en anglais?",
+      "choices": [
+        "to eat",
+        "station",
+        "shop",
+        "phone"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'computer' en français?",
+      "correct_answers": [
+        "ordinateur",
+        "un ordinateur",
+        "une ordinateur",
+        "le ordinateur",
+        "la ordinateur"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'ordinateur' signifie 'computer' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "dormir": "to sleep",
+        "ordinateur": "computer",
+        "demain": "tomorrow",
+        "hier": "yesterday"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'famille' en anglais?",
+      "choices": [
+        "shop",
+        "work",
+        "phone",
+        "family"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'famille' signifie 'family' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "magasin": "shop",
+        "dormir": "to sleep",
+        "téléphone": "phone",
+        "ordinateur": "computer"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "travail": "work",
+        "magasin": "shop",
+        "manger": "to eat",
+        "famille": "family"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'travail' en anglais?",
+      "choices": [
+        "computer",
+        "yesterday",
+        "work",
+        "to sleep"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'phone' en français?",
+      "correct_answers": [
+        "téléphone",
+        "un téléphone",
+        "une téléphone",
+        "le téléphone",
+        "la téléphone"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'shop' en français?",
+      "correct_answers": [
+        "magasin",
+        "un magasin",
+        "une magasin",
+        "le magasin",
+        "la magasin"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'computer' en français?",
+      "correct_answers": [
+        "ordinateur",
+        "un ordinateur",
+        "une ordinateur",
+        "le ordinateur",
+        "la ordinateur"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'ordinateur' signifie 'computer' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'yesterday' en français?",
+      "correct_answers": [
+        "hier",
+        "un hier",
+        "une hier",
+        "le hier",
+        "la hier"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'hier' signifie 'yesterday' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "famille": "family",
+        "dormir": "to sleep",
+        "magasin": "shop",
+        "travail": "work"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "work",
+        "to sleep",
+        "phone",
+        "yesterday"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'gare' en anglais?",
+      "choices": [
+        "work",
+        "station",
+        "phone",
+        "shop"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'téléphone' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "ennemi",
+        "copain",
+        "camarade",
+        "ami"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "famille": "family",
+        "ordinateur": "computer",
+        "demain": "tomorrow",
+        "magasin": "shop"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'work' en français?",
+      "correct_answers": [
+        "travail",
+        "un travail",
+        "une travail",
+        "le travail",
+        "la travail"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to sleep' en français?",
+      "correct_answers": [
+        "dormir",
+        "un dormir",
+        "une dormir",
+        "le dormir",
+        "la dormir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'dormir' signifie 'to sleep' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'work' en français?",
+      "correct_answers": [
+        "travail",
+        "un travail",
+        "une travail",
+        "le travail",
+        "la travail"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "yesterday",
+        "computer",
+        "tomorrow",
+        "phone"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "phone",
+        "family",
+        "tomorrow",
+        "to eat"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'station' en français?",
+      "correct_answers": [
+        "gare",
+        "un gare",
+        "une gare",
+        "le gare",
+        "la gare"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'téléphone' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "camarade",
+        "étranger",
+        "copain",
+        "ami"
+      ],
+      "correct_indices": [
+        1,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "to eat",
+        "phone",
+        "work",
+        "yesterday"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'shop' en français?",
+      "correct_answers": [
+        "magasin",
+        "un magasin",
+        "une magasin",
+        "le magasin",
+        "la magasin"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "work",
+        "family",
+        "phone",
+        "computer"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to eat' en français?",
+      "correct_answers": [
+        "manger",
+        "un manger",
+        "une manger",
+        "le manger",
+        "la manger"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'manger' signifie 'to eat' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'gare' en anglais?",
+      "choices": [
+        "yesterday",
+        "computer",
+        "station",
+        "shop"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "travail": "work",
+        "téléphone": "phone",
+        "ordinateur": "computer",
+        "hier": "yesterday"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "phone",
+        "work",
+        "station",
+        "family"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'gare' en anglais?",
+      "choices": [
+        "phone",
+        "family",
+        "shop",
+        "station"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "phone",
+        "station",
+        "yesterday",
+        "to eat"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'shop' en français?",
+      "correct_answers": [
+        "magasin",
+        "un magasin",
+        "une magasin",
+        "le magasin",
+        "la magasin"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'manger' en anglais?",
+      "choices": [
+        "to eat",
+        "computer",
+        "family",
+        "to sleep"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'manger' signifie 'to eat' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'travail' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "camarade",
+        "copain",
+        "ami",
+        "ennemi"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'travail' en anglais?",
+      "choices": [
+        "yesterday",
+        "work",
+        "station",
+        "tomorrow"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "travail": "work",
+        "demain": "tomorrow",
+        "gare": "station",
+        "famille": "family"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'demain' en anglais?",
+      "choices": [
+        "shop",
+        "computer",
+        "tomorrow",
+        "yesterday"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'manger' en anglais?",
+      "choices": [
+        "work",
+        "family",
+        "to eat",
+        "station"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'manger' signifie 'to eat' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'computer' en français?",
+      "correct_answers": [
+        "ordinateur",
+        "un ordinateur",
+        "une ordinateur",
+        "le ordinateur",
+        "la ordinateur"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'ordinateur' signifie 'computer' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'shop' en français?",
+      "correct_answers": [
+        "magasin",
+        "un magasin",
+        "une magasin",
+        "le magasin",
+        "la magasin"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'station' en français?",
+      "correct_answers": [
+        "gare",
+        "un gare",
+        "une gare",
+        "le gare",
+        "la gare"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'magasin' en anglais?",
+      "choices": [
+        "yesterday",
+        "to eat",
+        "computer",
+        "shop"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'téléphone' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "ennemi",
+        "ami",
+        "copain",
+        "étranger"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to sleep' en français?",
+      "correct_answers": [
+        "dormir",
+        "un dormir",
+        "une dormir",
+        "le dormir",
+        "la dormir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'dormir' signifie 'to sleep' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'hier' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "ami",
+        "camarade",
+        "étranger",
+        "copain"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'demain' en anglais?",
+      "choices": [
+        "to sleep",
+        "tomorrow",
+        "station",
+        "phone"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'gare' en anglais?",
+      "choices": [
+        "yesterday",
+        "to eat",
+        "computer",
+        "station"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to eat' en français?",
+      "correct_answers": [
+        "manger",
+        "un manger",
+        "une manger",
+        "le manger",
+        "la manger"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'manger' signifie 'to eat' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'gare' en anglais?",
+      "choices": [
+        "station",
+        "to eat",
+        "yesterday",
+        "to sleep"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'demain' en anglais?",
+      "choices": [
+        "computer",
+        "tomorrow",
+        "to eat",
+        "station"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "travail": "work",
+        "manger": "to eat",
+        "dormir": "to sleep",
+        "demain": "tomorrow"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'dormir' en anglais?",
+      "choices": [
+        "work",
+        "to sleep",
+        "computer",
+        "shop"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'dormir' signifie 'to sleep' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "manger": "to eat",
+        "travail": "work",
+        "demain": "tomorrow",
+        "gare": "station"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'hier' en anglais?",
+      "choices": [
+        "computer",
+        "tomorrow",
+        "yesterday",
+        "phone"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'hier' signifie 'yesterday' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'demain' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "étranger",
+        "copain",
+        "ami",
+        "ennemi"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'gare' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ami",
+        "copain",
+        "ennemi",
+        "étranger",
+        "camarade"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'phone' en français?",
+      "correct_answers": [
+        "téléphone",
+        "un téléphone",
+        "une téléphone",
+        "le téléphone",
+        "la téléphone"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'tomorrow' en français?",
+      "correct_answers": [
+        "demain",
+        "un demain",
+        "une demain",
+        "le demain",
+        "la demain"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'dormir' en anglais?",
+      "choices": [
+        "family",
+        "station",
+        "yesterday",
+        "to sleep"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'dormir' signifie 'to sleep' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "demain": "tomorrow",
+        "travail": "work",
+        "gare": "station",
+        "manger": "to eat"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'manger' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "étranger",
+        "camarade",
+        "copain",
+        "ami"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "demain": "tomorrow",
+        "ordinateur": "computer",
+        "travail": "work",
+        "magasin": "shop"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'manger' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "ami",
+        "étranger",
+        "copain",
+        "ennemi"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'tomorrow' en français?",
+      "correct_answers": [
+        "demain",
+        "un demain",
+        "une demain",
+        "le demain",
+        "la demain"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'demain' signifie 'tomorrow' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to sleep' en français?",
+      "correct_answers": [
+        "dormir",
+        "un dormir",
+        "une dormir",
+        "le dormir",
+        "la dormir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'dormir' signifie 'to sleep' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "hier": "yesterday",
+        "magasin": "shop",
+        "dormir": "to sleep",
+        "demain": "tomorrow"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'computer' en français?",
+      "correct_answers": [
+        "ordinateur",
+        "un ordinateur",
+        "une ordinateur",
+        "le ordinateur",
+        "la ordinateur"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'ordinateur' signifie 'computer' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'work' en français?",
+      "correct_answers": [
+        "travail",
+        "un travail",
+        "une travail",
+        "le travail",
+        "la travail"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'yesterday' en français?",
+      "correct_answers": [
+        "hier",
+        "un hier",
+        "une hier",
+        "le hier",
+        "la hier"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'hier' signifie 'yesterday' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "famille": "family",
+        "dormir": "to sleep",
+        "demain": "tomorrow",
+        "magasin": "shop"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'yesterday' en français?",
+      "correct_answers": [
+        "hier",
+        "un hier",
+        "une hier",
+        "le hier",
+        "la hier"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'hier' signifie 'yesterday' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'work' en français?",
+      "correct_answers": [
+        "travail",
+        "un travail",
+        "une travail",
+        "le travail",
+        "la travail"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'travail' signifie 'work' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "hier": "yesterday",
+        "famille": "family",
+        "téléphone": "phone",
+        "manger": "to eat"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'gare' en anglais?",
+      "choices": [
+        "station",
+        "computer",
+        "work",
+        "phone"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'gare' signifie 'station' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'dormir' en anglais?",
+      "choices": [
+        "shop",
+        "phone",
+        "to sleep",
+        "work"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'dormir' signifie 'to sleep' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'téléphone' en anglais?",
+      "choices": [
+        "to sleep",
+        "phone",
+        "shop",
+        "tomorrow"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'téléphone' signifie 'phone' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'magasin' en anglais?",
+      "choices": [
+        "shop",
+        "to eat",
+        "phone",
+        "family"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'magasin' signifie 'shop' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "manger": "to eat",
+        "dormir": "to sleep",
+        "famille": "family",
+        "demain": "tomorrow"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    }
+  ]
+}

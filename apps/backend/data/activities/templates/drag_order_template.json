@@ -1,0 +1,47 @@
+{
+    "activity_type": "DragOrderActivity",
+    "template_version": "1.0",
+    "description": "Drag and drop activity where users arrange French words to form a correct sentence.",
+    "usage": "Provide words in scrambled order. correct_order is the array of indices representing the correct sequence.",
+    "fields": {
+        "question_text": "Arrange the words to form a correct French sentence",
+        "question_text_key": "activity.drag_order.instruction",
+        "translation_data": {},
+        "words": [
+            "WORD_1",
+            "WORD_2",
+            "WORD_3",
+            "WORD_4"
+        ],
+        "correct_order": [
+            0,
+            1,
+            2,
+            3
+        ],
+        "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+        "subject": "Grammaire"
+    },
+    "examples": [
+        {
+            "question_text": "Arrange the words to form a correct French sentence",
+            "question_text_key": "activity.drag_order.instruction",
+            "translation_data": {},
+            "words": [
+                "suis",
+                "Je",
+                "étudiant",
+                "un"
+            ],
+            "correct_order": [
+                1,
+                0,
+                3,
+                2
+            ],
+            "difficulty": "BEGINNER",
+            "subject": "Grammaire",
+            "note": "Correct sentence: 'Je suis un étudiant'"
+        }
+    ]
+}

@@ -1,0 +1,60 @@
+# French Translation File (DEFAULT UI)
+# This is the default language for the ALF platform
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fr\n"
+
+# Activity Instructions
+msgid "activity.mcq.translate_word"
+msgstr "Quelle est la traduction de '{word}' ?"
+
+msgid "activity.fill_blank.complete_phrase"
+msgstr "Complétez la phrase : {phrase}"
+
+msgid "activity.dictee.instruction"
+msgstr "Écoutez et écrivez ce que vous entendez"
+
+msgid "activity.conjugation.instruction"
+msgstr "Conjuguez {verb} au {tense} pour {pronoun}"
+
+msgid "activity.matching.instruction"
+msgstr "Associez les mots français avec leurs traductions"
+
+msgid "activity.drag_order.instruction"
+msgstr "Arrangez les mots pour former une phrase française correcte"
+
+msgid "activity.text_input.translate"
+msgstr "Tapez la traduction française de '{word}'"
+
+msgid "activity.multiple_answer.select_all"
+msgstr "Sélectionnez toutes les bonnes réponses pour '{category}'"
+
+# Vocabulary (for reference in choices_keys)
+msgid "word.apple"
+msgstr "pomme"
+
+msgid "word.orange"
+msgstr "orange"
+
+msgid "word.book"
+msgstr "livre"
+
+msgid "word.cat"
+msgstr "chat"
+
+msgid "word.house"
+msgstr "maison"
+
+msgid "word.dog"
+msgstr "chien"
+
+msgid "word.table"
+msgstr "table"
+
+msgid "word.door"
+msgstr "porte"
+
+msgid "word.window"
+msgstr "fenêtre"

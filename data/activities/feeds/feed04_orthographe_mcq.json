@@ -1,0 +1,487 @@
+{
+  "subject": "Orthographe",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "activities": [
+    {
+      "level": 1,
+      "type": "MCQActivity",
+      "question_text": "Quelle est la bonne orthographe?",
+      "choices": [
+        "bébé",
+        "bebe",
+        "bèbè",
+        "bébe"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Accents aigus sur les 'e'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "MCQActivity",
+      "question_text": "Quelle est la bonne orthographe?",
+      "choices": [
+        "mère",
+        "mere",
+        "mére",
+        "mêre"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Accent grave sur le premier 'e'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "MCQActivity",
+      "question_text": "Quelle est la bonne orthographe?",
+      "choices": [
+        "fête",
+        "fete",
+        "féte",
+        "fète"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Accent circonflexe sur le premier 'e'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "MCQActivity",
+      "question_text": "___-tu français?",
+      "choices": [
+        "Parles",
+        "Parle",
+        "Parlent",
+        "Parler"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Avec 'tu', on ajoute un 's' (verbes en -er).",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "MCQActivity",
+      "question_text": "Ils ___",
+      "choices": [
+        "mangent",
+        "mange",
+        "manges",
+        "mangeons"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Pluriel 'ils' finit en -ent.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "MCQActivity",
+      "question_text": "Comment s'écrit 10?",
+      "choices": [
+        "dix",
+        "dis",
+        "diz",
+        "die"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Dix s'écrit avec un x.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "MCQActivity",
+      "question_text": "Comment s'écrit le mot?",
+      "choices": [
+        "garçon",
+        "garcon",
+        "garson",
+        "guarçon"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Cédille 'ç' nécessaire devant 'o'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "MCQActivity",
+      "question_text": "Le pluriel de cheval?",
+      "choices": [
+        "chevaux",
+        "chevals",
+        "chevaus",
+        "chevalx"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Pluriel en -aux.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 9,
+      "type": "MCQActivity",
+      "question_text": "Féminin de 'beau'?",
+      "choices": [
+        "belle",
+        "beau",
+        "beaux",
+        "bel"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Féminin est 'belle'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 10,
+      "type": "MCQActivity",
+      "question_text": "Lequel est correct?",
+      "choices": [
+        "hôpital",
+        "hopital",
+        "hòpital",
+        "hoppital"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Accent circonflexe sur le o.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "MCQActivity",
+      "question_text": "Orthographe de 'théâtre'?",
+      "choices": [
+        "théâtre",
+        "theâtre",
+        "théatre",
+        "téâtre"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "th + é + âtre.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "MCQActivity",
+      "question_text": "Pluriel de 'bijou'?",
+      "choices": [
+        "bijoux",
+        "bijous",
+        "bijous",
+        "bijouc"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Pluriel en -x pour bijou, caillou...",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "MCQActivity",
+      "question_text": "Adverbe de 'rapide'?",
+      "choices": [
+        "rapidement",
+        "rapidment",
+        "rapidemant",
+        "vitement"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Rapidement.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "MCQActivity",
+      "question_text": "Féminin de 'chanteur'?",
+      "choices": [
+        "chanteuse",
+        "chanteure",
+        "chantrice",
+        "chanteurse"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Chanteuse.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "MCQActivity",
+      "question_text": "Lequel prend un trait d'union?",
+      "choices": [
+        "est-ce que",
+        "est ce que",
+        "parce que",
+        "tandis que"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Est-ce que prend un trait d'union.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "MCQActivity",
+      "question_text": "Orthographe correcte?",
+      "choices": [
+        "apercevoir",
+        "appercevoir",
+        "apersevoir",
+        "aperevoir"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Un seul 'p'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "MCQActivity",
+      "question_text": "Orthographe correcte?",
+      "choices": [
+        "développement",
+        "dévelopement",
+        "developpement",
+        "développemant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Deux 'p'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 18,
+      "type": "MCQActivity",
+      "question_text": "Orthographe correcte?",
+      "choices": [
+        "accueil",
+        "acceuil",
+        "acueil",
+        "aqeuil"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "ue après c (accueil).",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 19,
+      "type": "MCQActivity",
+      "question_text": "Orthographe correcte?",
+      "choices": [
+        "langage",
+        "language",
+        "langauge",
+        "languaje"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Langage (pas de u comme en anglais).",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 20,
+      "type": "MCQActivity",
+      "question_text": "Pluriel de 'oeil'?",
+      "choices": [
+        "yeux",
+        "oeils",
+        "oeux",
+        "yeucs"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Yeux.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 21,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "méditerranée",
+        "mediteranée",
+        "méditerrranée",
+        "méditerannée"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Méditerranée (2 r, 2 n).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 22,
+      "type": "MCQActivity",
+      "question_text": "Accord: Des robes ___",
+      "choices": [
+        "orange",
+        "oranges",
+        "orangés",
+        "orangées"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Orange (nom de fruit utilisé comme adj) est invariable.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 23,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "intéressant",
+        "intérrèssant",
+        "interessant",
+        "intérèssant"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Intéressant (1 r, 2 s).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 24,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "succès",
+        "succés",
+        "succcès",
+        "sucès"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Succès (2 c, accent grave).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 25,
+      "type": "MCQActivity",
+      "question_text": "Participe passé: Elles se sont ___",
+      "choices": [
+        "lavées",
+        "lavé",
+        "lavés",
+        "lavée"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Accord avec le sujet (verbe pronominal réfléchi, COD avant).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 26,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "vraisemblablement",
+        "vraissemblablement",
+        "vraisamblablement",
+        "vrai-semblablement"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vraisemblablement (1 s, em).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 27,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "dilemme",
+        "dilemne",
+        "dillemme",
+        "dillemne"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Dilemme (2 m).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 28,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "exagérer",
+        "exaggérer",
+        "exagerer",
+        "éxagérer"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Exagérer.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 29,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "cauchemar",
+        "cauchemarre",
+        "cochemar",
+        "cauchemard"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Cauchemar (pas de d).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 30,
+      "type": "MCQActivity",
+      "question_text": "Orthographe?",
+      "choices": [
+        "inondation",
+        "innondation",
+        "inondasion",
+        "inondetion"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Inondation (1 n au début).",
+      "points": 10,
+      "difficulty": "HARD"
+    }
+  ]
+}

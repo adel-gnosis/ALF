@@ -1,0 +1,58 @@
+{
+  "activity_type": "MCQActivity",
+  "template_version": "1.0",
+  "description": "Multiple Choice Question for vocabulary translation. Use this template to generate more MCQ activities with AI.",
+  "usage": "Replace UPPERCASE placeholders with actual values. Ensure distractors are plausible but incorrect.",
+  "fields": {
+    "question_text": "What is the translation of '{word}'?",
+    "question_text_key": "activity.mcq.translate_word",
+    "translation_data": {
+      "word": "ENGLISH_WORD_HERE"
+    },
+    "choices": [
+      "CORRECT_FRENCH_TRANSLATION",
+      "DISTRACTOR_FRENCH_WORD_1",
+      "DISTRACTOR_FRENCH_WORD_2",
+      "DISTRACTOR_FRENCH_WORD_3"
+    ],
+    "choices_keys": null,
+    "choices_are_translatable": false,
+    "correct_answer": 0,
+    "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+    "subject": "Vocabulaire"
+  },
+  "examples": [
+    {
+      "question_text": "What is the translation of 'apple'?",
+      "question_text_key": "activity.mcq.translate_word",
+      "translation_data": {
+        "word": "key:word.apple"
+      },
+      "choices": [
+        "pomme",
+        "orange",
+        "banane",
+        "poire"
+      ],
+      "correct_answer": 0,
+      "difficulty": "BEGINNER",
+      "subject": "Vocabulaire"
+    },
+    {
+      "question_text": "What is the translation of 'book'?",
+      "question_text_key": "activity.mcq.translate_word",
+      "translation_data": {
+        "word": "key:word.book"
+      },
+      "choices": [
+        "livre",
+        "table",
+        "chaise",
+        "porte"
+      ],
+      "correct_answer": 0,
+      "difficulty": "BEGINNER",
+      "subject": "Vocabulaire"
+    }
+  ]
+}

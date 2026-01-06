@@ -1,0 +1,316 @@
+{
+  "subject": "Grammaire",
+  "levels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+  "activities": [
+    {
+      "level": 1,
+      "type": "MCQActivity",
+      "question_text": "Complétez : ___ maison est grande.",
+      "choices": ["Le", "La", "Les", "Un"],
+      "correct_answer_index": [1],
+      "explanation": "Le mot 'maison' est féminin singulier → 'La maison'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "MCQActivity",
+      "question_text": "Choisissez le pluriel correct : 'chien'",
+      "choices": ["Chiens", "Chien", "Chiennes", "Chienn"],
+      "correct_answer_index": [0],
+      "explanation": "Le pluriel de 'chien' est 'chiens'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Il a ___ pomme.",
+      "choices": ["un", "une", "le", "la"],
+      "correct_answer_index": [1],
+      "explanation": "'Pomme' est féminin → 'une pomme'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "MCQActivity",
+      "question_text": "Quel adjectif convient ? 'Une voiture ___ (rouge)'",
+      "choices": ["rouge", "rouges", "roux", "roug"],
+      "correct_answer_index": [0],
+      "explanation": "Singulier féminin → 'rouge'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Il ___ (aller) au marché.",
+      "choices": ["va", "vais", "allez", "vont"],
+      "correct_answer_index": [0],
+      "explanation": "3ème personne singulier → 'Il va'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "MCQActivity",
+      "question_text": "Choisissez le bon pronom : ___ mangeons des fruits.",
+      "choices": ["Je", "Tu", "Nous", "Vous"],
+      "correct_answer_index": [2],
+      "explanation": "'Nous' correspond à la 1ère personne du pluriel.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Elle est plus ___ (grand) que moi.",
+      "choices": ["grand", "grande", "grands", "grandes"],
+      "correct_answer_index": [1],
+      "explanation": "Féminin singulier → 'grande'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "MCQActivity",
+      "question_text": "Quel article défini pour 'arbres' ?",
+      "choices": ["Le", "La", "Les", "Un"],
+      "correct_answer_index": [2],
+      "explanation": "Pluriel → 'Les arbres'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 9,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Je ___ (avoir) un chat.",
+      "choices": ["ai", "as", "a", "avons"],
+      "correct_answer_index": [0],
+      "explanation": "1ère personne singulier → 'J'ai'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 10,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la bonne forme : Il ___ (être) médecin.",
+      "choices": ["est", "sont", "es", "êtes"],
+      "correct_answer_index": [0],
+      "explanation": "3ème personne singulier → 'est'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Nous ___ (parler) français tous les jours.",
+      "choices": ["parlons", "parlez", "parlent", "parle"],
+      "correct_answer_index": [0],
+      "explanation": "1ère personne pluriel → 'parlons'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "MCQActivity",
+      "question_text": "Quel pronom relatif complète : La femme ___ parle est ma voisine.",
+      "choices": ["que", "qui", "dont", "où"],
+      "correct_answer_index": [1],
+      "explanation": "'Qui' est sujet → 'La femme qui parle'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Hier, j'___ (aller) au marché.",
+      "choices": ["suis allé", "ai allé", "es allé", "allé"],
+      "correct_answer_index": [0],
+      "explanation": "Passé composé → 'Je suis allé'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la bonne préposition : Il est fier ___ son fils.",
+      "choices": ["de", "à", "pour", "avec"],
+      "correct_answer_index": [0],
+      "explanation": "'Fier de' → préposition correcte.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Elle ___ (faire) ses devoirs quand je suis arrivé.",
+      "choices": ["faisait", "fait", "fera", "fais"],
+      "correct_answer_index": [0],
+      "explanation": "Imparfait → 'faisait'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la bonne forme : Si j'___ riche, j'achèterais une maison.",
+      "choices": ["étais", "suis", "serai", "était"],
+      "correct_answer_index": [0],
+      "explanation": "Conditionnel → 'Si j'étais riche...'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Je veux que tu ___ (venir) demain.",
+      "choices": ["viennes", "viens", "vient", "venez"],
+      "correct_answer_index": [0],
+      "explanation": "Subjonctif présent → 'que tu viennes'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 18,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la bonne phrase : Ils auraient ___ partis plus tôt.",
+      "choices": ["du", "dû", "des", "de"],
+      "correct_answer_index": [1],
+      "explanation": "Participe passé du verbe devoir → 'dû'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 19,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Si j'avais su, je ___ (venir).",
+      "choices": ["serais venu", "suis venu", "viens", "viendrai"],
+      "correct_answer_index": [0],
+      "explanation": "Conditionnel passé → 'je serais venu'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 20,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la forme correcte : Nous ___ (partir) avant midi.",
+      "choices": ["sommes partis", "avons partis", "partons", "parti"],
+      "correct_answer_index": [0],
+      "explanation": "Passé composé → 'nous sommes partis'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 21,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Bien que tu ___ (être) fatigué, tu continues.",
+      "choices": ["sois", "es", "est", "soyez"],
+      "correct_answer_index": [0],
+      "explanation": "Subjonctif présent après 'bien que'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 22,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la phrase correcte au futur antérieur :",
+      "choices": [
+        "Quand j'aurai fini, je te téléphonerai",
+        "Quand je fini, je te téléphonerai",
+        "Quand j'avais fini, je te téléphonerai",
+        "Quand je finira, je te téléphonerai"
+      ],
+      "correct_answer_index": [0],
+      "explanation": "Futur antérieur → 'Quand j'aurai fini...'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 23,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Il faut que vous ___ (faire) attention.",
+      "choices": ["fassiez", "faites", "ferez", "fait"],
+      "correct_answer_index": [0],
+      "explanation": "Subjonctif présent → 'que vous fassiez'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 24,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la bonne forme : Si nous ___ (savoir) la vérité, nous aurions agi autrement.",
+      "choices": ["avions su", "avons su", "aurions su", "savons"],
+      "correct_answer_index": [0],
+      "explanation": "Conditionnel passé → 'Si nous avions su...'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 25,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Malgré qu'il ___ (être) malade, il est venu au travail.",
+      "choices": ["soit", "est", "était", "sera"],
+      "correct_answer_index": [0],
+      "explanation": "Subjonctif après 'malgré que'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 26,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la phrase correcte avec 'en train de' :",
+      "choices": [
+        "Je suis en train de lire un livre",
+        "Je suis en train lire un livre",
+        "Je suis en train lu un livre",
+        "Je suis en train à lire un livre"
+      ],
+      "correct_answer_index": [0],
+      "explanation": "'En train de' + infinitif → 'Je suis en train de lire'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 27,
+      "type": "MCQActivity",
+      "question_text": "Complétez : Il est parti sans ___ (dire) un mot.",
+      "choices": ["dire", "dit", "disant", "dira"],
+      "correct_answer_index": [0],
+      "explanation": "Infinitif après 'sans' → 'sans dire'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 28,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la forme correcte : Si j'___ (avoir) le temps, je voyagerais davantage.",
+      "choices": ["avais", "ai", "aurai", "a"],
+      "correct_answer_index": [0],
+      "explanation": "Imparfait pour conditionnel → 'Si j'avais le temps...'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 29,
+      "type": "MCQActivity",
+      "question_text": "Complétez avec le subjonctif passé : Il est heureux que tu ___ (finir) tes devoirs.",
+      "choices": ["aies fini", "as fini", "finis", "finiras"],
+      "correct_answer_index": [0],
+      "explanation": "Subjonctif passé → 'que tu aies fini'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 30,
+      "type": "MCQActivity",
+      "question_text": "Choisissez la phrase correcte au conditionnel passé : Si elle ___ (savoir) cela, elle aurait réagi différemment.",
+      "choices": ["avait su", "a su", "savait", "aurait su"],
+      "correct_answer_index": [0],
+      "explanation": "Conditionnel passé → 'Si elle avait su...'.",
+      "points": 10,
+      "difficulty": "HARD"
+    }
+  ]
+}

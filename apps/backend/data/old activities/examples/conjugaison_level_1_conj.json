@@ -1,0 +1,39 @@
+{
+    "subject": "Conjugaison",
+    "level": 1,
+    "activities": [
+        {
+            "type": "ConjugationActivity",
+            "question_text": "Conjuguez 'être' au présent avec 'je':",
+            "verb_infinitive": "être",
+            "tense": "présent",
+            "pronoun": "je",
+            "correct_conjugation": "suis",
+            "explanation": "Le verbe 'être' se conjugue 'suis' avec 'je' au présent.",
+            "points": 10,
+            "difficulty": "EASY"
+        },
+        {
+            "type": "ConjugationActivity",
+            "question_text": "Conjuguez 'avoir' au présent avec 'tu':",
+            "verb_infinitive": "avoir",
+            "tense": "présent",
+            "pronoun": "tu",
+            "correct_conjugation": "as",
+            "explanation": "Le verbe 'avoir' se conjugue 'as'  avec 'tu' au présent.",
+            "points": 10,
+            "difficulty": "EASY"
+        },
+        {
+            "type": "ConjugationActivity",
+            "question_text": "Conjuguez 'parler' au présent avec 'il/elle':",
+            "verb_infinitive": "parler",
+            "tense": "présent",
+            "pronoun": "il",
+            "correct_conjugation": "parle",
+            "explanation": "Les verbes en -ER se conjuguent avec 'e' à la 3ème personne du singulier.",
+            "points": 10,
+            "difficulty": "MEDIUM"
+        }
+    ]
+}

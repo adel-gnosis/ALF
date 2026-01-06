@@ -1,0 +1,277 @@
+{
+  "subject": "Vocabulaire",
+  "lesson_order": 1,
+  "levels": [
+    {
+      "level_code": "FR-L1",
+      "activities": [
+        {
+          "type": "MCQActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Quelle est la traduction de « apple » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "apple" },
+          "choices": ["pomme", "orange", "banane", "poire"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "MCQActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Quelle est la traduction de « dog » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "dog" },
+          "choices": ["chat", "chien", "oiseau", "poisson"],
+          "correct_answer_index": 1
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : J’ai un ___",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": { "phrase": "J’ai un ___" },
+          "correct_answer": "livre"
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Écrivez la traduction française de « hello »",
+          "question_text_key": "activity.text_input.translate",
+          "translation_data": { "word": "hello" },
+          "correct_answers": ["bonjour", "salut"]
+        },
+        {
+          "type": "MatchingActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Associez les mots français à leur traduction",
+          "question_text_key": "activity.matching.instruction",
+          "translation_data": {},
+          "pairs": [
+            ["pomme", "apple"],
+            ["chat", "cat"],
+            ["maison", "house"]
+          ],
+          "values_are_translatable": false
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Remettez les mots dans le bon ordre",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["un", "chat", "J’ai"],
+          "correct_order": [2, 0, 1]
+        }
+      ]
+    },
+
+    {
+      "level_code": "FR-L2",
+      "activities": [
+        {
+          "type": "MCQActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Quelle est la traduction de « teacher » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "teacher" },
+          "choices": ["étudiant", "professeur", "docteur", "ami"],
+          "correct_answer_index": 1
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Il est ___",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": { "phrase": "Il est ___" },
+          "correct_answer": "professeur"
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Traduisez « school » en français",
+          "question_text_key": "activity.text_input.translate",
+          "translation_data": { "word": "school" },
+          "correct_answers": ["école"]
+        },
+        {
+          "type": "MatchingActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Associez chaque mot à sa traduction",
+          "question_text_key": "activity.matching.instruction",
+          "translation_data": {},
+          "pairs": [
+            ["école", "school"],
+            ["livre", "book"],
+            ["stylo", "pen"]
+          ],
+          "values_are_translatable": false
+        },
+        {
+          "type": "MCQActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Quelle est la traduction de « chair » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "chair" },
+          "choices": ["chaise", "table", "porte", "fenêtre"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Formez une phrase correcte",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["une", "école", "C’est"],
+          "correct_order": [2, 0, 1]
+        }
+      ]
+    },
+
+    {
+      "level_code": "FR-L3",
+      "activities": [
+        {
+          "type": "MCQActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Que signifie « voiture » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "voiture" },
+          "choices": ["car", "train", "bike", "plane"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Traduisez « street » en français",
+          "question_text_key": "activity.text_input.translate",
+          "translation_data": { "word": "street" },
+          "correct_answers": ["rue"]
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : La ___ est grande",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": { "phrase": "La ___ est grande" },
+          "correct_answer": "ville"
+        },
+        {
+          "type": "MatchingActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Associez les lieux",
+          "question_text_key": "activity.matching.instruction",
+          "translation_data": {},
+          "pairs": [
+            ["ville", "city"],
+            ["rue", "street"],
+            ["pont", "bridge"]
+          ],
+          "values_are_translatable": false
+        },
+        {
+          "type": "MCQActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Quelle est la traduction de « river » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "river" },
+          "choices": ["mer", "rivière", "lac", "plage"],
+          "correct_answer_index": 1
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Remettez la phrase en ordre",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["la", "ville", "J’aime"],
+          "correct_order": [2, 0, 1]
+        }
+      ]
+    },
+
+    {
+      "level_code": "FR-L4",
+      "activities": [
+        {
+          "type": "MCQActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Que signifie « nourriture » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "nourriture" },
+          "choices": ["food", "drink", "table", "market"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Traduisez « breakfast »",
+          "question_text_key": "activity.text_input.translate",
+          "translation_data": { "word": "breakfast" },
+          "correct_answers": ["petit déjeuner"]
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Je mange une ___",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": { "phrase": "Je mange une ___" },
+          "correct_answer": "pomme"
+        },
+        {
+          "type": "MatchingActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Associez les aliments",
+          "question_text_key": "activity.matching.instruction",
+          "translation_data": {},
+          "pairs": [
+            ["pain", "bread"],
+            ["fromage", "cheese"],
+            ["eau", "water"]
+          ],
+          "values_are_translatable": false
+        },
+        {
+          "type": "MCQActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Quelle est la traduction de « drink » ?",
+          "question_text_key": "activity.mcq.translate_word",
+          "translation_data": { "word": "drink" },
+          "choices": ["boire", "boisson", "manger", "verre"],
+          "correct_answer_index": 1
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Formez une phrase correcte",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["un", "pain", "Je", "mange"],
+          "correct_order": [2, 3, 0, 1]
+        }
+      ]
+    }
+  ]
+}

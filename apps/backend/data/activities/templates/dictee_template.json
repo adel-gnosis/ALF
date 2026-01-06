@@ -1,0 +1,40 @@
+{
+    "activity_type": "DicteeActivity",
+    "template_version": "1.0",
+    "description": "Audio dictation activity. User listens to French audio and types what they hear.",
+    "usage": "Use placeholder audio URLs. Upload actual audio files via Django admin later.",
+    "fields": {
+        "question_text": "Listen and write what you hear",
+        "question_text_key": "activity.dictee.instruction",
+        "translation_data": {},
+        "audio_urls": [
+            "https://placeholder.com/audio/FILENAME.mp3"
+        ],
+        "correct_text": "EXACT_FRENCH_SENTENCE",
+        "case_sensitive": false,
+        "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+        "subject": "Prononciation"
+    },
+    "examples": [
+        {
+            "question_text": "Listen and write what you hear",
+            "question_text_key": "activity.dictee.instruction",
+            "translation_data": {},
+            "audio_urls": [],
+            "correct_text": "Je suis un robot",
+            "case_sensitive": false,
+            "difficulty": "BEGINNER",
+            "subject": "Prononciation"
+        },
+        {
+            "question_text": "Listen and write what you hear",
+            "question_text_key": "activity.dictee.instruction",
+            "translation_data": {},
+            "audio_urls": [],
+            "correct_text": "Bonjour, comment allez-vous?",
+            "case_sensitive": false,
+            "difficulty": "INTERMEDIATE",
+            "subject": "Prononciation"
+        }
+    ]
+}

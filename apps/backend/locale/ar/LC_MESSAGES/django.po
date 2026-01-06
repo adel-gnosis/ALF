@@ -1,0 +1,60 @@
+# Arabic Translation File (OPTIONAL UI)
+# Users can switch to Arabic UI while still learning French
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ar\n"
+
+# Activity Instructions
+msgid "activity.mcq.translate_word"
+msgstr "ما هي ترجمة '{word}'؟"
+
+msgid "activity.fill_blank.complete_phrase"
+msgstr "أكمل العبارة: {phrase}"
+
+msgid "activity.dictee.instruction"
+msgstr "استمع واكتب ما تسمعه"
+
+msgid "activity.conjugation.instruction"
+msgstr "صرّف {verb} في {tense} لـ {pronoun}"
+
+msgid "activity.matching.instruction"
+msgstr "طابق الكلمات الفرنسية مع ترجماتها"
+
+msgid "activity.drag_order.instruction"
+msgstr "رتب الكلمات لتكوين جملة فرنسية صحيحة"
+
+msgid "activity.text_input.translate"
+msgstr "اكتب الترجمة الفرنسية لـ '{word}'"
+
+msgid "activity.multiple_answer.select_all"
+msgstr "اختر جميع الإجابات الصحيحة لـ '{category}'"
+
+# Vocabulary (for reference in choices_keys)
+msgid "word.apple"
+msgstr "تفاحة"
+
+msgid "word.orange"
+msgstr "برتقالة"
+
+msgid "word.book"
+msgstr "كتاب"
+
+msgid "word.cat"
+msgstr "قطة"
+
+msgid "word.house"
+msgstr "منزل"
+
+msgid "word.dog"
+msgstr "كلب"
+
+msgid "word.table"
+msgstr "طاولة"
+
+msgid "word.door"
+msgstr "باب"
+
+msgid "word.window"
+msgstr "نافذة"

@@ -1,0 +1,487 @@
+{
+  "subject": "Compréhension",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "activities": [
+    {
+      "level": 1,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Bonjour, je m'appelle Pierre.'\n\nQui parle?",
+      "choices": [
+        "Pierre",
+        "Paul",
+        "Jacques",
+        "Marie"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: Pierre.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Bonjour, je m'appelle Pierre.'\n\nQui parle?",
+      "choices": [
+        "Pierre",
+        "Paul",
+        "Jacques",
+        "Marie"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: Pierre.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Bonjour, je m'appelle Pierre.'\n\nQui parle?",
+      "choices": [
+        "Pierre",
+        "Paul",
+        "Jacques",
+        "Marie"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: Pierre.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Bonjour, je m'appelle Pierre.'\n\nQui parle?",
+      "choices": [
+        "Pierre",
+        "Paul",
+        "Jacques",
+        "Marie"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: Pierre.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 9,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 10,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'Paris est la capitale de la France.'\n\nQuelle est la capitale?",
+      "choices": [
+        "Lyon",
+        "Marseille",
+        "Paris",
+        "Bordeaux"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "La réponse est dans le texte: Paris.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 18,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 19,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 20,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 21,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 22,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 23,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 24,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 25,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 26,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 27,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 28,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 29,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 30,
+      "type": "MCQActivity",
+      "question_text": "Lisez: 'La Révolution française a commencé en 1789.'\n\nEn quelle année?",
+      "choices": [
+        "1789",
+        "1800",
+        "1900",
+        "1500"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "La réponse est dans le texte: 1789.",
+      "points": 10,
+      "difficulty": "HARD"
+    }
+  ]
+}

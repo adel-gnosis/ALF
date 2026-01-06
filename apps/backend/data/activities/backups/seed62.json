@@ -1,0 +1,1497 @@
+{
+  "subject": "Vocabulaire",
+  "level": 2,
+  "total_activities": 100,
+  "activities": [
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'car' en français?",
+      "correct_answers": [
+        "voiture",
+        "un voiture",
+        "une voiture",
+        "le voiture",
+        "la voiture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'voiture' signifie 'car' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'two' en français?",
+      "correct_answers": [
+        "deux",
+        "un deux",
+        "une deux",
+        "le deux",
+        "la deux"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'deux' signifie 'two' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "maison": "house",
+        "bleu": "blue",
+        "bonjour": "hello",
+        "eau": "water"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'oui' en anglais?",
+      "choices": [
+        "one",
+        "yes",
+        "cat",
+        "red"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'oui' signifie 'yes' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'il vous plaît' en anglais?",
+      "choices": [
+        "please",
+        "red",
+        "goodbye",
+        "house"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 's'il vous plaît' signifie 'please' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'merci' en anglais?",
+      "choices": [
+        "please",
+        "goodbye",
+        "thank you",
+        "hello"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'merci' signifie 'thank you' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pain' en anglais?",
+      "choices": [
+        "please",
+        "dog",
+        "bread",
+        "goodbye"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'pain' signifie 'bread' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'cat' en français?",
+      "correct_answers": [
+        "chat",
+        "un chat",
+        "une chat",
+        "le chat",
+        "la chat"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'chat' signifie 'cat' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'red' en français?",
+      "correct_answers": [
+        "rouge",
+        "un rouge",
+        "une rouge",
+        "le rouge",
+        "la rouge"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'rouge' signifie 'red' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'voiture' en anglais?",
+      "choices": [
+        "car",
+        "dog",
+        "cat",
+        "please"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'voiture' signifie 'car' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "deux": "two",
+        "oui": "yes",
+        "s'il vous plaît": "please",
+        "eau": "water"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'un' en anglais?",
+      "choices": [
+        "bread",
+        "car",
+        "hello",
+        "one"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'un' signifie 'one' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'bleu' en anglais?",
+      "choices": [
+        "red",
+        "car",
+        "blue",
+        "thank you"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'bleu' signifie 'blue' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'maison' en anglais?",
+      "choices": [
+        "bread",
+        "no",
+        "house",
+        "car"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'maison' signifie 'house' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'please' en français?",
+      "correct_answers": [
+        "s'il vous plaît",
+        "un s'il vous plaît",
+        "une s'il vous plaît",
+        "le s'il vous plaît",
+        "la s'il vous plaît"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'il vous plaît' signifie 'please' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "bonjour": "hello",
+        "eau": "water",
+        "merci": "thank you",
+        "non": "no"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'eau' en anglais?",
+      "choices": [
+        "red",
+        "hello",
+        "water",
+        "house"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'eau' signifie 'water' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'maison' en anglais?",
+      "choices": [
+        "hello",
+        "house",
+        "car",
+        "thank you"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'maison' signifie 'house' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "non": "no",
+        "voiture": "car",
+        "chat": "cat",
+        "oui": "yes"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "pain": "bread",
+        "rouge": "red",
+        "au revoir": "goodbye",
+        "voiture": "car"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'voiture' en anglais?",
+      "choices": [
+        "red",
+        "car",
+        "goodbye",
+        "one"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'voiture' signifie 'car' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'chien' en anglais?",
+      "choices": [
+        "cat",
+        "red",
+        "one",
+        "dog"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'chien' signifie 'dog' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'house' en français?",
+      "correct_answers": [
+        "maison",
+        "un maison",
+        "une maison",
+        "le maison",
+        "la maison"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'maison' signifie 'house' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'cat' en français?",
+      "correct_answers": [
+        "chat",
+        "un chat",
+        "une chat",
+        "le chat",
+        "la chat"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'chat' signifie 'cat' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'house' en français?",
+      "correct_answers": [
+        "maison",
+        "un maison",
+        "une maison",
+        "le maison",
+        "la maison"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'maison' signifie 'house' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'bread' en français?",
+      "correct_answers": [
+        "pain",
+        "un pain",
+        "une pain",
+        "le pain",
+        "la pain"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pain' signifie 'bread' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "eau": "water",
+        "non": "no",
+        "pain": "bread",
+        "merci": "thank you"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'un' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "étranger",
+        "copain",
+        "camarade",
+        "ami"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 's'il vous plaît' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "ennemi",
+        "ami",
+        "copain",
+        "étranger"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'water' en français?",
+      "correct_answers": [
+        "eau",
+        "un eau",
+        "une eau",
+        "le eau",
+        "la eau"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'eau' signifie 'water' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'au revoir' en anglais?",
+      "choices": [
+        "thank you",
+        "goodbye",
+        "please",
+        "water"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'au revoir' signifie 'goodbye' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "voiture": "car",
+        "chat": "cat",
+        "pain": "bread",
+        "deux": "two"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "bonjour": "hello",
+        "maison": "house",
+        "pain": "bread",
+        "chien": "dog"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'chien' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "copain",
+        "ami",
+        "étranger",
+        "camarade"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'thank you' en français?",
+      "correct_answers": [
+        "merci",
+        "un merci",
+        "une merci",
+        "le merci",
+        "la merci"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'merci' signifie 'thank you' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'au revoir' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "ami",
+        "camarade",
+        "copain",
+        "étranger"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'yes' en français?",
+      "correct_answers": [
+        "oui",
+        "un oui",
+        "une oui",
+        "le oui",
+        "la oui"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'oui' signifie 'yes' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'deux' en anglais?",
+      "choices": [
+        "water",
+        "red",
+        "house",
+        "two"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'deux' signifie 'two' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'voiture' en anglais?",
+      "choices": [
+        "water",
+        "bread",
+        "two",
+        "car"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'voiture' signifie 'car' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "bleu": "blue",
+        "bonjour": "hello",
+        "eau": "water",
+        "merci": "thank you"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'chat' en anglais?",
+      "choices": [
+        "dog",
+        "two",
+        "yes",
+        "cat"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'chat' signifie 'cat' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'rouge' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "copain",
+        "ennemi",
+        "ami",
+        "camarade"
+      ],
+      "correct_indices": [
+        1,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "eau": "water",
+        "rouge": "red",
+        "non": "no",
+        "voiture": "car"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'chien' en anglais?",
+      "choices": [
+        "cat",
+        "two",
+        "no",
+        "dog"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'chien' signifie 'dog' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "deux": "two",
+        "chien": "dog",
+        "eau": "water",
+        "bonjour": "hello"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'red' en français?",
+      "correct_answers": [
+        "rouge",
+        "un rouge",
+        "une rouge",
+        "le rouge",
+        "la rouge"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'rouge' signifie 'red' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'oui' en anglais?",
+      "choices": [
+        "yes",
+        "red",
+        "house",
+        "goodbye"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'oui' signifie 'yes' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'red' en français?",
+      "correct_answers": [
+        "rouge",
+        "un rouge",
+        "une rouge",
+        "le rouge",
+        "la rouge"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'rouge' signifie 'red' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'non' en anglais?",
+      "choices": [
+        "no",
+        "bread",
+        "yes",
+        "one"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'non' signifie 'no' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'one' en français?",
+      "correct_answers": [
+        "un",
+        "un un",
+        "une un",
+        "le un",
+        "la un"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'un' signifie 'one' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 's'il vous plaît' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "ami",
+        "copain",
+        "ennemi",
+        "camarade"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'hello' en français?",
+      "correct_answers": [
+        "bonjour",
+        "un bonjour",
+        "une bonjour",
+        "le bonjour",
+        "la bonjour"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'bonjour' signifie 'hello' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'bonjour' en anglais?",
+      "choices": [
+        "yes",
+        "hello",
+        "thank you",
+        "house"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'bonjour' signifie 'hello' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'maison' en anglais?",
+      "choices": [
+        "house",
+        "one",
+        "please",
+        "cat"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'maison' signifie 'house' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'oui' en anglais?",
+      "choices": [
+        "yes",
+        "house",
+        "car",
+        "cat"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'oui' signifie 'yes' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'no' en français?",
+      "correct_answers": [
+        "non",
+        "un non",
+        "une non",
+        "le non",
+        "la non"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'non' signifie 'no' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'dog' en français?",
+      "correct_answers": [
+        "chien",
+        "un chien",
+        "une chien",
+        "le chien",
+        "la chien"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'chien' signifie 'dog' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "oui": "yes",
+        "pain": "bread",
+        "au revoir": "goodbye",
+        "chat": "cat"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "rouge": "red",
+        "voiture": "car",
+        "bleu": "blue",
+        "oui": "yes"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'deux' en anglais?",
+      "choices": [
+        "red",
+        "car",
+        "goodbye",
+        "two"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'deux' signifie 'two' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'bleu' en anglais?",
+      "choices": [
+        "one",
+        "blue",
+        "red",
+        "please"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'bleu' signifie 'blue' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'cat' en français?",
+      "correct_answers": [
+        "chat",
+        "un chat",
+        "une chat",
+        "le chat",
+        "la chat"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'chat' signifie 'cat' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'rouge' en anglais?",
+      "choices": [
+        "water",
+        "red",
+        "two",
+        "car"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'rouge' signifie 'red' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'deux' en anglais?",
+      "choices": [
+        "hello",
+        "two",
+        "one",
+        "please"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'deux' signifie 'two' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'chien' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "étranger",
+        "ennemi",
+        "copain",
+        "ami"
+      ],
+      "correct_indices": [
+        0,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'bread' en français?",
+      "correct_answers": [
+        "pain",
+        "un pain",
+        "une pain",
+        "le pain",
+        "la pain"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'pain' signifie 'bread' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "merci": "thank you",
+        "au revoir": "goodbye",
+        "oui": "yes",
+        "un": "one"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'voiture' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ami",
+        "ennemi",
+        "camarade",
+        "étranger",
+        "copain"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'cat' en français?",
+      "correct_answers": [
+        "chat",
+        "un chat",
+        "une chat",
+        "le chat",
+        "la chat"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'chat' signifie 'cat' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "deux": "two",
+        "merci": "thank you",
+        "chat": "cat",
+        "un": "one"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'yes' en français?",
+      "correct_answers": [
+        "oui",
+        "un oui",
+        "une oui",
+        "le oui",
+        "la oui"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'oui' signifie 'yes' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'water' en français?",
+      "correct_answers": [
+        "eau",
+        "un eau",
+        "une eau",
+        "le eau",
+        "la eau"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'eau' signifie 'water' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'dog' en français?",
+      "correct_answers": [
+        "chien",
+        "un chien",
+        "une chien",
+        "le chien",
+        "la chien"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'chien' signifie 'dog' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'chat' en anglais?",
+      "choices": [
+        "cat",
+        "house",
+        "thank you",
+        "no"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'chat' signifie 'cat' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'bonjour' en anglais?",
+      "choices": [
+        "goodbye",
+        "yes",
+        "dog",
+        "hello"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'bonjour' signifie 'hello' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "non": "no",
+        "deux": "two",
+        "eau": "water",
+        "merci": "thank you"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "pain": "bread",
+        "un": "one",
+        "deux": "two",
+        "au revoir": "goodbye"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'goodbye' en français?",
+      "correct_answers": [
+        "au revoir",
+        "un au revoir",
+        "une au revoir",
+        "le au revoir",
+        "la au revoir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'au revoir' signifie 'goodbye' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'bleu' en anglais?",
+      "choices": [
+        "car",
+        "blue",
+        "hello",
+        "cat"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'bleu' signifie 'blue' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'no' en français?",
+      "correct_answers": [
+        "non",
+        "un non",
+        "une non",
+        "le non",
+        "la non"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'non' signifie 'no' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'au revoir' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "copain",
+        "ami",
+        "ennemi",
+        "camarade"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'yes' en français?",
+      "correct_answers": [
+        "oui",
+        "un oui",
+        "une oui",
+        "le oui",
+        "la oui"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'oui' signifie 'yes' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'deux' en anglais?",
+      "choices": [
+        "two",
+        "cat",
+        "hello",
+        "dog"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'deux' signifie 'two' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'bleu' en anglais?",
+      "choices": [
+        "one",
+        "hello",
+        "thank you",
+        "blue"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'bleu' signifie 'blue' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'chien' (Placeholder - needs real synonym data):",
+      "choices": [
+        "copain",
+        "camarade",
+        "étranger",
+        "ennemi",
+        "ami"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "bleu": "blue",
+        "au revoir": "goodbye",
+        "oui": "yes",
+        "non": "no"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pain' en anglais?",
+      "choices": [
+        "water",
+        "red",
+        "blue",
+        "bread"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'pain' signifie 'bread' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'il vous plaît' en anglais?",
+      "choices": [
+        "please",
+        "two",
+        "water",
+        "yes"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 's'il vous plaît' signifie 'please' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'voiture' en anglais?",
+      "choices": [
+        "bread",
+        "hello",
+        "please",
+        "car"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'voiture' signifie 'car' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'oui' en anglais?",
+      "choices": [
+        "yes",
+        "please",
+        "two",
+        "hello"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'oui' signifie 'yes' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'one' en français?",
+      "correct_answers": [
+        "un",
+        "un un",
+        "une un",
+        "le un",
+        "la un"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'un' signifie 'one' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'pain' en anglais?",
+      "choices": [
+        "yes",
+        "house",
+        "bread",
+        "cat"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'pain' signifie 'bread' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'blue' en français?",
+      "correct_answers": [
+        "bleu",
+        "un bleu",
+        "une bleu",
+        "le bleu",
+        "la bleu"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'bleu' signifie 'blue' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "un": "one",
+        "chat": "cat",
+        "au revoir": "goodbye",
+        "rouge": "red"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'au revoir' en anglais?",
+      "choices": [
+        "goodbye",
+        "dog",
+        "house",
+        "water"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'au revoir' signifie 'goodbye' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'goodbye' en français?",
+      "correct_answers": [
+        "au revoir",
+        "un au revoir",
+        "une au revoir",
+        "le au revoir",
+        "la au revoir"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'au revoir' signifie 'goodbye' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'deux' en anglais?",
+      "choices": [
+        "hello",
+        "thank you",
+        "two",
+        "yes"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'deux' signifie 'two' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'eau' en anglais?",
+      "choices": [
+        "water",
+        "thank you",
+        "blue",
+        "car"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'eau' signifie 'water' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'bonjour' en anglais?",
+      "choices": [
+        "water",
+        "hello",
+        "car",
+        "goodbye"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'bonjour' signifie 'hello' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "au revoir": "goodbye",
+        "voiture": "car",
+        "eau": "water",
+        "merci": "thank you"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    }
+  ]
+}

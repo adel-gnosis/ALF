@@ -1,0 +1,84 @@
+========================================
+ALF – WINDOWS DEV QUICK COMMANDS
+========================================
+
+ROOT PATH
+---------
+C:\Users\Yagami\Desktop\ALF
+
+
+----------------------------------------
+1) SHARED PACKAGE (watch mode)
+----------------------------------------
+cd C:\Users\Yagami\Desktop\ALF
+pnpm --filter @alf/shared dev
+# keeps packages/shared/dist updated
+
+
+----------------------------------------
+2) BACKEND (Django – standalone mode)
+----------------------------------------
+cd C:\Users\Yagami\Desktop\ALF\apps\backend
+
+.\venv\Scripts\Activate.ps1
+# activate python virtualenv
+
+python --version
+pip --version
+# sanity check
+
+python manage.py migrate
+# apply migrations
+
+python manage.py runserver 0.0.0.0:8000
+# backend runs on http://localhost:8000
+
+# to exit venv later:
+# deactivate
+
+
+----------------------------------------
+3) BACKEND (alternative via pnpm)
+----------------------------------------
+cd C:\Users\Yagami\Desktop\ALF\apps\backend
+pnpm dev
+# same as runserver, without manual venv activation
+
+
+----------------------------------------
+4) WEB (Next.js)
+----------------------------------------
+cd C:\Users\Yagami\Desktop\ALF
+pnpm --filter web dev
+# http://localhost:3000
+
+
+----------------------------------------
+5) MOBILE (Expo / React Native)
+----------------------------------------
+cd C:\Users\Yagami\Desktop\ALF
+pnpm --filter frontend dev
+# starts Expo + Metro
+
+# if cache issues:
+# pnpm --filter frontend dev -- --clear
+
+
+----------------------------------------
+6) ALL PROJECTS AT ONCE (Turbo)
+----------------------------------------
+cd C:\Users\Yagami\Desktop\ALF
+pnpm dev
+# runs shared + backend + web + mobile together
+
+
+----------------------------------------
+7) COMMON FIXES
+----------------------------------------
+# reinstall all deps
+pnpm install
+
+# rebuild shared once if needed
+pnpm --filter @alf/shared build
+
+========================================

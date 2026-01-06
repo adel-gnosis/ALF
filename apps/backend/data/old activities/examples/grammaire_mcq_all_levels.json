@@ -1,0 +1,82 @@
+{
+    "subject": "Grammaire",
+    "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+    ],
+    "activities": [
+        {
+            "level": 1,
+            "type": "MCQActivity",
+            "question_text": "Quel est l'article défini masculin?",
+            "choices": [
+                "le",
+                "la",
+                "les",
+                "l'"
+            ],
+            "correct_answer_index": 0,
+            "explanation": "'Le' est l'article défini masculin singulier.",
+            "points": 10,
+            "difficulty": "EASY"
+        },
+        {
+            "level": 2,
+            "type": "MCQActivity",
+            "question_text": "Quel est l'article défini féminin?",
+            "choices": [
+                "le",
+                "la",
+                "les",
+                "un"
+            ],
+            "correct_answer_index": 1,
+            "explanation": "'La' est l'article défini féminin singulier.",
+            "points": 10,
+            "difficulty": "EASY"
+        },
+        {
+            "level": 3,
+            "type": "MCQActivity",
+            "question_text": "Comment dit-on 'the books' en français?",
+            "choices": [
+                "le livre",
+                "la livre",
+                "les livres",
+                "des livres"
+            ],
+            "correct_answer_index": 2,
+            "explanation": "'Les livres' est le pluriel de 'le livre'.",
+            "points": 10,
+            "difficulty": "EASY"
+        }
+    ]
+}

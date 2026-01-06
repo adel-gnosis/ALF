@@ -1,0 +1,427 @@
+{
+  "subject": "Vocabulaire / Lexique",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "activities": [
+    {
+      "level": 1,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Couleurs):",
+      "pairs": {
+        "Rouge": "Red",
+        "Bleu": "Blue",
+        "Vert": "Green"
+      },
+      "explanation": "Vocabulaire sur le thème: Couleurs.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Animaux):",
+      "pairs": {
+        "Chien": "Dog",
+        "Chat": "Cat",
+        "Oiseau": "Bird"
+      },
+      "explanation": "Vocabulaire sur le thème: Animaux.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Nombres):",
+      "pairs": {
+        "Un": "One",
+        "Deux": "Two",
+        "Trois": "Three"
+      },
+      "explanation": "Vocabulaire sur le thème: Nombres.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Famille):",
+      "pairs": {
+        "Père": "Father",
+        "Mère": "Mother",
+        "Frère": "Brother"
+      },
+      "explanation": "Vocabulaire sur le thème: Famille.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Fruits):",
+      "pairs": {
+        "Pomme": "Apple",
+        "Banane": "Banana",
+        "Orange": "Orange"
+      },
+      "explanation": "Vocabulaire sur le thème: Fruits.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Jours):",
+      "pairs": {
+        "Lundi": "Monday",
+        "Mardi": "Tuesday",
+        "Mercredi": "Wednesday"
+      },
+      "explanation": "Vocabulaire sur le thème: Jours.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Corps):",
+      "pairs": {
+        "Tête": "Head",
+        "Bras": "Arm",
+        "Jambe": "Leg"
+      },
+      "explanation": "Vocabulaire sur le thème: Corps.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Lieux):",
+      "pairs": {
+        "Maison": "House",
+        "École": "School",
+        "Porte": "Door"
+      },
+      "explanation": "Vocabulaire sur le thème: Lieux.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 9,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Verbes):",
+      "pairs": {
+        "Manger": "To eat",
+        "Boire": "To drink",
+        "Dormir": "To sleep"
+      },
+      "explanation": "Vocabulaire sur le thème: Verbes.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 10,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Adjectifs):",
+      "pairs": {
+        "Grand": "Big",
+        "Petit": "Small",
+        "Bon": "Good"
+      },
+      "explanation": "Vocabulaire sur le thème: Adjectifs.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Temps):",
+      "pairs": {
+        "Matin": "Morning",
+        "Soir": "Evening",
+        "Nuit": "Night"
+      },
+      "explanation": "Vocabulaire sur le thème: Temps.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Transport):",
+      "pairs": {
+        "Voiture": "Car",
+        "Train": "Train",
+        "Avion": "Plane"
+      },
+      "explanation": "Vocabulaire sur le thème: Transport.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (École):",
+      "pairs": {
+        "Stylo": "Pen",
+        "Livre": "Book",
+        "Cahier": "Notebook"
+      },
+      "explanation": "Vocabulaire sur le thème: École.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Température):",
+      "pairs": {
+        "Froid": "Cold",
+        "Chaud": "Hot",
+        "Tiède": "Warm"
+      },
+      "explanation": "Vocabulaire sur le thème: Température.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Émotions):",
+      "pairs": {
+        "Heureux": "Happy",
+        "Triste": "Sad",
+        "Colère": "Angry"
+      },
+      "explanation": "Vocabulaire sur le thème: Émotions.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Nourriture):",
+      "pairs": {
+        "Pain": "Bread",
+        "Eau": "Water",
+        "Lait": "Milk"
+      },
+      "explanation": "Vocabulaire sur le thème: Nourriture.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Vêtements):",
+      "pairs": {
+        "Chemise": "Shirt",
+        "Pantalon": "Pants",
+        "Robe": "Dress"
+      },
+      "explanation": "Vocabulaire sur le thème: Vêtements.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 18,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Environnement):",
+      "pairs": {
+        "Ville": "City",
+        "Campagne": "Countryside",
+        "Mer": "Sea"
+      },
+      "explanation": "Vocabulaire sur le thème: Environnement.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 19,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Métiers):",
+      "pairs": {
+        "Docteur": "Doctor",
+        "Professeur": "Teacher",
+        "Policier": "Policeman"
+      },
+      "explanation": "Vocabulaire sur le thème: Métiers.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 20,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Technologie):",
+      "pairs": {
+        "Ordinateur": "Computer",
+        "Écran": "Screen",
+        "Clavier": "Keyboard"
+      },
+      "explanation": "Vocabulaire sur le thème: Technologie.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 21,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Maison):",
+      "pairs": {
+        "Cuisine": "Kitchen",
+        "Salon": "Living room",
+        "Chambre": "Bedroom"
+      },
+      "explanation": "Vocabulaire sur le thème: Maison.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 22,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Table):",
+      "pairs": {
+        "Fourchette": "Fork",
+        "Couteau": "Knife",
+        "Cuillère": "Spoon"
+      },
+      "explanation": "Vocabulaire sur le thème: Table.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 23,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Saisons):",
+      "pairs": {
+        "Hiver": "Winter",
+        "Été": "Summer",
+        "Printemps": "Spring"
+      },
+      "explanation": "Vocabulaire sur le thème: Saisons.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 24,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Directions):",
+      "pairs": {
+        "Nord": "North",
+        "Sud": "South",
+        "Est": "East"
+      },
+      "explanation": "Vocabulaire sur le thème: Directions.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 25,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Quantité):",
+      "pairs": {
+        "Beaucoup": "A lot",
+        "Peu": "Little",
+        "Trop": "Too much"
+      },
+      "explanation": "Vocabulaire sur le thème: Quantité.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 26,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Fréquence):",
+      "pairs": {
+        "Toujours": "Always",
+        "Jamais": "Never",
+        "Parfois": "Sometimes"
+      },
+      "explanation": "Vocabulaire sur le thème: Fréquence.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 27,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Conjonctions):",
+      "pairs": {
+        "Aussi": "Also",
+        "Mais": "But",
+        "Donc": "So"
+      },
+      "explanation": "Vocabulaire sur le thème: Conjonctions.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 28,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Prépositions):",
+      "pairs": {
+        "Avant": "Before",
+        "Après": "After",
+        "Pendant": "During"
+      },
+      "explanation": "Vocabulaire sur le thème: Prépositions.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 29,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Nuances):",
+      "pairs": {
+        "Savoir": "To know (fact)",
+        "Connaître": "To know (person)",
+        "Comprendre": "To understand"
+      },
+      "explanation": "Vocabulaire sur le thème: Nuances.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 30,
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots (Valeurs):",
+      "pairs": {
+        "Liberté": "Freedom",
+        "Égalité": "Equality",
+        "Fraternité": "Fraternity"
+      },
+      "explanation": "Vocabulaire sur le thème: Valeurs.",
+      "points": 15,
+      "difficulty": "HARD"
+    }
+  ]
+}

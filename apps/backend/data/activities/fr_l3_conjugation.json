@@ -1,0 +1,141 @@
+{
+  "subject": "Conjugaison",
+  "lesson_order": 1,
+  "levels": [
+    {
+      "level_code": "FR-L1",
+      "activities": [
+        {
+          "type": "ConjugationActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Conjuguez « être » au présent pour je",
+          "question_text_key": "activity.conjugation.instruction",
+          "translation_data": { "verb": "être", "tense": "présent", "pronoun": "je" },
+          "verb_infinitive": "être",
+          "tense": "présent",
+          "pronoun": "je",
+          "correct_conjugation": "suis"
+        },
+        {
+          "type": "ConjugationActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Conjuguez « avoir » au présent pour tu",
+          "question_text_key": "activity.conjugation.instruction",
+          "translation_data": { "verb": "avoir", "tense": "présent", "pronoun": "tu" },
+          "verb_infinitive": "avoir",
+          "tense": "présent",
+          "pronoun": "tu",
+          "correct_conjugation": "as"
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Je ___ un livre",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "lis"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Quelle est la bonne forme ? Nous ___",
+          "question_text_key": "activity.mcq.conjugation",
+          "translation_data": {},
+          "choices": ["avons", "avez", "ont", "a"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Conjuguez « aller » pour il",
+          "question_text_key": "activity.text_input.conjugation",
+          "translation_data": {},
+          "correct_answers": ["va"]
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Remettez la phrase en ordre",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["vais", "Je", "école", "à", "l’"],
+          "correct_order": [1, 0, 3, 4, 2]
+        }
+      ]
+    },
+
+    {
+      "level_code": "FR-L2",
+      "activities": [
+        {
+          "type": "ConjugationActivity",
+          "order": 0,
+          "difficulty": "BEGINNER",
+          "question_text": "Conjuguez « faire » pour nous",
+          "question_text_key": "activity.conjugation.instruction",
+          "translation_data": { "verb": "faire", "tense": "présent", "pronoun": "nous" },
+          "verb_infinitive": "faire",
+          "tense": "présent",
+          "pronoun": "nous",
+          "correct_conjugation": "faisons"
+        },
+        {
+          "type": "ConjugationActivity",
+          "order": 1,
+          "difficulty": "BEGINNER",
+          "question_text": "Conjuguez « dire » pour vous",
+          "question_text_key": "activity.conjugation.instruction",
+          "translation_data": { "verb": "dire", "tense": "présent", "pronoun": "vous" },
+          "verb_infinitive": "dire",
+          "tense": "présent",
+          "pronoun": "vous",
+          "correct_conjugation": "dites"
+        },
+        {
+          "type": "FillBlankActivity",
+          "order": 2,
+          "difficulty": "BEGINNER",
+          "question_text": "Complétez : Ils ___ au travail",
+          "question_text_key": "activity.fill_blank.complete_phrase",
+          "translation_data": {},
+          "correct_answer": "vont"
+        },
+        {
+          "type": "MCQActivity",
+          "order": 3,
+          "difficulty": "BEGINNER",
+          "question_text": "Choisissez la bonne forme",
+          "question_text_key": "activity.mcq.conjugation",
+          "translation_data": {},
+          "choices": ["prenons", "prends", "prend", "prenez"],
+          "correct_answer_index": 0
+        },
+        {
+          "type": "TextInputActivity",
+          "order": 4,
+          "difficulty": "BEGINNER",
+          "question_text": "Conjuguez « pouvoir » pour il",
+          "question_text_key": "activity.text_input.conjugation",
+          "translation_data": {},
+          "correct_answers": ["peut"]
+        },
+        {
+          "type": "DragOrderActivity",
+          "order": 5,
+          "difficulty": "BEGINNER",
+          "question_text": "Formez une phrase correcte",
+          "question_text_key": "activity.drag_order.instruction",
+          "translation_data": {},
+          "words": ["travail", "au", "Ils", "vont"],
+          "correct_order": [2, 3, 1, 0]
+        }
+      ]
+    }
+  ]
+}

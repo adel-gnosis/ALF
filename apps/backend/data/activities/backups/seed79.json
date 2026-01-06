@@ -1,0 +1,1497 @@
+{
+  "subject": "Vocabulaire",
+  "level": 19,
+  "total_activities": 100,
+  "activities": [
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "se souvenir": "to remember",
+        "cependant": "however",
+        "développement": "development",
+        "environnement": "environment"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'culture' en anglais?",
+      "choices": [
+        "to get angry",
+        "to remember",
+        "culture",
+        "unfortunately"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'unfortunately' en français?",
+      "correct_answers": [
+        "malheureusement",
+        "un malheureusement",
+        "une malheureusement",
+        "le malheureusement",
+        "la malheureusement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'politics' en français?",
+      "correct_answers": [
+        "politique",
+        "un politique",
+        "une politique",
+        "le politique",
+        "la politique"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'development' en français?",
+      "correct_answers": [
+        "développement",
+        "un développement",
+        "une développement",
+        "le développement",
+        "la développement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'environnement' en anglais?",
+      "choices": [
+        "development",
+        "unfortunately",
+        "to remember",
+        "environment"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'environnement' signifie 'environment' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "malheureusement": "unfortunately",
+        "cependant": "however",
+        "s'énerver": "to get angry",
+        "culture": "culture"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "cependant": "however",
+        "politique": "politics",
+        "malheureusement": "unfortunately",
+        "culture": "culture"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'unfortunately' en français?",
+      "correct_answers": [
+        "malheureusement",
+        "un malheureusement",
+        "une malheureusement",
+        "le malheureusement",
+        "la malheureusement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'malheureusement' en anglais?",
+      "choices": [
+        "politics",
+        "culture",
+        "however",
+        "unfortunately"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'cependant' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ami",
+        "ennemi",
+        "camarade",
+        "copain",
+        "étranger"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'se souvenir' en anglais?",
+      "choices": [
+        "development",
+        "to remember",
+        "to get angry",
+        "culture"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'se souvenir' signifie 'to remember' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'développement' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "ami",
+        "étranger",
+        "copain",
+        "ennemi"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'politics' en français?",
+      "correct_answers": [
+        "politique",
+        "un politique",
+        "une politique",
+        "le politique",
+        "la politique"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'malheureusement' en anglais?",
+      "choices": [
+        "politics",
+        "development",
+        "to remember",
+        "unfortunately"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "malheureusement": "unfortunately",
+        "culture": "culture",
+        "se souvenir": "to remember",
+        "environnement": "environment"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'politique' en anglais?",
+      "choices": [
+        "to remember",
+        "politics",
+        "however",
+        "development"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to get angry' en français?",
+      "correct_answers": [
+        "s'énerver",
+        "un s'énerver",
+        "une s'énerver",
+        "le s'énerver",
+        "la s'énerver"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'development' en français?",
+      "correct_answers": [
+        "développement",
+        "un développement",
+        "une développement",
+        "le développement",
+        "la développement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'cependant' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "étranger",
+        "ami",
+        "camarade",
+        "copain"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'culture' en anglais?",
+      "choices": [
+        "however",
+        "environment",
+        "unfortunately",
+        "culture"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'se souvenir' en anglais?",
+      "choices": [
+        "politics",
+        "to remember",
+        "to get angry",
+        "unfortunately"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'se souvenir' signifie 'to remember' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'however' en français?",
+      "correct_answers": [
+        "cependant",
+        "un cependant",
+        "une cependant",
+        "le cependant",
+        "la cependant"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'cependant' signifie 'however' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 's'énerver' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ami",
+        "copain",
+        "ennemi",
+        "camarade",
+        "étranger"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'se souvenir' en anglais?",
+      "choices": [
+        "unfortunately",
+        "politics",
+        "however",
+        "to remember"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'se souvenir' signifie 'to remember' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'cependant' en anglais?",
+      "choices": [
+        "culture",
+        "however",
+        "to remember",
+        "environment"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'cependant' signifie 'however' en anglais.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to get angry' en français?",
+      "correct_answers": [
+        "s'énerver",
+        "un s'énerver",
+        "une s'énerver",
+        "le s'énerver",
+        "la s'énerver"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'development' en français?",
+      "correct_answers": [
+        "développement",
+        "un développement",
+        "une développement",
+        "le développement",
+        "la développement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'politique' en anglais?",
+      "choices": [
+        "politics",
+        "environment",
+        "unfortunately",
+        "to remember"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'culture' (Placeholder - needs real synonym data):",
+      "choices": [
+        "ennemi",
+        "ami",
+        "camarade",
+        "étranger",
+        "copain"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "cependant": "however",
+        "environnement": "environment",
+        "malheureusement": "unfortunately",
+        "culture": "culture"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to get angry' en français?",
+      "correct_answers": [
+        "s'énerver",
+        "un s'énerver",
+        "une s'énerver",
+        "le s'énerver",
+        "la s'énerver"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "cependant": "however",
+        "culture": "culture",
+        "se souvenir": "to remember",
+        "politique": "politics"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'malheureusement' en anglais?",
+      "choices": [
+        "however",
+        "to remember",
+        "unfortunately",
+        "development"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'development' en français?",
+      "correct_answers": [
+        "développement",
+        "un développement",
+        "une développement",
+        "le développement",
+        "la développement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "environnement": "environment",
+        "malheureusement": "unfortunately",
+        "s'énerver": "to get angry",
+        "développement": "development"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'développement' en anglais?",
+      "choices": [
+        "development",
+        "to remember",
+        "to get angry",
+        "however"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'développement' en anglais?",
+      "choices": [
+        "unfortunately",
+        "development",
+        "politics",
+        "to get angry"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "cependant": "however",
+        "malheureusement": "unfortunately",
+        "se souvenir": "to remember",
+        "développement": "development"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to get angry' en français?",
+      "correct_answers": [
+        "s'énerver",
+        "un s'énerver",
+        "une s'énerver",
+        "le s'énerver",
+        "la s'énerver"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'politique' en anglais?",
+      "choices": [
+        "politics",
+        "culture",
+        "environment",
+        "unfortunately"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "cependant": "however",
+        "se souvenir": "to remember",
+        "culture": "culture",
+        "s'énerver": "to get angry"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'développement' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "ennemi",
+        "copain",
+        "camarade",
+        "ami"
+      ],
+      "correct_indices": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'malheureusement' en anglais?",
+      "choices": [
+        "however",
+        "unfortunately",
+        "to remember",
+        "culture"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'development' en français?",
+      "correct_answers": [
+        "développement",
+        "un développement",
+        "une développement",
+        "le développement",
+        "la développement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "politique": "politics",
+        "se souvenir": "to remember",
+        "malheureusement": "unfortunately",
+        "développement": "development"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'culture' en anglais?",
+      "choices": [
+        "to get angry",
+        "development",
+        "to remember",
+        "culture"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'se souvenir' en anglais?",
+      "choices": [
+        "politics",
+        "culture",
+        "environment",
+        "to remember"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'se souvenir' signifie 'to remember' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'culture' en anglais?",
+      "choices": [
+        "however",
+        "to remember",
+        "culture",
+        "politics"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "cependant": "however",
+        "développement": "development",
+        "malheureusement": "unfortunately",
+        "se souvenir": "to remember"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "s'énerver": "to get angry",
+        "développement": "development",
+        "politique": "politics",
+        "cependant": "however"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'développement' en anglais?",
+      "choices": [
+        "development",
+        "politics",
+        "environment",
+        "to remember"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'se souvenir' (Placeholder - needs real synonym data):",
+      "choices": [
+        "camarade",
+        "étranger",
+        "ennemi",
+        "copain",
+        "ami"
+      ],
+      "correct_indices": [
+        0,
+        3,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "malheureusement": "unfortunately",
+        "se souvenir": "to remember",
+        "culture": "culture",
+        "s'énerver": "to get angry"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to get angry' en français?",
+      "correct_answers": [
+        "s'énerver",
+        "un s'énerver",
+        "une s'énerver",
+        "le s'énerver",
+        "la s'énerver"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "environnement": "environment",
+        "culture": "culture",
+        "se souvenir": "to remember",
+        "s'énerver": "to get angry"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'politique' en anglais?",
+      "choices": [
+        "unfortunately",
+        "to get angry",
+        "politics",
+        "to remember"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "culture": "culture",
+        "environnement": "environment",
+        "se souvenir": "to remember",
+        "développement": "development"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'culture' en anglais?",
+      "choices": [
+        "environment",
+        "unfortunately",
+        "however",
+        "culture"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'développement' (Placeholder - needs real synonym data):",
+      "choices": [
+        "copain",
+        "ennemi",
+        "ami",
+        "camarade",
+        "étranger"
+      ],
+      "correct_indices": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "développement": "development",
+        "cependant": "however",
+        "se souvenir": "to remember",
+        "culture": "culture"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'politique' en anglais?",
+      "choices": [
+        "to remember",
+        "unfortunately",
+        "however",
+        "politics"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "politique": "politics",
+        "culture": "culture",
+        "environnement": "environment",
+        "s'énerver": "to get angry"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'environnement' en anglais?",
+      "choices": [
+        "culture",
+        "to get angry",
+        "environment",
+        "politics"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'environnement' signifie 'environment' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'énerver' en anglais?",
+      "choices": [
+        "culture",
+        "politics",
+        "to get angry",
+        "environment"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'politics' en français?",
+      "correct_answers": [
+        "politique",
+        "un politique",
+        "une politique",
+        "le politique",
+        "la politique"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'environnement' en anglais?",
+      "choices": [
+        "to remember",
+        "environment",
+        "culture",
+        "politics"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'environnement' signifie 'environment' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "environnement": "environment",
+        "culture": "culture",
+        "malheureusement": "unfortunately",
+        "cependant": "however"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'malheureusement' en anglais?",
+      "choices": [
+        "unfortunately",
+        "however",
+        "to remember",
+        "to get angry"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'développement' en anglais?",
+      "choices": [
+        "however",
+        "to get angry",
+        "development",
+        "environment"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'développement' signifie 'development' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'unfortunately' en français?",
+      "correct_answers": [
+        "malheureusement",
+        "un malheureusement",
+        "une malheureusement",
+        "le malheureusement",
+        "la malheureusement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'environnement' en anglais?",
+      "choices": [
+        "environment",
+        "culture",
+        "unfortunately",
+        "to get angry"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'environnement' signifie 'environment' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'to get angry' en français?",
+      "correct_answers": [
+        "s'énerver",
+        "un s'énerver",
+        "une s'énerver",
+        "le s'énerver",
+        "la s'énerver"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'environment' en français?",
+      "correct_answers": [
+        "environnement",
+        "un environnement",
+        "une environnement",
+        "le environnement",
+        "la environnement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'environnement' signifie 'environment' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'énerver' en anglais?",
+      "choices": [
+        "to get angry",
+        "development",
+        "culture",
+        "politics"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'cependant' en anglais?",
+      "choices": [
+        "politics",
+        "to remember",
+        "culture",
+        "however"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'cependant' signifie 'however' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'culture' en français?",
+      "correct_answers": [
+        "culture",
+        "un culture",
+        "une culture",
+        "le culture",
+        "la culture"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'cependant' en anglais?",
+      "choices": [
+        "however",
+        "to get angry",
+        "culture",
+        "development"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Vocabulaire: Le mot français 'cependant' signifie 'however' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'cependant' en anglais?",
+      "choices": [
+        "unfortunately",
+        "however",
+        "culture",
+        "development"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'cependant' signifie 'however' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'énerver' en anglais?",
+      "choices": [
+        "culture",
+        "to remember",
+        "development",
+        "to get angry"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 's'énerver' (Placeholder - needs real synonym data):",
+      "choices": [
+        "étranger",
+        "copain",
+        "camarade",
+        "ennemi",
+        "ami"
+      ],
+      "correct_indices": [
+        1,
+        2,
+        4
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'environnement' en anglais?",
+      "choices": [
+        "development",
+        "to remember",
+        "politics",
+        "environment"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Vocabulaire: Le mot français 'environnement' signifie 'environment' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 's'énerver' en anglais?",
+      "choices": [
+        "however",
+        "culture",
+        "to get angry",
+        "unfortunately"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 's'énerver' signifie 'to get angry' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'politics' en français?",
+      "correct_answers": [
+        "politique",
+        "un politique",
+        "une politique",
+        "le politique",
+        "la politique"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "environnement": "environment",
+        "s'énerver": "to get angry",
+        "politique": "politics",
+        "développement": "development"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Sélectionnez tous les mots qui sont des synonymes de 'culture' (Placeholder - needs real synonym data):",
+      "choices": [
+        "copain",
+        "ami",
+        "étranger",
+        "camarade",
+        "ennemi"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'politique' en anglais?",
+      "choices": [
+        "to get angry",
+        "politics",
+        "to remember",
+        "however"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'culture' en anglais?",
+      "choices": [
+        "to remember",
+        "politics",
+        "culture",
+        "to get angry"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'culture' en anglais?",
+      "choices": [
+        "unfortunately",
+        "to remember",
+        "culture",
+        "however"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'culture' signifie 'culture' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associez les mots français à leur traduction anglaise:",
+      "pairs": {
+        "politique": "politics",
+        "se souvenir": "to remember",
+        "cependant": "however",
+        "malheureusement": "unfortunately"
+      },
+      "explanation": "Vocabulaire: Le mot français 'inconnu' signifie 'inconnu' en anglais.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'politics' en français?",
+      "correct_answers": [
+        "politique",
+        "un politique",
+        "une politique",
+        "le politique",
+        "la politique"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'politique' signifie 'politics' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Comment dit-on 'environment' en français?",
+      "correct_answers": [
+        "environnement",
+        "un environnement",
+        "une environnement",
+        "le environnement",
+        "la environnement"
+      ],
+      "case_sensitive": false,
+      "accept_partial": false,
+      "explanation": "Vocabulaire: Le mot français 'environnement' signifie 'environment' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Que signifie 'malheureusement' en anglais?",
+      "choices": [
+        "however",
+        "environment",
+        "unfortunately",
+        "politics"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Vocabulaire: Le mot français 'malheureusement' signifie 'unfortunately' en anglais.",
+      "points": 10,
+      "difficulty": "HARD"
+    }
+  ]
+}

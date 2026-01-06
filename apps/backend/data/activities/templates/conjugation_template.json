@@ -1,0 +1,53 @@
+{
+    "activity_type": "ConjugationActivity",
+    "template_version": "1.0",
+    "description": "Verb conjugation activity where users conjugate a French verb in a specific tense and pronoun.",
+    "usage": "Provide verb infinitive, tense, and pronoun. User must type the correct conjugation.",
+    "fields": {
+        "question_text": "Conjugate {verb} in {tense} for {pronoun}",
+        "question_text_key": "activity.conjugation.instruction",
+        "translation_data": {
+            "verb": "VERB_INFINITIVE",
+            "tense": "TENSE_NAME",
+            "pronoun": "PRONOUN"
+        },
+        "verb_infinitive": "VERB_INFINITIVE",
+        "tense": "présent|imparfait|futur|passé composé",
+        "pronoun": "je|tu|il/elle|nous|vous|ils/elles",
+        "correct_answer": "CONJUGATED_FORM",
+        "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+        "subject": "Conjugaison"
+    },
+    "examples": [
+        {
+            "question_text": "Conjugate être in présent for je",
+            "question_text_key": "activity.conjugation.instruction",
+            "translation_data": {
+                "verb": "être",
+                "tense": "présent",
+                "pronoun": "je"
+            },
+            "verb_infinitive": "être",
+            "tense": "présent",
+            "pronoun": "je",
+            "correct_answer": "suis",
+            "difficulty": "BEGINNER",
+            "subject": "Conjugaison"
+        },
+        {
+            "question_text": "Conjugate manger in présent for nous",
+            "question_text_key": "activity.conjugation.instruction",
+            "translation_data": {
+                "verb": "manger",
+                "tense": "présent",
+                "pronoun": "nous"
+            },
+            "verb_infinitive": "manger",
+            "tense": "présent",
+            "pronoun": "nous",
+            "correct_answer": "mangeons",
+            "difficulty": "BEGINNER",
+            "subject": "Conjugaison"
+        }
+    ]
+}

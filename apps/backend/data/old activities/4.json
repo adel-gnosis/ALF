@@ -1,0 +1,597 @@
+{
+  "subject": "Compréhension",
+  "activity_type": "MCQActivity",
+  "levels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+  "activities": [
+    {
+      "level": 1,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Le chat est noir.' Quelle est la couleur du chat ?",
+      "choices": ["blanc", "noir", "rouge", "bleu"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte dit 'Le chat est noir'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 1,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Je mange une pomme.' Que mange la personne ?",
+      "choices": ["une banane", "une pomme", "une orange", "un gâteau"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte indique 'je mange une pomme'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Marie a un chien. Il s'appelle Max.' Qui est Max ?",
+      "choices": ["un chat", "un chien", "un oiseau", "un poisson"],
+      "correct_answer_index": 1,
+      "explanation": "Max est le nom du chien de Marie.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Paul va à l'école.' Où va Paul ?",
+      "choices": ["au parc", "à la maison", "à l'école", "au magasin"],
+      "correct_answer_index": 2,
+      "explanation": "Le texte dit que Paul va à l'école.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Sophie aime les fruits. Elle mange des pommes et des bananes.' Que préfère Sophie ?",
+      "choices": ["les légumes", "les fruits", "la viande", "le pain"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte indique que Sophie aime les fruits.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Il pleut aujourd'hui. Jean prend son parapluie.' Quel temps fait-il ?",
+      "choices": ["Il fait beau", "Il pleut", "Il neige", "Il fait chaud"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte dit 'Il pleut aujourd'hui'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Luc habite à Paris. Il travaille dans un bureau.' Où travaille Luc ?",
+      "choices": ["dans un hôpital", "dans un bureau", "dans une école", "dans un magasin"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte précise que Luc travaille dans un bureau.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Emma est médecin. Elle aide les malades.' Quel est le métier d'Emma ?",
+      "choices": ["professeur", "médecin", "avocat", "ingénieur"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte indique qu'Emma est médecin.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Ce matin, Pierre a pris le bus pour aller au travail. Il est arrivé à 9h.' Comment Pierre est-il allé au travail ?",
+      "choices": ["en voiture", "en bus", "à pied", "en vélo"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte dit que Pierre a pris le bus.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Julie adore lire. Elle va à la bibliothèque chaque semaine.' Que fait Julie chaque semaine ?",
+      "choices": ["Elle va au cinéma", "Elle va à la bibliothèque", "Elle va au parc", "Elle va au restaurant"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte précise que Julie va à la bibliothèque chaque semaine.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Marc et Sophie sont frère et sœur. Ils habitent avec leurs parents à Lyon.' Où habite la famille ?",
+      "choices": ["à Paris", "à Lyon", "à Marseille", "à Nice"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte indique qu'ils habitent à Lyon.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Le magasin ouvre à 9h et ferme à 19h.' Combien d'heures le magasin est-il ouvert ?",
+      "choices": ["8 heures", "9 heures", "10 heures", "11 heures"],
+      "correct_answer_index": 2,
+      "explanation": "De 9h à 19h = 10 heures d'ouverture.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Hier, nous sommes allés au restaurant. Nous avons mangé des pâtes et bu du vin.' Qu'ont-ils fait hier ?",
+      "choices": ["Ils sont allés au cinéma", "Ils sont allés au restaurant", "Ils sont restés à la maison", "Ils sont allés au parc"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte dit qu'ils sont allés au restaurant.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Amélie est fatiguée. Elle a travaillé toute la journée.' Pourquoi Amélie est-elle fatiguée ?",
+      "choices": ["Elle a fait du sport", "Elle a travaillé toute la journée", "Elle n'a pas dormi", "Elle est malade"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte explique qu'elle a travaillé toute la journée.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Thomas veut devenir médecin. Il étudie la médecine à l'université.' Que fait Thomas à l'université ?",
+      "choices": ["Il étudie le droit", "Il étudie la médecine", "Il étudie l'économie", "Il étudie l'informatique"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte indique qu'il étudie la médecine.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Le train part à 15h30 et arrive à 18h45.' Combien de temps dure le voyage ?",
+      "choices": ["2h15", "3h15", "3h30", "4h15"],
+      "correct_answer_index": 1,
+      "explanation": "De 15h30 à 18h45 = 3 heures 15 minutes.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 9,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Claire prépare un gâteau pour l'anniversaire de son fils. Elle achète de la farine, des œufs et du sucre.' Pourquoi Claire prépare-t-elle un gâteau ?",
+      "choices": ["Pour son anniversaire", "Pour l'anniversaire de son fils", "Pour Noël", "Pour un mariage"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte dit que c'est pour l'anniversaire de son fils.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 9,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Antoine n'aime pas le froid. En hiver, il préfère rester chez lui.' Que fait Antoine en hiver ?",
+      "choices": ["Il fait du ski", "Il voyage", "Il reste chez lui", "Il va à la plage"],
+      "correct_answer_index": 2,
+      "explanation": "Le texte indique qu'il préfère rester chez lui en hiver.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 10,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Hier soir, Laura a regardé un film. C'était un film d'action très intéressant.' Quel type de film Laura a-t-elle regardé ?",
+      "choices": ["une comédie", "un film d'action", "un documentaire", "un film d'horreur"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte précise que c'était un film d'action.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 10,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Martin aime le sport. Il joue au football le samedi et fait de la natation le dimanche.' Combien de fois par semaine Martin fait-il du sport ?",
+      "choices": ["Une fois", "Deux fois", "Trois fois", "Tous les jours"],
+      "correct_answer_index": 1,
+      "explanation": "Il fait du sport le samedi et le dimanche = 2 fois.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Isabelle a raté son bus ce matin. Elle est arrivée en retard au bureau. Son patron n'était pas content.' Pourquoi Isabelle est-elle arrivée en retard ?",
+      "choices": ["Elle s'est réveillée tard", "Elle a raté son bus", "Sa voiture est tombée en panne", "Il y avait des embouteillages"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte explique qu'elle a raté son bus.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Nicolas économise de l'argent depuis six mois. Il veut acheter une nouvelle voiture.' Pourquoi Nicolas économise-t-il ?",
+      "choices": ["Pour partir en vacances", "Pour acheter une voiture", "Pour acheter une maison", "Pour ses études"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte dit qu'il veut acheter une nouvelle voiture.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Pendant les vacances, la famille Dubois est allée à la mer. Les enfants ont adoré jouer sur la plage.' Où est allée la famille Dubois ?",
+      "choices": ["à la montagne", "à la campagne", "à la mer", "en ville"],
+      "correct_answer_index": 2,
+      "explanation": "Le texte indique qu'ils sont allés à la mer.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Marie étudie le français depuis trois ans. Elle parle maintenant couramment.' Combien de temps Marie étudie-t-elle le français ?",
+      "choices": ["Un an", "Deux ans", "Trois ans", "Quatre ans"],
+      "correct_answer_index": 2,
+      "explanation": "Le texte précise 'depuis trois ans'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Hier, Paul a perdu son portefeuille dans le métro. Il a déclaré la perte au commissariat.' Qu'a fait Paul après avoir perdu son portefeuille ?",
+      "choices": ["Il est rentré chez lui", "Il a cherché dans le métro", "Il a déclaré la perte au commissariat", "Il a acheté un nouveau portefeuille"],
+      "correct_answer_index": 2,
+      "explanation": "Le texte dit qu'il a déclaré la perte au commissariat.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Sophie a postulé pour un nouvel emploi. Elle a reçu une réponse positive et commence lundi prochain.' Quelle est la situation de Sophie ?",
+      "choices": ["Elle cherche encore un emploi", "Elle a été acceptée", "Elle a été refusée", "Elle hésite encore"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte indique qu'elle a reçu une réponse positive.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Bien que le temps soit mauvais, les touristes visitent quand même la ville. Ils portent des imperméables et des parapluies.' Quel temps fait-il ?",
+      "choices": ["Il fait beau", "Il fait mauvais", "Il fait chaud", "Il neige"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte mentionne 'le temps est mauvais'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Avant de partir en voyage, Julien a vérifié son passeport et réservé son hôtel.' Que fait Julien pour préparer son voyage ?",
+      "choices": ["Il achète des souvenirs", "Il vérifie son passeport et réserve son hôtel", "Il apprend la langue du pays", "Il change de l'argent"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte décrit ces deux préparatifs.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Quand j'étais enfant, nous passions tous les étés chez mes grands-parents à la campagne. C'étaient des moments merveilleux.' Que faisait le narrateur chaque été ?",
+      "choices": ["Il allait à la mer", "Il restait en ville", "Il allait chez ses grands-parents", "Il partait à l'étranger"],
+      "correct_answer_index": 2,
+      "explanation": "Le texte dit qu'ils passaient les étés chez les grands-parents.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Léa était en train de préparer le dîner quand le téléphone a sonné. Elle a dû arrêter pour répondre.' Que faisait Léa avant que le téléphone sonne ?",
+      "choices": ["Elle regardait la télévision", "Elle préparait le dîner", "Elle dormait", "Elle lisait un livre"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte indique qu'elle préparait le dîner.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Si j'avais plus de temps, je voyagerais davantage. Malheureusement, mon travail me laisse peu de liberté.' Pourquoi le narrateur ne voyage-t-il pas beaucoup ?",
+      "choices": ["Il n'a pas assez d'argent", "Il n'a pas assez de temps", "Il n'aime pas voyager", "Il a peur de l'avion"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte explique que son travail lui laisse peu de temps.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Demain, je partirai tôt le matin. J'arriverai à destination vers midi.' Quand le narrateur arrivera-t-il ?",
+      "choices": ["Le matin", "Vers midi", "L'après-midi", "Le soir"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte précise 'vers midi'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Il faut que tu viennes demain, c'est très important. Nous devons discuter de ce projet ensemble.' Quelle est l'intention du locuteur ?",
+      "choices": ["Inviter à une fête", "Demander de l'aide", "Insister sur une réunion importante", "Proposer un voyage"],
+      "correct_answer_index": 2,
+      "explanation": "Le ton impératif et l'importance soulignée indiquent une réunion cruciale.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 17,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Bien que je sois fatigué, je continue à travailler. Ce projet doit être terminé avant vendredi.' Pourquoi le narrateur continue-t-il à travailler ?",
+      "choices": ["Il aime son travail", "Il n'est pas vraiment fatigué", "Le projet doit être terminé avant vendredi", "Son patron le surveille"],
+      "correct_answer_index": 2,
+      "explanation": "Le texte explique qu'il a une date limite à respecter.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 18,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Les experts estiment que le changement climatique aura des conséquences graves. Ils recommandent des actions immédiates.' Quel est le ton de ce texte ?",
+      "choices": ["Optimiste", "Alarmiste", "Humoristique", "Indifférent"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte souligne la gravité et l'urgence, ce qui est alarmiste.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 18,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Malgré ses nombreux échecs, Pierre n'a jamais abandonné. Aujourd'hui, il est un entrepreneur à succès.' Que peut-on déduire de Pierre ?",
+      "choices": ["Il est chanceux", "Il est persévérant", "Il est intelligent", "Il est riche"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte met en avant sa persévérance malgré les échecs.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 19,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Le gouvernement a annoncé de nouvelles mesures économiques. Certains économistes les jugent insuffisantes, tandis que d'autres les trouvent prometteuses.' Quelle est l'opinion générale ?",
+      "choices": ["Tout le monde est d'accord", "Les opinions sont partagées", "Tout le monde est contre", "Personne n'a d'opinion"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte montre des opinions divergentes parmi les économistes.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 19,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Si j'avais su que tu viendrais, j'aurais préparé un repas spécial.' Qu'est-ce que cela implique ?",
+      "choices": ["Un repas a été préparé", "Aucun repas spécial n'a été préparé", "Le narrateur n'aime pas cuisiner", "Le visiteur est arrivé en retard"],
+      "correct_answer_index": 1,
+      "explanation": "La structure du conditionnel passé indique qu'aucun repas spécial n'a été fait.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 20,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'L'auteur utilise une métaphore pour décrire la vie urbaine comme une jungle où seuls les plus forts survivent.' Quelle est l'idée principale ?",
+      "choices": ["La ville est dangereuse", "La vie en ville est compétitive", "Il faut quitter la ville", "La nature manque en ville"],
+      "correct_answer_index": 1,
+      "explanation": "La métaphore de la jungle suggère la compétition et la survie du plus fort.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 20,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Contrairement à ce que pensent beaucoup de gens, l'intelligence artificielle ne remplacera pas complètement l'humain.' Quelle est la position de l'auteur ?",
+      "choices": ["L'IA remplacera l'humain", "L'IA ne remplacera pas complètement l'humain", "L'IA est dangereuse", "L'IA est inutile"],
+      "correct_answer_index": 1,
+      "explanation": "L'auteur contredit l'idée d'un remplacement complet.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 21,
+      "type": "MultipleAnswerActivity",
+      "question_text": "Lisez : 'Le rapport souligne trois problèmes majeurs : la pollution, le chômage et l'inégalité sociale.' Quels sont les problèmes mentionnés ?",
+      "choices": ["La pollution", "Le chômage", "L'éducation", "L'inégalité sociale"],
+      "correct_indices": [0, 1, 3],
+      "explanation": "Le texte mentionne la pollution, le chômage et l'inégalité sociale.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 21,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Bien qu'il ait plu toute la journée, la fête a été un succès grâce à l'organisation impeccable.' Quel est le facteur de succès ?",
+      "choices": ["Le beau temps", "L'organisation", "Le nombre d'invités", "Le lieu"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte attribue le succès à l'organisation impeccable.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 22,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Dès que j'aurai fini ce projet, je prendrai des vacances bien méritées.' Quand le narrateur prendra-t-il ses vacances ?",
+      "choices": ["Maintenant", "Après avoir fini le projet", "L'année prochaine", "Jamais"],
+      "correct_answer_index": 1,
+      "explanation": "Le futur antérieur indique que les vacances suivront la fin du projet.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 22,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'L'article adopte un ton ironique pour critiquer les politiques actuelles.' Quelle est la stratégie de l'auteur ?",
+      "choices": ["L'humour direct", "L'ironie", "La colère", "L'indifférence"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte précise que le ton est ironique.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 23,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Il est impératif que vous fassiez attention aux détails. Une erreur pourrait coûter cher.' Quel est le message principal ?",
+      "choices": ["Les détails sont secondaires", "La précision est cruciale", "Les erreurs sont acceptables", "Il faut travailler vite"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte insiste sur l'importance des détails et des conséquences des erreurs.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 23,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Je doute qu'il puisse terminer à temps, compte tenu de la complexité du projet.' Quelle est l'attitude du narrateur ?",
+      "choices": ["Confiant", "Sceptique", "Enthousiaste", "Indifférent"],
+      "correct_answer_index": 1,
+      "explanation": "Le verbe 'douter' exprime le scepticisme.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 24,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Si nous avions investi dans cette technologie il y a dix ans, nous serions leaders du marché aujourd'hui.' Que regrette le narrateur ?",
+      "choices": ["Un manque de personnel", "Une décision d'investissement passée", "Un problème technique", "Une mauvaise stratégie marketing"],
+      "correct_answer_index": 1,
+      "explanation": "Le conditionnel passé exprime le regret d'un investissement non fait.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 24,
+      "type": "MultipleAnswerActivity",
+      "question_text": "Lisez : 'Pour réussir, il faut du talent, du travail et de la chance.' Quels sont les trois facteurs de succès mentionnés ?",
+      "choices": ["Le talent", "Le travail", "L'argent", "La chance"],
+      "correct_indices": [0, 1, 3],
+      "explanation": "Le texte mentionne le talent, le travail et la chance.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 25,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Pourvu qu'il ne pleuve pas demain, nous pourrons faire le pique-nique prévu.' Quel est le souhait exprimé ?",
+      "choices": ["Qu'il fasse beau", "Qu'il pleuve", "Qu'il neige", "Qu'il fasse chaud"],
+      "correct_answer_index": 0,
+      "explanation": "L'expression 'pourvu que' exprime un souhait qu'il ne pleuve pas.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 26,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'L'auteur utilise l'euphémisme 'il nous a quittés' pour parler de la mort.' Pourquoi utiliser un euphémisme ?",
+      "choices": ["Pour être précis", "Pour adoucir le propos", "Pour être dramatique", "Pour confondre le lecteur"],
+      "correct_answer_index": 1,
+      "explanation": "Un euphémisme adoucit une réalité difficile ou désagréable.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 26,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Le personnage est en train de lire quand il réalise soudain la vérité.' Quel est le moment clé ?",
+      "choices": ["Quand il commence à lire", "Quand il réalise la vérité", "Quand il finit de lire", "Quand il ferme le livre"],
+      "correct_answer_index": 1,
+      "explanation": "Le moment clé est la réalisation soudaine de la vérité.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 27,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Sans vouloir vous contredire, je pense que votre analyse comporte quelques lacunes.' Quel est le ton du locuteur ?",
+      "choices": ["Agressif", "Diplomatique", "Sarcastique", "Indifférent"],
+      "correct_answer_index": 1,
+      "explanation": "L'expression 'sans vouloir vous contredire' montre de la diplomatie.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 27,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Avant de partir, il a tout vérifié : les fenêtres, les portes, le gaz et l'électricité.' Quelle caractéristique montre ce personnage ?",
+      "choices": ["L'imprudence", "La méticulosité", "L'impatience", "La négligence"],
+      "correct_answer_index": 1,
+      "explanation": "La vérification détaillée indique une personne méticuleuse.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 28,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Si j'avais le temps, je voyagerais davantage, mais avec mon emploi du temps actuel, c'est impossible.' Quelle structure grammaticale est utilisée ?",
+      "choices": ["Le futur simple", "Le conditionnel présent", "Le subjonctif", "L'impératif"],
+      "correct_answer_index": 1,
+      "explanation": "La phrase utilise le conditionnel présent (je voyagerais).",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 28,
+      "type": "MultipleAnswerActivity",
+      "question_text": "Lisez : 'Le texte présente trois arguments : économique, social et environnemental.' Quels types d'arguments sont mentionnés ?",
+      "choices": ["Économique", "Politique", "Social", "Environnemental"],
+      "correct_indices": [0, 2, 3],
+      "explanation": "Les trois arguments sont économique, social et environnemental.",
+      "points": 15,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 29,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Il est heureux que tu aies fini tes devoirs à temps. Maintenant, tu peux te reposer.' Quel temps verbal est utilisé dans la subordonnée ?",
+      "choices": ["Subjonctif présent", "Subjonctif passé", "Indicatif présent", "Conditionnel"],
+      "correct_answer_index": 1,
+      "explanation": "'Aies fini' est au subjonctif passé.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 29,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'L'ironie du sort veut que celui qui prônait la simplicité ait accumulé une immense fortune.' Quelle figure de style est utilisée ?",
+      "choices": ["La métaphore", "L'ironie", "L'hyperbole", "La litote"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte décrit explicitement une situation ironique.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 30,
+      "type": "MCQActivity",
+      "question_text": "Lisez : 'Si elle avait su les conséquences de ses actes, elle aurait agi différemment. Malheureusement, il est trop tard pour les regrets.' Quel est le thème principal ?",
+      "choices": ["L'espoir", "Le regret", "La joie", "La vengeance"],
+      "correct_answer_index": 1,
+      "explanation": "Le texte parle de regrets concernant des actions passées.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 30,
+      "type": "MultipleAnswerActivity",
+      "question_text": "Lisez : 'Le romancier explore trois thèmes : l'amour, la solitude et la quête d'identité.' Quels sont les thèmes abordés ?",
+      "choices": ["L'amour", "La guerre", "La solitude", "La quête d'identité"],
+      "correct_indices": [0, 2, 3],
+      "explanation": "Les trois thèmes sont l'amour, la solitude et la quête d'identité.",
+      "points": 15,
+      "difficulty": "HARD"
+     }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "subject": "Grammaire",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "activities": [
+    {
+      "level": 1,
+      "type": "FillBlankActivity",
+      "question_text": "Je ___ un homme.",
+      "correct_answer": "suis",
+      "explanation": "La réponse est 'suis'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 2,
+      "type": "FillBlankActivity",
+      "question_text": "Il ___ une voiture.",
+      "correct_answer": "a",
+      "explanation": "La réponse est 'a'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 3,
+      "type": "FillBlankActivity",
+      "question_text": "Tu ___ français.",
+      "correct_answer": "parles",
+      "explanation": "La réponse est 'parles'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 4,
+      "type": "FillBlankActivity",
+      "question_text": "Nous ___ à Paris.",
+      "correct_answer": "habitons",
+      "explanation": "La réponse est 'habitons'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 5,
+      "type": "FillBlankActivity",
+      "question_text": "Vous ___ gentils.",
+      "correct_answer": "êtes",
+      "explanation": "La réponse est 'êtes'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 6,
+      "type": "FillBlankActivity",
+      "question_text": "Elles ___ des pommes.",
+      "correct_answer": "mangent",
+      "explanation": "La réponse est 'mangent'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 7,
+      "type": "FillBlankActivity",
+      "question_text": "Le ciel est ___ (couleur).",
+      "correct_answer": "bleu",
+      "explanation": "La réponse est 'bleu'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 8,
+      "type": "FillBlankActivity",
+      "question_text": "La neige est ___.",
+      "correct_answer": "blanche",
+      "explanation": "La réponse est 'blanche'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 9,
+      "type": "FillBlankActivity",
+      "question_text": "J'ai ___ chien.",
+      "correct_answer": "un",
+      "explanation": "La réponse est 'un'.",
+      "points": 10,
+      "difficulty": "EASY"
+    },
+    {
+      "level": 10,
+      "type": "FillBlankActivity",
+      "question_text": "C'est ___ mère.",
+      "correct_answer": "ma",
+      "explanation": "La réponse est 'ma'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 11,
+      "type": "FillBlankActivity",
+      "question_text": "Il va ___ école.",
+      "correct_answer": "à l'",
+      "explanation": "La réponse est 'à l''.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 12,
+      "type": "FillBlankActivity",
+      "question_text": "Je viens ___ France.",
+      "correct_answer": "de",
+      "explanation": "La réponse est 'de'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 13,
+      "type": "FillBlankActivity",
+      "question_text": "Ce sont ___ livres.",
+      "correct_answer": "mes",
+      "explanation": "La réponse est 'mes'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 14,
+      "type": "FillBlankActivity",
+      "question_text": "___ heure est-il?",
+      "correct_answer": "Quelle",
+      "explanation": "La réponse est 'Quelle'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 15,
+      "type": "FillBlankActivity",
+      "question_text": "Est-ce ___ tu viens?",
+      "correct_answer": "que",
+      "explanation": "La réponse est 'que'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 16,
+      "type": "FillBlankActivity",
+      "question_text": "Je ne sais ___.",
+      "correct_answer": "pas",
+      "explanation": "La réponse est 'pas'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 17,
+      "type": "FillBlankActivity",
+      "question_text": "Il a ___ de manger.",
+      "correct_answer": "fini",
+      "explanation": "La réponse est 'fini'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 18,
+      "type": "FillBlankActivity",
+      "question_text": "Nous sommes ___ avec eux.",
+      "correct_answer": "allés",
+      "explanation": "La réponse est 'allés'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 19,
+      "type": "FillBlankActivity",
+      "question_text": "C'est le livre ___ j'ai lu.",
+      "correct_answer": "que",
+      "explanation": "La réponse est 'que'.",
+      "points": 10,
+      "difficulty": "MEDIUM"
+    },
+    {
+      "level": 20,
+      "type": "FillBlankActivity",
+      "question_text": "C'est l'homme ___ parle.",
+      "correct_answer": "qui",
+      "explanation": "La réponse est 'qui'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 21,
+      "type": "FillBlankActivity",
+      "question_text": "Il faut que tu ___.",
+      "correct_answer": "viennes",
+      "explanation": "La réponse est 'viennes'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 22,
+      "type": "FillBlankActivity",
+      "question_text": "Si j'étais riche, j'___.",
+      "correct_answer": "irais",
+      "explanation": "La réponse est 'irais'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 23,
+      "type": "FillBlankActivity",
+      "question_text": "Bien ___ il soit tard.",
+      "correct_answer": "qu'",
+      "explanation": "La réponse est 'qu''.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 24,
+      "type": "FillBlankActivity",
+      "question_text": "Avant ___ partir.",
+      "correct_answer": "de",
+      "explanation": "La réponse est 'de'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 25,
+      "type": "FillBlankActivity",
+      "question_text": "Après ___ mangé.",
+      "correct_answer": "avoir",
+      "explanation": "La réponse est 'avoir'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 26,
+      "type": "FillBlankActivity",
+      "question_text": "Je l'ai fait ___ toi.",
+      "correct_answer": "pour",
+      "explanation": "La réponse est 'pour'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 27,
+      "type": "FillBlankActivity",
+      "question_text": "C'est ___ mieux.",
+      "correct_answer": "le",
+      "explanation": "La réponse est 'le'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 28,
+      "type": "FillBlankActivity",
+      "question_text": "Il est plus grand ___ moi.",
+      "correct_answer": "que",
+      "explanation": "La réponse est 'que'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 29,
+      "type": "FillBlankActivity",
+      "question_text": "Au fur et à ___.",
+      "correct_answer": "mesure",
+      "explanation": "La réponse est 'mesure'.",
+      "points": 10,
+      "difficulty": "HARD"
+    },
+    {
+      "level": 30,
+      "type": "FillBlankActivity",
+      "question_text": "Il n'y a ___ de problème.",
+      "correct_answer": "pas",
+      "explanation": "La réponse est 'pas'.",
+      "points": 10,
+      "difficulty": "HARD"
+    }
+  ]
+}

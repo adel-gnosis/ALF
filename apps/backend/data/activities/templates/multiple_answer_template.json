@@ -1,0 +1,48 @@
+{
+    "activity_type": "MultipleAnswerActivity",
+    "template_version": "1.0",
+    "description": "Multiple answer activity where users select ALL correct answers from a list.",
+    "usage": "Similar to MCQ but allows multiple correct answers. correct_indices is an array of all correct choice indices.",
+    "fields": {
+        "question_text": "Select all the correct French words for '{category}'",
+        "question_text_key": "activity.multiple_answer.select_all",
+        "translation_data": {
+            "category": "CATEGORY_NAME"
+        },
+        "choices": [
+            "CORRECT_CHOICE_1",
+            "INCORRECT_CHOICE_1",
+            "CORRECT_CHOICE_2",
+            "INCORRECT_CHOICE_2"
+        ],
+        "choices_keys": null,
+        "choices_are_translatable": false,
+        "correct_indices": [
+            0,
+            2
+        ],
+        "difficulty": "BEGINNER|INTERMEDIATE|ADVANCED",
+        "subject": "Vocabulaire"
+    },
+    "examples": [
+        {
+            "question_text": "Select all the correct French words for 'fruits'",
+            "question_text_key": "activity.multiple_answer.select_all",
+            "translation_data": {
+                "category": "fruits"
+            },
+            "choices": [
+                "pomme",
+                "chaise",
+                "banane",
+                "table"
+            ],
+            "correct_indices": [
+                0,
+                2
+            ],
+            "difficulty": "BEGINNER",
+            "subject": "Vocabulaire"
+        }
+    ]
+}

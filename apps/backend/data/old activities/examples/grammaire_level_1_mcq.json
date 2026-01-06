@@ -1,0 +1,48 @@
+{
+    "subject": "Grammaire",
+    "level": 1,
+    "activities": [
+        {
+            "type": "MCQActivity",
+            "question_text": "Quel est l'article défini pour 'livre' (masculin)?",
+            "choices": [
+                "le",
+                "la",
+                "les",
+                "l'"
+            ],
+            "correct_answer_index": 0,
+            "explanation": "'Livre' est masculin singulier, donc on utilise 'le'.",
+            "points": 10,
+            "difficulty": "EASY"
+        },
+        {
+            "type": "MCQActivity",
+            "question_text": "Comment dit-on 'the girls' en français?",
+            "choices": [
+                "la fille",
+                "les filles",
+                "des filles",
+                "une fille"
+            ],
+            "correct_answer_index": 1,
+            "explanation": "'The girls' = 'les filles' (article défini pluriel)",
+            "points": 10,
+            "difficulty": "EASY"
+        },
+        {
+            "type": "MCQActivity",
+            "question_text": "Quel est l'article indéfini pour 'maison' (féminin)?",
+            "choices": [
+                "un",
+                "une",
+                "des",
+                "la"
+            ],
+            "correct_answer_index": 1,
+            "explanation": "'Maison' est féminin singulier, donc on utilise 'une'.",
+            "points": 10,
+            "difficulty": "EASY"
+        }
+    ]
+}
