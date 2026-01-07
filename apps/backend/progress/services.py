@@ -274,10 +274,30 @@ def get_next_activity(session):
         
         if unattempted.exists():
             selected_activity = unattempted.order_by('?').first()
-            logger.info(f"Selected unattempted activity {selected_activity.id}")
+            if selected_activity:
+                logger.info(f"Selected unattempted activity {selected_activity.id}")
+            else:
+                logger.warning("Unattempted queryset was non-empty but returned None on first(). Falling back to activities pool.")
         else:
+            selected_activity = None
+
+        if not selected_activity:
             selected_activity = activities.order_by('?').first()
-            logger.info(f"Selected re-attempt of activity {selected_activity.id}")
+            if selected_activity:
+                logger.info(f"Selected re-attempt of activity {selected_activity.id}")
+            else:
+                logger.error("Activities pool returned None on first() — cannot select next activity.")
+                return {
+                    'activity': None,
+                    'is_retry': False,
+                    'retry_info': None,
+                    'progress': {
+                        'completed': session.activities_completed,
+                        'target': session.target_activities,
+                        'percentage': 100.0
+                    }
+                }
+
 
     # RECORDING: Append to queue for future replay
     if selected_activity:
