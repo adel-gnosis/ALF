@@ -8,9 +8,19 @@ import { Platform } from 'react-native';
 const isWeb = Platform.OS === 'web';
 
 // Define API URL based on environment
-export const API_URL = isWeb
-    ? 'http://localhost:8000/api'  // Web
-    : 'http://192.168.1.235:8000/api';  // Mobile
+// API URL priority:
+// 1) EXPO_PUBLIC_API_URL (works for Expo Web + Native, dev + prod)
+// 2) Dev fallbacks: web -> localhost, native -> LAN IP (so you can test on phone)
+const envApiUrl =
+  process.env.EXPO_PUBLIC_API_URL ||
+  process.env.NEXT_PUBLIC_API_URL;
+
+const devFallback = isWeb
+  ? "http://localhost:8000/api"
+  : "http://192.168.1.235:8000/api"; // ✅ keep your phone testing fallback
+
+export const API_URL = envApiUrl || devFallback;
+
 
 console.log(`[API] Configuration: OS=${Platform.OS}, URL=${API_URL}`);
 
