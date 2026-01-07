@@ -28,6 +28,41 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+
+def _pick_random_activity(qs, *, max_tries: int = 5):
+    """
+    Safely pick a random Activity from a queryset without using order_by('?').
+
+    Why:
+    - Postgres order_by('?') is slow.
+    - With django-polymorphic, order_by('?') can sometimes return rows that
+      downcast to None, causing unexpected None results.
+
+    Strategy:
+    - Fetch only IDs (cheap).
+    - Randomly choose an ID in Python.
+    - Fetch by pk (polymorphic-safe).
+    - Retry a few times in case of race conditions.
+    """
+    ids = list(qs.values_list("id", flat=True))
+    if not ids:
+        return None
+
+    for _ in range(max_tries):
+        pk = random.choice(ids)
+        try:
+            return Activity.objects.get(pk=pk)
+        except Activity.DoesNotExist:
+            # Race condition: row removed between ID fetch and get()
+            try:
+                ids.remove(pk)
+            except ValueError:
+                pass
+            if not ids:
+                return None
+
+    return None
+
 # ============================================================================
 # I. SESSION MANAGEMENT
 # ============================================================================
@@ -273,28 +308,28 @@ def get_next_activity(session):
         unattempted = activities.exclude(id__in=attempted_by_user)
         
         if unattempted.exists():
-            selected_activity = unattempted.order_by('?').first()
+            selected_activity = _pick_random_activity(unattempted)
             if selected_activity:
                 logger.info(f"Selected unattempted activity {selected_activity.id}")
             else:
-                logger.warning("Unattempted queryset was non-empty but returned None on first(). Falling back to activities pool.")
+                logger.warning("Unattempted queryset was non-empty but random pick returned None. Falling back to activities pool.")
         else:
             selected_activity = None
 
         if not selected_activity:
-            selected_activity = activities.order_by('?').first()
+            selected_activity = _pick_random_activity(activities)
             if selected_activity:
                 logger.info(f"Selected re-attempt of activity {selected_activity.id}")
             else:
-                logger.error("Activities pool returned None on first() — cannot select next activity.")
+                logger.error("Activities pool returned None on random pick — cannot select next activity.")
                 return {
-                    'activity': None,
-                    'is_retry': False,
-                    'retry_info': None,
-                    'progress': {
-                        'completed': session.activities_completed,
-                        'target': session.target_activities,
-                        'percentage': 100.0
+                    "activity": None,
+                    "is_retry": False,
+                    "retry_info": None,
+                    "progress": {
+                        "completed": session.activities_completed,
+                        "target": session.target_activities,
+                        "percentage": 100.0
                     }
                 }
 
@@ -921,10 +956,13 @@ class PlacementTest:
             session_id=session.id
         ).values_list('activity_id', flat=True)
         
-        activity = Activity.objects.filter(
+        qs = Activity.objects.filter(
             lesson__level=level,
             lesson__is_published=True
-        ).exclude(id__in=attempted).order_by('?').first()
+        ).exclude(id__in=attempted)
+
+        activity = _pick_random_activity(qs)
+
         
         return {
             'activity': activity,
