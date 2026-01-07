@@ -1,7 +1,16 @@
 import axios from 'axios';
 
 // Base URL can be configured via env vars
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+// IMPORTANT:
+// - Next.js exposes NEXT_PUBLIC_*
+// - Expo exposes EXPO_PUBLIC_*
+// - Fallback remains localhost for local dev
+const envApiUrl =
+  process.env.EXPO_PUBLIC_API_URL ||
+  process.env.NEXT_PUBLIC_API_URL;
+
+export const API_BASE_URL = envApiUrl || 'http://localhost:8000/api';
+
 
 const api = axios.create({
     baseURL: API_BASE_URL,
