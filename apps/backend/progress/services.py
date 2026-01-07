@@ -29,37 +29,41 @@ logger = logging.getLogger(__name__)
 
 
 
-def _pick_random_activity(qs, *, max_tries: int = 5):
+def _pick_random_activity(qs, *, max_tries: int = 30):
     """
     Safely pick a random Activity from a queryset without using order_by('?').
 
-    Why:
-    - Postgres order_by('?') is slow.
-    - With django-polymorphic, order_by('?') can sometimes return rows that
-      downcast to None, causing unexpected None results.
-
-    Strategy:
-    - Fetch only IDs (cheap).
-    - Randomly choose an ID in Python.
-    - Fetch by pk (polymorphic-safe).
-    - Retry a few times in case of race conditions.
+    IMPORTANT:
+    With django-polymorphic, some Activity rows can sometimes fail to "realize"
+    into their concrete subclass (and can come back as None instead of an object).
+    This helper skips those IDs and keeps trying.
     """
     ids = list(qs.values_list("id", flat=True))
     if not ids:
         return None
 
-    for _ in range(max_tries):
+    tries = 0
+    while ids and tries < max_tries:
+        tries += 1
         pk = random.choice(ids)
+
+        # Remove immediately so we don't retry the same bad id forever
         try:
-            return Activity.objects.get(pk=pk)
+            ids.remove(pk)
+        except ValueError:
+            pass
+
+        try:
+            obj = Activity.objects.get(pk=pk)
         except Activity.DoesNotExist:
-            # Race condition: row removed between ID fetch and get()
-            try:
-                ids.remove(pk)
-            except ValueError:
-                pass
-            if not ids:
-                return None
+            continue
+
+        # Polymorphic "realize" failure (yes, it can happen)
+        if obj is None:
+            logger.warning(f"Polymorphic Activity id={pk} could not be realized; skipping.")
+            continue
+
+        return obj
 
     return None
 
