@@ -1,0 +1,411 @@
+{
+  "subject": "Grammaire",
+  "level": 3,
+  "activities": [
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis le pluriel : un livre →",
+      "choices": [
+        "des livres",
+        "les livre",
+        "un livres",
+        "de livres"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis : Je vais ___ école.",
+      "choices": [
+        "à",
+        "de",
+        "en",
+        "pour"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Accord : une fille ___ (petit).",
+      "choices": [
+        "petite",
+        "petit",
+        "petits",
+        "petites"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis l'article défini pluriel :",
+      "choices": [
+        "les",
+        "des",
+        "la",
+        "un"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "J'habite ___ Maroc.",
+      "correct_answer": "au",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Il y a ___ chats.",
+      "correct_answer": "des",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "C'est une voiture ___.",
+      "correct_answer": "rouge",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Je vais ___ maison.",
+      "correct_answer": "à la",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : couleurs (EN/AR).",
+      "pairs": {
+        "rouge": "red",
+        "bleu": "blue",
+        "vert": "green",
+        "noir": "black"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "rouge": {
+          "en": "red",
+          "ar": "أحمر"
+        },
+        "bleu": {
+          "en": "blue",
+          "ar": "أزرق"
+        },
+        "vert": {
+          "en": "green",
+          "ar": "أخضر"
+        },
+        "noir": {
+          "en": "black",
+          "ar": "أسود"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : prépositions (EN/AR).",
+      "pairs": {
+        "à": "to/at",
+        "de": "from/of",
+        "dans": "in",
+        "sur": "on"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "à": {
+          "en": "to/at",
+          "ar": "إلى/في"
+        },
+        "de": {
+          "en": "from/of",
+          "ar": "من"
+        },
+        "dans": {
+          "en": "in",
+          "ar": "في"
+        },
+        "sur": {
+          "en": "on",
+          "ar": "على"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : pluriels (EN/AR).",
+      "pairs": {
+        "un chat": "a cat",
+        "des chats": "cats",
+        "une fille": "a girl",
+        "des filles": "girls"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "un chat": {
+          "en": "a cat",
+          "ar": "قط"
+        },
+        "des chats": {
+          "en": "cats",
+          "ar": "قطط"
+        },
+        "une fille": {
+          "en": "a girl",
+          "ar": "فتاة"
+        },
+        "des filles": {
+          "en": "girls",
+          "ar": "فتيات"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : adjectifs (EN/AR).",
+      "pairs": {
+        "petit": "small",
+        "grande": "big (f)",
+        "beau": "beautiful",
+        "belle": "beautiful (f)"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "petit": {
+          "en": "small",
+          "ar": "صغير"
+        },
+        "grande": {
+          "en": "big (f)",
+          "ar": "كبيرة"
+        },
+        "beau": {
+          "en": "beautiful",
+          "ar": "جميل"
+        },
+        "belle": {
+          "en": "beautiful (f)",
+          "ar": "جميلة"
+        }
+      }
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "J'",
+        "ai",
+        "deux",
+        "livres",
+        "."
+      ],
+      "correct_order": [
+        "J'",
+        "ai",
+        "deux",
+        "livres",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "Je",
+        "vais",
+        "à",
+        "l'",
+        "école",
+        "."
+      ],
+      "correct_order": [
+        "Je",
+        "vais",
+        "à",
+        "l'",
+        "école",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "La",
+        "fille",
+        "est",
+        "petite",
+        "."
+      ],
+      "correct_order": [
+        "La",
+        "fille",
+        "est",
+        "petite",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "Les",
+        "chats",
+        "sont",
+        "noirs",
+        "."
+      ],
+      "correct_order": [
+        "Les",
+        "chats",
+        "sont",
+        "noirs",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'aller' au présent :",
+      "verb_infinitive": "aller",
+      "tense": "présent",
+      "pronoun": "je",
+      "correct_conjugation": "vais",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'aller' au présent :",
+      "verb_infinitive": "aller",
+      "tense": "présent",
+      "pronoun": "tu",
+      "correct_conjugation": "vas",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'faire' au présent :",
+      "verb_infinitive": "faire",
+      "tense": "présent",
+      "pronoun": "il",
+      "correct_conjugation": "fait",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'prendre' au présent :",
+      "verb_infinitive": "prendre",
+      "tense": "présent",
+      "pronoun": "nous",
+      "correct_conjugation": "prenons",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots sont des couleurs ?",
+      "choices": [
+        "rouge",
+        "bleu",
+        "école",
+        "vert"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots sont des prépositions ?",
+      "choices": [
+        "à",
+        "dans",
+        "chat",
+        "sur"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels sont des articles ?",
+      "choices": [
+        "les",
+        "un",
+        "petit",
+        "des"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels adjectifs peuvent être au féminin ?",
+      "choices": [
+        "petit→petite",
+        "beau→belle",
+        "chat→chate",
+        "rouge→rougee"
+      ],
+      "correct_indices": [
+        0,
+        1
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris le pluriel : une maison → des ___.",
+      "correct_answers": [
+        "maisons"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Complète : Je vais ___ (à) l'école.",
+      "correct_answers": [
+        "à"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Accorde : une voiture ___ (noir).",
+      "correct_answers": [
+        "noire"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris l'article : ___ chats (défini).",
+      "correct_answers": [
+        "les"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    }
+  ]
+}

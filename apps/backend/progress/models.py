@@ -129,13 +129,18 @@ class ActivityAttempt(models.Model):
     
     # Session tracking
     session_id = models.UUIDField(null=True, blank=True)  # Groups attempts in same study session
+    # Idempotency (client-side retry protection)
+    client_attempt_uuid = models.UUIDField(null=True, blank=True, unique=True, db_index=True)
+
     
     class Meta:
         ordering = ['-attempted_at']
         indexes = [
-            models.Index(fields=['user', 'activity', '-attempted_at']),
-            models.Index(fields=['user', '-attempted_at']),
+            models.Index(fields=['user', 'attempted_at']),
+            models.Index(fields=['session_id']),
+            models.Index(fields=['user', 'activity']),
         ]
+
         verbose_name = 'Activity Attempt'
         verbose_name_plural = 'Activity Attempts'
     
@@ -157,6 +162,15 @@ class FailedActivityQueue(models.Model):
     first_failed_at = models.DateTimeField(auto_now_add=True)
     times_failed = models.PositiveIntegerField(default=1)
     priority = models.PositiveIntegerField(default=1)  # Higher = show sooner (1-5)
+
+    # SRS-lite scheduling (minimal, high ROI)
+    next_review_at = models.DateTimeField(null=True, blank=True, db_index=True)
+    interval_days = models.PositiveIntegerField(default=1)
+    ease_factor = models.FloatField(default=2.5)
+    times_reviewed = models.PositiveIntegerField(default=0)
+    last_reviewed_at = models.DateTimeField(null=True, blank=True)
+    last_outcome = models.BooleanField(null=True, blank=True)  # True=success, False=fail
+
     
     # Status
     is_resolved = models.BooleanField(default=False)  # True when user gets it right
@@ -165,6 +179,10 @@ class FailedActivityQueue(models.Model):
     class Meta:
         unique_together = ['user', 'activity']
         ordering = ['-priority', 'first_failed_at']
+        indexes = [
+            models.Index(fields=['user', 'next_review_at']),
+        ]
+
         verbose_name = 'Failed Activity Queue'
         verbose_name_plural = 'Failed Activity Queue'
     
@@ -209,6 +227,10 @@ class StudySession(models.Model):
     started_at = models.DateTimeField(auto_now_add=True)
     ended_at = models.DateTimeField(null=True, blank=True)
     duration_seconds = models.PositiveIntegerField(null=True, blank=True)
+
+    completion_payload = models.JSONField(null=True, blank=True)
+    completion_xp_awarded = models.BooleanField(default=False)
+
     
     # Outcome
     OUTCOME_CHOICES = [
@@ -224,6 +246,13 @@ class StudySession(models.Model):
     set_number = models.PositiveIntegerField(default=1)  # 1st set, 2nd set, etc.
     
     class Meta:
+        indexes = [
+            models.Index(fields=['user', 'outcome']),
+            models.Index(fields=['user', 'level', 'subject']),
+            models.Index(fields=['user', 'started_at']),
+        ]
+
+
         ordering = ['-started_at']
         verbose_name = 'Study Session'
         verbose_name_plural = 'Study Sessions'
@@ -312,3 +341,28 @@ class WeaknessAlert(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.severity}: {self.subject.title} at {self.level.code}"
+
+
+class Achievement(models.Model):
+    code = models.CharField(max_length=64, unique=True)
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=512, blank=True)
+    xp_reward = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
+
+
+class UserAchievement(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='earned_achievements')
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE, related_name='earned_by')
+    earned_at = models.DateTimeField(auto_now_add=True)
+    session_id = models.UUIDField(null=True, blank=True)  # Optional link to a session
+
+    class Meta:
+        unique_together = ('user', 'achievement')
+        ordering = ['-earned_at']
+
+    def __str__(self):
+        return f"{self.user_id} -> {self.achievement.code}"

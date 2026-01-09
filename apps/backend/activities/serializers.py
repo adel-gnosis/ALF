@@ -106,6 +106,10 @@ class ActivityPolymorphicSerializer(PolymorphicSerializer):
             
             # Get base representation from polymorphic serializer
             data = super().to_representation(instance)
+
+            # Expose supported UI languages (useful for frontend debugging / logic)
+            data['supported_ui_languages'] = instance.supported_ui_languages
+
             
             # Add RTL metadata
             data['is_rtl'] = is_rtl
@@ -145,39 +149,51 @@ class ActivityPolymorphicSerializer(PolymorphicSerializer):
             
             # ===== ACTIVITY-SPECIFIC LOGIC =====
             
-            # C. MCQ & MultipleAnswer: Choice Translation
+            # C. MCQ & MultipleAnswer: Multilingual choices (teacher-created)
             if isinstance(instance, (MCQActivity, MultipleAnswerActivity)):
-                if instance.choices_are_translatable and instance.choices_keys:
-                    # Cases B & C: Translate choices
+                if instance.choices_i18n:
+                    # Teacher-created multilingual choices
+                    rendered_choices = []
+                    for choice in instance.choices_i18n:
+                        if isinstance(choice, dict) and user_lang in choice:
+                            rendered_choices.append(choice[user_lang])
+                        elif isinstance(choice, dict) and 'fr' in choice:
+                            rendered_choices.append(choice['fr'])  # fallback
+                    data['choices'] = rendered_choices
+
+                elif instance.choices_are_translatable and instance.choices_keys:
+                    # Legacy gettext-based choices
                     translated_choices = []
                     for idx, key in enumerate(instance.choices_keys):
                         try:
                             translated_choices.append(_(key))
                         except Exception:
-                            # Fallback to original choice if key fails
-                            if idx < len(instance.choices):
-                                translated_choices.append(instance.choices[idx])
-                            else:
-                                translated_choices.append(key)
+                            translated_choices.append(instance.choices[idx] if idx < len(instance.choices) else key)
                     data['choices'] = translated_choices
-                # Case A: choices stay in French (already in data)
-            
-            # D. Matching: Value Translation
+
+            # D. Matching: Multilingual pairs (teacher-created)
             if isinstance(instance, MatchingActivity):
-                if instance.values_are_translatable:
+                if instance.pairs_i18n:
+                    rendered_pairs = {}
+                    for fr_word, translations in instance.pairs_i18n.items():
+                        if isinstance(translations, dict):
+                            if user_lang in translations:
+                                rendered_pairs[fr_word] = translations[user_lang]
+                            elif 'fr' in translations:
+                                rendered_pairs[fr_word] = translations['fr']  # fallback
+                    data['pairs'] = rendered_pairs
+
+                elif instance.values_are_translatable:
+                    # Legacy gettext-based pairs
                     translated_pairs = {}
                     for key, value in instance.pairs.items():
                         if isinstance(value, str) and value.startswith('key:'):
-                            # This is a translation key
-                            translation_key = value.replace('key:', '', 1)
                             try:
-                                translated_pairs[key] = _(translation_key)
+                                translated_pairs[key] = _(value.replace('key:', '', 1))
                             except Exception:
-                                translated_pairs[key] = value  # Fallback
+                                translated_pairs[key] = value
                         else:
-                            # Literal value (French text)
                             translated_pairs[key] = value
                     data['pairs'] = translated_pairs
-                # Otherwise pairs stay as-is (French-French matching)
-            
+
             return data

@@ -1,0 +1,423 @@
+{
+  "subject": "Grammaire",
+  "level": 4,
+  "activities": [
+    {
+      "type": "MCQActivity",
+      "question_text": "Futur proche : Je ___ manger.",
+      "choices": [
+        "vais",
+        "va",
+        "allez",
+        "suis"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis le bon mot : Je vais ___ cinéma.",
+      "choices": [
+        "au",
+        "à la",
+        "aux",
+        "du"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Quelle heure est-il ? 08:00 → Il est ___ heures.",
+      "choices": [
+        "huit",
+        "neuf",
+        "sept",
+        "dix"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis le connecteur :",
+      "choices": [
+        "et",
+        "chat",
+        "livre",
+        "rouge"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Je vais ___ (aller) à l'école.",
+      "correct_answer": "aller",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Nous ___ regarder un film.",
+      "correct_answer": "allons",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Il est ___ heures (10:00).",
+      "correct_answer": "dix",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Je vais au cinéma ___ je vais au café.",
+      "correct_answer": "et",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : lieux (EN/AR).",
+      "pairs": {
+        "cinéma": "cinema",
+        "restaurant": "restaurant",
+        "parc": "park",
+        "marché": "market"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "cinéma": {
+          "en": "cinema",
+          "ar": "سينما"
+        },
+        "restaurant": {
+          "en": "restaurant",
+          "ar": "مطعم"
+        },
+        "parc": {
+          "en": "park",
+          "ar": "حديقة"
+        },
+        "marché": {
+          "en": "market",
+          "ar": "سوق"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : futur proche (EN/AR).",
+      "pairs": {
+        "je vais": "I am going",
+        "tu vas": "you are going",
+        "il va": "he is going",
+        "nous allons": "we are going"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "je vais": {
+          "en": "I am going",
+          "ar": "سأذهب"
+        },
+        "tu vas": {
+          "en": "you are going",
+          "ar": "ستذهب"
+        },
+        "il va": {
+          "en": "he is going",
+          "ar": "سيذهب"
+        },
+        "nous allons": {
+          "en": "we are going",
+          "ar": "سنذهب"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : temps (EN/AR).",
+      "pairs": {
+        "aujourd'hui": "today",
+        "demain": "tomorrow",
+        "maintenant": "now",
+        "ce soir": "this evening"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "aujourd'hui": {
+          "en": "today",
+          "ar": "اليوم"
+        },
+        "demain": {
+          "en": "tomorrow",
+          "ar": "غداً"
+        },
+        "maintenant": {
+          "en": "now",
+          "ar": "الآن"
+        },
+        "ce soir": {
+          "en": "this evening",
+          "ar": "هذا المساء"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : connecteurs (EN/AR).",
+      "pairs": {
+        "et": "and",
+        "mais": "but",
+        "ou": "or",
+        "parce que": "because"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "et": {
+          "en": "and",
+          "ar": "و"
+        },
+        "mais": {
+          "en": "but",
+          "ar": "لكن"
+        },
+        "ou": {
+          "en": "or",
+          "ar": "أو"
+        },
+        "parce que": {
+          "en": "because",
+          "ar": "لأن"
+        }
+      }
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "Je",
+        "vais",
+        "au",
+        "parc",
+        "demain",
+        "."
+      ],
+      "correct_order": [
+        "Je",
+        "vais",
+        "au",
+        "parc",
+        "demain",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "Nous",
+        "allons",
+        "au",
+        "cinéma",
+        "ce",
+        "soir",
+        "."
+      ],
+      "correct_order": [
+        "Nous",
+        "allons",
+        "au",
+        "cinéma",
+        "ce",
+        "soir",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "Il",
+        "est",
+        "huit",
+        "heures",
+        "."
+      ],
+      "correct_order": [
+        "Il",
+        "est",
+        "huit",
+        "heures",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase :",
+      "words": [
+        "Je",
+        "vais",
+        "au",
+        "marché",
+        "et",
+        "au",
+        "café",
+        "."
+      ],
+      "correct_order": [
+        "Je",
+        "vais",
+        "au",
+        "marché",
+        "et",
+        "au",
+        "café",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'aller' au présent :",
+      "verb_infinitive": "aller",
+      "tense": "présent",
+      "pronoun": "nous",
+      "correct_conjugation": "allons",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'aller' au présent :",
+      "verb_infinitive": "aller",
+      "tense": "présent",
+      "pronoun": "vous",
+      "correct_conjugation": "allez",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'venir' au présent :",
+      "verb_infinitive": "venir",
+      "tense": "présent",
+      "pronoun": "je",
+      "correct_conjugation": "viens",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'voir' au présent :",
+      "verb_infinitive": "voir",
+      "tense": "présent",
+      "pronoun": "il",
+      "correct_conjugation": "voit",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots indiquent le futur proche ?",
+      "choices": [
+        "vais",
+        "vas",
+        "hier",
+        "allons"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots sont des connecteurs ?",
+      "choices": [
+        "et",
+        "mais",
+        "parc",
+        "ou"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots parlent du temps ?",
+      "choices": [
+        "aujourd'hui",
+        "demain",
+        "pomme",
+        "maintenant"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Choisis les lieux :",
+      "choices": [
+        "cinéma",
+        "restaurant",
+        "beau",
+        "marché"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris : Je vais ___ (aller) au cinéma.",
+      "correct_answers": [
+        "aller"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris l'heure en lettres : 09:00 → Il est ___ heures.",
+      "correct_answers": [
+        "neuf"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Complète : Je vais au parc ___ je suis content.",
+      "correct_answers": [
+        "et"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Complète : Je vais au restaurant ___ j'ai faim.",
+      "correct_answers": [
+        "parce que",
+        "parce que "
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    }
+  ]
+}

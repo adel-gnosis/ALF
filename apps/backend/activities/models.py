@@ -31,6 +31,18 @@ class Activity(PolymorphicModel):
         blank=True,
         help_text="Parameters for interpolation (e.g., {'phrase': 'Je suis ___'})"
     )
+
+    # UI-language availability (Meaning A)
+    # Empty [] means "universal" (safe for any UI language)
+    supported_ui_languages = models.JSONField(
+        default=list,
+        blank=True,
+        help_text=(
+            "List of UI languages this activity supports when it contains translated content "
+            "(e.g., ['en','ar']). Empty means universal (doesn't depend on UI language)."
+        ),
+    )
+
     
     # Metadata
     points = models.PositiveIntegerField(default=10)
@@ -49,20 +61,114 @@ class Activity(PolymorphicModel):
         blank=True,
         related_name='created_activities'
     )
-    is_approved = models.BooleanField(default=True)
+    # ========== REPLACE is_approved WITH THIS ==========
+    STATUS_CHOICES = [
+        ('DRAFT', 'Draft'),
+        ('PENDING', 'Pending Review'),
+        ('APPROVED', 'Approved'),
+        ('REJECTED', 'Rejected'),
+        ('ARCHIVED', 'Archived'),
+    ]
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='DRAFT',
+        help_text="Content approval workflow status"
+    )
+    
+    # Approval tracking
+    submitted_for_review_at = models.DateTimeField(null=True, blank=True)
+    reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='reviewed_activities'
+    )
+    reviewed_at = models.DateTimeField(null=True, blank=True)
+    rejection_reason = models.TextField(blank=True)
+    
+    # Versioning
+    version = models.PositiveIntegerField(default=1)
+    previous_version = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='next_versions'
+    )
+    version_notes = models.TextField(blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['order']
         verbose_name_plural = 'Activities'
 
+    def supports_ui_language(self, lang: str) -> bool:
+        return not self.supported_ui_languages or lang in self.supported_ui_languages
+
+
     def __str__(self):
         return f"{self.lesson.title} - {self.__class__.__name__} #{self.pk}"
+    
+    
 
     @property
     def resourcetype(self):
         return self.__class__.__name__
 
+
+class ActivityFeedback(models.Model):
+    """Student feedback on activities"""
+    activity = models.ForeignKey(
+        Activity,
+        on_delete=models.CASCADE,
+        related_name='feedback'
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    
+    # Feedback type
+    FEEDBACK_TYPES = [
+        ('INCORRECT', 'Answer is Wrong'),
+        ('UNCLEAR', 'Question is Unclear'),
+        ('TYPO', 'Has Typo'),
+        ('TOO_HARD', 'Too Difficult'),
+        ('TOO_EASY', 'Too Easy'),
+        ('OTHER', 'Other Issue'),
+    ]
+    feedback_type = models.CharField(max_length=20, choices=FEEDBACK_TYPES)
+    
+    # Details
+    description = models.TextField(blank=True)
+    user_answer = models.JSONField(null=True, blank=True)
+    
+    # Status
+    is_resolved = models.BooleanField(default=False)
+    resolved_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='resolved_feedback'
+    )
+    resolution_notes = models.TextField(blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ['activity', 'user', 'feedback_type']
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['activity', 'is_resolved']),
+        ]
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.feedback_type} on Activity #{self.activity.pk}"
 
 # === ACTIVITY TYPES ===
 
@@ -87,6 +193,18 @@ class MCQActivity(Activity):
         default=False,
         help_text="True for Cases B & C (translated choices), False for Case A (French choices)"
     )
+
+    # Teacher-created multilingual choices (no gettext)
+    # Shape: [ {"fr":"pomme","en":"apple","ar":"تفاحة"}, {"fr":"chat","en":"cat"} ]
+    choices_i18n = models.JSONField(
+        default=list,
+        blank=True,
+        help_text=(
+            "Optional multilingual choices provided by teacher. Each choice is a dict keyed by language code. "
+            "Use supported_ui_languages to prevent serving when the user's UI language is missing."
+        ),
+    )
+
 
     class Meta:
         verbose_name = 'Multiple Choice Activity'
@@ -114,6 +232,19 @@ class MatchingActivity(Activity):
         default=False,
         help_text="True if values are translation keys, False if literal text"
     )
+
+    # Teacher-created multilingual matching (no gettext, no keys)
+    # Shape: { "parfait": {"en":"perfect","ar":"ممتاز"}, "rapide": {"en":"fast"} }
+    pairs_i18n = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text=(
+            "Teacher-provided multilingual pairs. Keys are typically French terms; values are "
+            "dicts keyed by UI language code (e.g. {'en': 'perfect', 'ar': 'ممتاز'}). "
+            "If a language is missing for any entry, exclude it from supported_ui_languages."
+        ),
+    )
+
 
     class Meta:
         verbose_name = 'Matching Activity'
@@ -166,6 +297,16 @@ class MultipleAnswerActivity(Activity):
         default=False,
         help_text="True if choices should be translated to learner's language"
     )
+
+    # Teacher-created multilingual choices (no gettext)
+    choices_i18n = models.JSONField(
+        default=list,
+        blank=True,
+        help_text=(
+            "Optional multilingual choices provided by teacher. Each choice is a dict keyed by language code."
+        ),
+    )
+
     
     class Meta:
         verbose_name = 'Multiple Answer Activity'

@@ -1,0 +1,411 @@
+{
+  "subject": "Grammaire",
+  "level": 1,
+  "activities": [
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis la bonne salutation :",
+      "choices": [
+        "Bonjour",
+        "Au revoir",
+        "Merci",
+        "Pardon"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Complète : Je ___ Adel.",
+      "choices": [
+        "suis",
+        "es",
+        "est",
+        "sommes"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Quel article pour '___ école' ?",
+      "choices": [
+        "un",
+        "une",
+        "le",
+        "la"
+      ],
+      "correct_answer_index": 1,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis le pronom :",
+      "choices": [
+        "je",
+        "manger",
+        "pomme",
+        "grand"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Je ___ marocain.",
+      "correct_answer": "suis",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Tu ___ étudiant.",
+      "correct_answer": "es",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "C'est ___ livre.",
+      "correct_answer": "un",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Je m'appelle ___.",
+      "correct_answer": "Adel",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe les mots français avec leur traduction (EN/AR).",
+      "pairs": {
+        "bonjour": "hello",
+        "merci": "thank you",
+        "oui": "yes",
+        "non": "no"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "bonjour": {
+          "en": "hello",
+          "ar": "مرحبا"
+        },
+        "merci": {
+          "en": "thank you",
+          "ar": "شكرا"
+        },
+        "oui": {
+          "en": "yes",
+          "ar": "نعم"
+        },
+        "non": {
+          "en": "no",
+          "ar": "لا"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : objets (EN/AR).",
+      "pairs": {
+        "pomme": "apple",
+        "chat": "cat",
+        "maison": "house",
+        "livre": "book"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "pomme": {
+          "en": "apple",
+          "ar": "تفاحة"
+        },
+        "chat": {
+          "en": "cat",
+          "ar": "قط"
+        },
+        "maison": {
+          "en": "house",
+          "ar": "منزل"
+        },
+        "livre": {
+          "en": "book",
+          "ar": "كتاب"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : adjectifs (EN/AR).",
+      "pairs": {
+        "grand": "tall/big",
+        "petit": "small",
+        "froid": "cold",
+        "chaud": "hot"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "grand": {
+          "en": "tall/big",
+          "ar": "طويل/كبير"
+        },
+        "petit": {
+          "en": "small",
+          "ar": "صغير"
+        },
+        "froid": {
+          "en": "cold",
+          "ar": "بارد"
+        },
+        "chaud": {
+          "en": "hot",
+          "ar": "حار"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : jours (EN/AR).",
+      "pairs": {
+        "lundi": "Monday",
+        "mardi": "Tuesday",
+        "mercredi": "Wednesday",
+        "jeudi": "Thursday"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "lundi": {
+          "en": "Monday",
+          "ar": "الاثنين"
+        },
+        "mardi": {
+          "en": "Tuesday",
+          "ar": "الثلاثاء"
+        },
+        "mercredi": {
+          "en": "Wednesday",
+          "ar": "الأربعاء"
+        },
+        "jeudi": {
+          "en": "Thursday",
+          "ar": "الخميس"
+        }
+      }
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "Je",
+        "suis",
+        "Adel",
+        "."
+      ],
+      "correct_order": [
+        "Je",
+        "suis",
+        "Adel",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "Tu",
+        "es",
+        "étudiant",
+        "."
+      ],
+      "correct_order": [
+        "Tu",
+        "es",
+        "étudiant",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "C'",
+        "est",
+        "un",
+        "livre",
+        "."
+      ],
+      "correct_order": [
+        "C'",
+        "est",
+        "un",
+        "livre",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "Bonjour",
+        ",",
+        "je",
+        "m'",
+        "appelle",
+        "Sara",
+        "."
+      ],
+      "correct_order": [
+        "Bonjour",
+        ",",
+        "je",
+        "m'",
+        "appelle",
+        "Sara",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue le verbe 'être' au présent :",
+      "verb_infinitive": "être",
+      "tense": "présent",
+      "pronoun": "je",
+      "correct_conjugation": "suis",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue le verbe 'être' au présent :",
+      "verb_infinitive": "être",
+      "tense": "présent",
+      "pronoun": "tu",
+      "correct_conjugation": "es",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue le verbe 'avoir' au présent :",
+      "verb_infinitive": "avoir",
+      "tense": "présent",
+      "pronoun": "je",
+      "correct_conjugation": "ai",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue le verbe 'avoir' au présent :",
+      "verb_infinitive": "avoir",
+      "tense": "présent",
+      "pronoun": "il",
+      "correct_conjugation": "a",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots sont des pronoms ?",
+      "choices": [
+        "je",
+        "tu",
+        "manger",
+        "pomme"
+      ],
+      "correct_indices": [
+        0,
+        1
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots sont des articles ?",
+      "choices": [
+        "un",
+        "une",
+        "bonjour",
+        "le"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Choisis les formes du verbe 'être' (présent) :",
+      "choices": [
+        "suis",
+        "es",
+        "a",
+        "sommes"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        3
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Choisis les salutations :",
+      "choices": [
+        "Bonjour",
+        "Merci",
+        "Au revoir",
+        "Livre"
+      ],
+      "correct_indices": [
+        0,
+        2
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris le verbe correct : Je ___ (être).",
+      "correct_answers": [
+        "suis"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris l'article : ___ livre (masculin singulier).",
+      "correct_answers": [
+        "un",
+        "le"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris la réponse : Oui ou non ? (Est-ce que tu es étudiant ?)",
+      "correct_answers": [
+        "oui",
+        "Oui"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris le pronom : ___ suis Marie.",
+      "correct_answers": [
+        "Je",
+        "je"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    }
+  ]
+}

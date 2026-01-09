@@ -1,20 +1,47 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django import forms
-from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin, PolymorphicChildModelFilter
+from polymorphic.admin import (
+    PolymorphicParentModelAdmin,
+    PolymorphicChildModelAdmin,
+    PolymorphicChildModelFilter,
+)
+
 from .models import (
     Activity, MCQActivity, FillBlankActivity, MatchingActivity,
-    DragOrderActivity, ConjugationActivity, MultipleAnswerActivity, TextInputActivity,
-    DicteeActivity
+    DragOrderActivity, ConjugationActivity, MultipleAnswerActivity,
+    TextInputActivity, DicteeActivity
 )
 
 
+# =========================
+# Base Child Admin
+# =========================
+
 class ActivityChildAdmin(PolymorphicChildModelAdmin):
     base_model = Activity
-    list_display = ['question_text', 'lesson', 'points', 'difficulty', 'order']
-    list_filter = ['difficulty', 'is_approved']
-    list_editable = ['order']
 
+    list_display = (
+        'question_text',
+        'lesson',
+        'points',
+        'difficulty',
+        'status',
+        'order',
+    )
+
+    list_filter = (
+        'difficulty',
+        'status',
+    )
+
+    list_editable = ('order',)
+    search_fields = ('question_text',)
+
+
+# =========================
+# Activity Type Admins
+# =========================
 
 @admin.register(MCQActivity)
 class MCQActivityAdmin(ActivityChildAdmin):
@@ -51,25 +78,25 @@ class TextInputActivityAdmin(ActivityChildAdmin):
     base_model = TextInputActivity
 
 
+# =========================
+# Dictee Custom Form
+# =========================
+
 class DicteeActivityForm(forms.ModelForm):
-    """Custom form to handle audio file display properly"""
-    
     class Meta:
         model = DicteeActivity
         fields = '__all__'
         widgets = {
-            'audio_file': forms.ClearableFileInput(attrs={
-                'accept': 'audio/*'
-            })
+            'audio_file': forms.ClearableFileInput(attrs={'accept': 'audio/*'})
         }
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # If editing existing object with audio file, customize the help text
-        if self.instance and self.instance.pk and self.instance.audio_file:
+
+        if self.instance.pk and self.instance.audio_file:
             file_url = self.instance.audio_file.url
             self.fields['audio_file'].help_text = format_html(
-                'Current file: <a href="{}" target="_blank" rel="noopener noreferrer">{}</a><br>'
+                'Current file: <a href="{}" target="_blank">{}</a><br>'
                 '<audio controls style="max-width: 400px; margin-top: 5px;">'
                 '<source src="{}" type="audio/mpeg"></audio>',
                 file_url,
@@ -84,37 +111,52 @@ class DicteeActivityAdmin(ActivityChildAdmin):
     form = DicteeActivityForm
 
     def save_model(self, request, obj, form, change):
-        # Save first to handle file upload standardly
         super().save_model(request, obj, form, change)
-        
-        # Then update audio_urls if a new file was uploaded
-        if obj.audio_file:
-            try:
-                # Get the URL from the file field
-                file_url = obj.audio_file.url
-                
-                # Fetch fresh instance from DB
-                fresh_obj = self.model.objects.get(pk=obj.pk)
-                current_urls = fresh_obj.audio_urls if fresh_obj.audio_urls else []
-                
-                # Add URL if not already in list
-                if file_url not in current_urls:
-                    current_urls.append(file_url)
-                    # Use update to bypass save() signals/hooks
-                    self.model.objects.filter(pk=obj.pk).update(audio_urls=current_urls)
-                    
-            except Exception as e:
-                print(f"Error updating audio_urls: {e}")
 
+        if obj.audio_file:
+            file_url = obj.audio_file.url
+            current_urls = obj.audio_urls or []
+
+            if file_url not in current_urls:
+                current_urls.append(file_url)
+                self.model.objects.filter(pk=obj.pk).update(
+                    audio_urls=current_urls
+                )
+
+
+# =========================
+# Parent Polymorphic Admin
+# =========================
 
 @admin.register(Activity)
 class ActivityParentAdmin(PolymorphicParentModelAdmin):
     base_model = Activity
+
     child_models = (
-        MCQActivity, FillBlankActivity, MatchingActivity,
-        DragOrderActivity, ConjugationActivity, MultipleAnswerActivity, TextInputActivity,
-        DicteeActivity
+        MCQActivity,
+        FillBlankActivity,
+        MatchingActivity,
+        DragOrderActivity,
+        ConjugationActivity,
+        MultipleAnswerActivity,
+        TextInputActivity,
+        DicteeActivity,
     )
-    list_filter = (PolymorphicChildModelFilter, 'lesson', 'difficulty', 'is_approved')
-    list_display = ('__str__', 'lesson', 'points', 'difficulty', 'polymorphic_ctype')
-    search_fields = ['question_text']
+
+    list_display = (
+        '__str__',
+        'lesson',
+        'points',
+        'difficulty',
+        'status',
+        'polymorphic_ctype',
+    )
+
+    list_filter = (
+        PolymorphicChildModelFilter,
+        'lesson',
+        'difficulty',
+        'status',
+    )
+
+    search_fields = ('question_text',)

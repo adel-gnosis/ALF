@@ -1,0 +1,418 @@
+{
+  "subject": "Grammaire",
+  "level": 2,
+  "activities": [
+    {
+      "type": "MCQActivity",
+      "question_text": "Mets à la forme négative : Je suis étudiant → Je ___ étudiant.",
+      "choices": [
+        "ne suis pas",
+        "suis ne pas",
+        "pas suis",
+        "ne pas suis"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis la bonne question :",
+      "choices": [
+        "Est-ce que tu es prêt ?",
+        "Tu est prêt ?",
+        "Est-ce tu es prêt ?",
+        "Es tu prêt ?"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Choisis le bon possessif : ___ mère (ma).",
+      "choices": [
+        "mon",
+        "ma",
+        "mes",
+        "ton"
+      ],
+      "correct_answer_index": 1,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MCQActivity",
+      "question_text": "Conjugue : Je ___ (parler).",
+      "choices": [
+        "parle",
+        "parles",
+        "parlent",
+        "parlons"
+      ],
+      "correct_answer_index": 0,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Je ___ pas fatigué.",
+      "correct_answer": "ne suis",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Tu ___ pas ici.",
+      "correct_answer": "n'es",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "___-ce que tu aimes le café ?",
+      "correct_answer": "Est",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "FillBlankActivity",
+      "question_text": "Je ___ français.",
+      "correct_answer": "parle",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : famille (EN/AR).",
+      "pairs": {
+        "père": "father",
+        "mère": "mother",
+        "frère": "brother",
+        "sœur": "sister"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "père": {
+          "en": "father",
+          "ar": "أب"
+        },
+        "mère": {
+          "en": "mother",
+          "ar": "أم"
+        },
+        "frère": {
+          "en": "brother",
+          "ar": "أخ"
+        },
+        "sœur": {
+          "en": "sister",
+          "ar": "أخت"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : verbes -er (EN/AR).",
+      "pairs": {
+        "parler": "to speak",
+        "aimer": "to like",
+        "habiter": "to live",
+        "regarder": "to watch"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "parler": {
+          "en": "to speak",
+          "ar": "يتكلم"
+        },
+        "aimer": {
+          "en": "to like",
+          "ar": "يحب"
+        },
+        "habiter": {
+          "en": "to live",
+          "ar": "يسكن"
+        },
+        "regarder": {
+          "en": "to watch",
+          "ar": "يشاهد"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : expressions (EN/AR).",
+      "pairs": {
+        "je n'aime pas": "I don't like",
+        "je ne sais pas": "I don't know",
+        "s'il vous plaît": "please",
+        "excusez-moi": "excuse me"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "je n'aime pas": {
+          "en": "I don't like",
+          "ar": "لا أحب"
+        },
+        "je ne sais pas": {
+          "en": "I don't know",
+          "ar": "لا أعرف"
+        },
+        "s'il vous plaît": {
+          "en": "please",
+          "ar": "من فضلك"
+        },
+        "excusez-moi": {
+          "en": "excuse me",
+          "ar": "عذراً"
+        }
+      }
+    },
+    {
+      "type": "MatchingActivity",
+      "question_text": "Associe : lieux (EN/AR).",
+      "pairs": {
+        "école": "school",
+        "maison": "house",
+        "ville": "city",
+        "café": "cafe"
+      },
+      "values_are_translatable": false,
+      "difficulty": "BEGINNER",
+      "pairs_i18n": {
+        "école": {
+          "en": "school",
+          "ar": "مدرسة"
+        },
+        "maison": {
+          "en": "house",
+          "ar": "منزل"
+        },
+        "ville": {
+          "en": "city",
+          "ar": "مدينة"
+        },
+        "café": {
+          "en": "cafe",
+          "ar": "مقهى"
+        }
+      }
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "Je",
+        "ne",
+        "suis",
+        "pas",
+        "fatigué",
+        "."
+      ],
+      "correct_order": [
+        "Je",
+        "ne",
+        "suis",
+        "pas",
+        "fatigué",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "Est-ce",
+        "que",
+        "tu",
+        "aimes",
+        "le",
+        "thé",
+        "?"
+      ],
+      "correct_order": [
+        "Est-ce",
+        "que",
+        "tu",
+        "aimes",
+        "le",
+        "thé",
+        "?"
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "C'",
+        "est",
+        "ma",
+        "mère",
+        "."
+      ],
+      "correct_order": [
+        "C'",
+        "est",
+        "ma",
+        "mère",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "DragOrderActivity",
+      "question_text": "Remets la phrase dans le bon ordre :",
+      "words": [
+        "Je",
+        "parle",
+        "français",
+        "et",
+        "arabe",
+        "."
+      ],
+      "correct_order": [
+        "Je",
+        "parle",
+        "français",
+        "et",
+        "arabe",
+        "."
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'parler' au présent :",
+      "verb_infinitive": "parler",
+      "tense": "présent",
+      "pronoun": "je",
+      "correct_conjugation": "parle",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'parler' au présent :",
+      "verb_infinitive": "parler",
+      "tense": "présent",
+      "pronoun": "tu",
+      "correct_conjugation": "parles",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'aimer' au présent :",
+      "verb_infinitive": "aimer",
+      "tense": "présent",
+      "pronoun": "il",
+      "correct_conjugation": "aime",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "ConjugationActivity",
+      "question_text": "Conjugue 'habiter' au présent :",
+      "verb_infinitive": "habiter",
+      "tense": "présent",
+      "pronoun": "nous",
+      "correct_conjugation": "habitons",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels éléments forment la négation en français ?",
+      "choices": [
+        "ne",
+        "pas",
+        "très",
+        "est-ce que"
+      ],
+      "correct_indices": [
+        0,
+        1
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots sont des possessifs ?",
+      "choices": [
+        "mon",
+        "ma",
+        "mes",
+        "bonjour"
+      ],
+      "correct_indices": [
+        0,
+        1,
+        2
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Choisis les verbes en -er :",
+      "choices": [
+        "parler",
+        "être",
+        "aimer",
+        "avoir"
+      ],
+      "correct_indices": [
+        0,
+        2
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "MultipleAnswerActivity",
+      "question_text": "Quels mots peuvent commencer une question ?",
+      "choices": [
+        "Est-ce que",
+        "Pourquoi",
+        "Maison",
+        "Pomme"
+      ],
+      "correct_indices": [
+        0,
+        1
+      ],
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Transforme en négatif : Je suis ici → Je ___ ici.",
+      "correct_answers": [
+        "ne suis pas",
+        "ne suis pas."
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Écris le possessif : ___ frère (mon).",
+      "correct_answers": [
+        "mon"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Conjugue : Nous ___ (aimer).",
+      "correct_answers": [
+        "aimons"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    },
+    {
+      "type": "TextInputActivity",
+      "question_text": "Réponds : Tu habites où ? → J'habite à ___.",
+      "correct_answers": [
+        "Rabat",
+        "Casablanca",
+        "Marrakech"
+      ],
+      "case_sensitive": false,
+      "difficulty": "BEGINNER"
+    }
+  ]
+}

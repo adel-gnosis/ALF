@@ -177,9 +177,10 @@ class Command(BaseCommand):
                 activity_fields = {
                     'lesson': lesson,
                     'created_by': teacher,
-                    'is_approved': True,
+                    'status': 'APPROVED',
                     'order': idx
                 }
+
                 
                 # Add all fields except 'type'
                 for key, value in activity_data.items():
@@ -281,9 +282,10 @@ class Command(BaseCommand):
                     activity_fields = {
                         'lesson': lesson,
                         'created_by': teacher,
-                        'is_approved': True,
+                        'status': 'APPROVED',
                         'order': idx
                     }
+
                     
                     # Add all fields except 'type' and 'level'
                     for key, value in activity_data.items():

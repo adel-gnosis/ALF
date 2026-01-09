@@ -2,6 +2,7 @@ from rest_framework import views, viewsets, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext as _
 
 from .models import (
     UserProgress, SubjectProgress, StudySession, FailedActivityQueue, WeaknessAlert
@@ -95,8 +96,10 @@ class SessionViewSet(viewsets.ViewSet):
             activity=activity,
             user_answer=user_answer,
             is_correct=is_correct,
-            time_spent=serializer.validated_data.get('time_spent')
+            time_spent=serializer.validated_data.get('time_spent'),
+            client_attempt_uuid=serializer.validated_data['client_attempt_uuid'],
         )
+
         
         # Get correct answer if wrong
         correct_answer = None
@@ -194,34 +197,39 @@ class SessionViewSet(viewsets.ViewSet):
         elif isinstance(activity, FillBlankActivity):
             return str(user_answer).strip().lower() == str(activity.correct_answer).strip().lower()
         elif isinstance(activity, MatchingActivity):
-            # Compare dict equality where keys and values match
-            # user_answer comes as {key: value}
             if not isinstance(user_answer, dict):
                 return False
-                
-            # We need to translate the stored pairs to match what the user sees
-            stored_pairs = activity.pairs
+
+            user_lang = getattr(self.request.user, 'native_language', 'fr') or 'fr'
+
+            if getattr(activity, "pairs_i18n", None):
+                expected_pairs = {}
+                for fr_word, translations in (activity.pairs_i18n or {}).items():
+                    if not isinstance(translations, dict):
+                        continue
+                    if user_lang in translations and str(translations[user_lang]).strip():
+                        expected_pairs[fr_word] = translations[user_lang]
+                    elif 'fr' in translations and str(translations['fr']).strip():
+                        expected_pairs[fr_word] = translations['fr']
+                return user_answer == expected_pairs
+
             expected_pairs = {}
-            
-            # Determine user language for verification context
-            request = self.request
-            user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
-            
-            from django.utils import translation
-            from django.utils.translation import gettext as _
-            
-            with translation.override(user_lang):
-                for k, v in stored_pairs.items():
-                    if isinstance(v, str) and v.startswith('key:'):
+            if activity.values_are_translatable:
+                for fr_word, value in (activity.pairs or {}).items():
+                    if isinstance(value, str) and value.startswith('key:'):
+                        key = value.replace('key:', '', 1)
                         try:
-                            expected_pairs[k] = _(v.replace('key:', '', 1))
-                        except:
-                            expected_pairs[k] = v
+                            expected_pairs[fr_word] = _(key)
+                        except Exception:
+                            expected_pairs[fr_word] = value
                     else:
-                        expected_pairs[k] = v
-            
-            # Normalize for comparison
+                        expected_pairs[fr_word] = value
+            else:
+                expected_pairs = activity.pairs or {}
+
             return user_answer == expected_pairs
+
+
         elif isinstance(activity, ConjugationActivity):
             return str(user_answer).strip().lower() == str(activity.correct_conjugation).strip().lower()
         elif isinstance(activity, DragOrderActivity):
@@ -251,15 +259,38 @@ class SessionViewSet(viewsets.ViewSet):
     def _get_correct_answer(self, activity):
         """Get the correct answer for an activity"""
         if isinstance(activity, MCQActivity):
-            # Return actual text of the correct choice
+            request = self.request
+            user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
+
+            if getattr(activity, "choices_i18n", None):
+                try:
+                    choice = activity.choices_i18n[activity.correct_answer_index]
+                    if isinstance(choice, dict):
+                        return choice.get(user_lang) or choice.get('fr') or ""
+                except Exception:
+                    return "Unknown"
+
+            # legacy fallback
             try:
                 return activity.choices[activity.correct_answer_index]
             except (IndexError, TypeError):
                 return "Unknown"
+
         elif isinstance(activity, FillBlankActivity):
             return activity.correct_answer
         elif isinstance(activity, MatchingActivity):
+            request = self.request
+            user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
+
+            if getattr(activity, "pairs_i18n", None):
+                rendered = {}
+                for fr_word, translations in (activity.pairs_i18n or {}).items():
+                    if isinstance(translations, dict):
+                        rendered[fr_word] = translations.get(user_lang) or translations.get('fr') or ""
+                return rendered
+
             return activity.pairs
+
         elif isinstance(activity, ConjugationActivity):
             return activity.correct_conjugation
         elif isinstance(activity, DragOrderActivity):
@@ -275,11 +306,26 @@ class SessionViewSet(viewsets.ViewSet):
                     return str(activity.correct_order)
             return activity.correct_order
         elif isinstance(activity, MultipleAnswerActivity):
-             # Return list of correct choice texts
+            request = self.request
+            user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
+
+            if getattr(activity, "choices_i18n", None):
+                out = []
+                for i in activity.correct_indices:
+                    try:
+                        choice = activity.choices_i18n[i]
+                        if isinstance(choice, dict):
+                            out.append(choice.get(user_lang) or choice.get('fr') or "")
+                    except Exception:
+                        continue
+                return out
+
+            # legacy fallback
             try:
                 return [activity.choices[i] for i in activity.correct_indices]
             except (IndexError, TypeError):
                 return activity.correct_indices
+
         elif isinstance(activity, TextInputActivity):
             return activity.correct_answers[0] if activity.correct_answers else ""
         return None
@@ -526,14 +572,14 @@ class SubjectModeViewSet(viewsets.ViewSet):
         """POST /api/sessions/{id}/complete/ - Complete a session"""
         session = get_object_or_404(StudySession, id=pk, user=request.user) # Use pk to fetch session
         
-        if session.status == 'COMPLETED':
+        if session.outcome == 'COMPLETED':
             return Response(
                 {'error': 'Session already completed'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
         # Complete the session using service
-        result = complete_study_session(session)
+        result = complete_session(session)
         
         # Serialize nested objects properly
         response_data = {
@@ -598,10 +644,19 @@ class PlacementTestViewSet(viewsets.ViewSet):
         
         # Check correctness (reuse from SessionViewSet)
         session_viewset = SessionViewSet()
+        session_viewset.request = request  # ✅ required because _check_answer uses self.request
         is_correct = session_viewset._check_answer(activity, user_answer)
+
         
         # Submit and adjust level
-        result = PlacementTest.submit_placement_answer(session, activity, user_answer, is_correct)
+        result = PlacementTest.submit_placement_answer(
+            session,
+            activity,
+            user_answer,
+            is_correct,
+            client_attempt_uuid=serializer.validated_data['client_attempt_uuid']
+        )
+
         
         # Add correct answer if wrong
         if not is_correct:

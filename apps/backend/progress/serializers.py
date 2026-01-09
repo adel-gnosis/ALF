@@ -156,6 +156,10 @@ class SubmitActivityRequestSerializer(serializers.Serializer):
     user_answer = serializers.JSONField()
     time_spent = serializers.IntegerField(required=False, allow_null=True)
 
+    # Required for idempotency
+    client_attempt_uuid = serializers.UUIDField()
+
+
 
 class SubmitActivityResponseSerializer(serializers.Serializer):
     is_correct = serializers.BooleanField()
@@ -172,10 +176,18 @@ class CompleteSessionResponseSerializer(serializers.Serializer):
     outcome = serializers.CharField()
     next_action = serializers.CharField()
     message = serializers.CharField()
+
     subject_breakdown = serializers.ListField()
     weak_subjects = serializers.ListField()
     recommendations = serializers.ListField()
     suggested_level = serializers.IntegerField(required=False, allow_null=True)
+
+    # Gamification summary (V1)
+    xp_earned = serializers.IntegerField()
+    total_xp = serializers.IntegerField()
+    streak = serializers.DictField()
+    new_achievements = serializers.ListField()
+
 
 
 class WeaknessAnalysisSerializer(serializers.Serializer):
@@ -207,6 +219,10 @@ class PlacementAnswerRequestSerializer(serializers.Serializer):
     activity_id = serializers.IntegerField()
     user_answer = serializers.JSONField()
 
+    # Required for idempotency
+    client_attempt_uuid = serializers.UUIDField()
+
+
 
 class PlacementAnswerResponseSerializer(serializers.Serializer):
     is_correct = serializers.BooleanField()
@@ -221,3 +237,9 @@ class PlacementCompleteResponseSerializer(serializers.Serializer):
     accuracy = serializers.FloatField()
     unlocked_levels = serializers.ListField()
     weakness_summary = serializers.ListField()
+
+    # Placement XP (no streak)
+    xp_earned = serializers.IntegerField()
+    total_xp = serializers.IntegerField()
+    new_achievements = serializers.ListField()
+
