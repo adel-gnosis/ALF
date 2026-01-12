@@ -1,10 +1,11 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import api from '../services/api';
 import Button from '../components/Button';
 import { getSubjectColor } from '../constants/subjectColors';
 import type { CompleteSessionResponse } from '../types/session';
+import { rehearseMissedSession } from '@/services/sessionService';
 
 export default function SessionCompleteScreen() {
     const router = useRouter();
@@ -12,6 +13,8 @@ export default function SessionCompleteScreen() {
 
     // Fetch session results
     const { data, isLoading } = useQuery({
+
+        
         queryKey: ['session-complete', sessionId],
         queryFn: async () => {
             const response = await api.post(`/sessions/${sessionId}/complete/`);
@@ -19,6 +22,15 @@ export default function SessionCompleteScreen() {
         },
         enabled: !!sessionId,
     });
+
+    const rehearseMutation = useMutation({
+        mutationFn: () => rehearseMissedSession(sessionId),
+        onSuccess: (res) => {
+            // Navigate to the newly created rehearsal session
+            router.replace(`/session/${res.session_id}`);
+        },
+    });
+
 
     if (isLoading || !data) {
         return null;
@@ -118,13 +130,15 @@ export default function SessionCompleteScreen() {
                     variant="outline"
                 />
 
-                <Button
-                    title="Pratiquer les Erreurs"
-                    onPress={() => {
-                        router.replace('/(tabs)/practice');
-                    }}
-                    variant="outline"
-                />
+                {!passed && (
+                    <Button
+                        title="Pratiquer les Erreurs"
+                        onPress={() => rehearseMutation.mutate()}
+                        loading={rehearseMutation.isPending}
+                        variant="outline"
+                    />
+                )}
+
 
                 <Button
                     title="Retour au Tableau de Bord"

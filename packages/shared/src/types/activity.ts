@@ -48,11 +48,21 @@ export interface TextInputActivity extends BaseActivity {
     case_sensitive: boolean;
 }
 
+export interface DicteeActivity extends BaseActivity {
+  resourcetype: 'DicteeActivity';
+  audio_urls: string[];
+  correct_text: string;
+  case_sensitive: boolean;
+}
+
+
 export type Activity =
-    | MCQActivity
-    | FillBlankActivity
-    | MatchingActivity
-    | DragOrderActivity
-    | ConjugationActivity
-    | MultipleAnswerActivity
-    | TextInputActivity;
+  | MCQActivity
+  | FillBlankActivity
+  | MatchingActivity
+  | DragOrderActivity
+  | ConjugationActivity
+  | MultipleAnswerActivity
+  | TextInputActivity
+  | DicteeActivity;
+

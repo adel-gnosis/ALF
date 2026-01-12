@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from courses.models import Level, Subject, Lesson
 from activities.models import (
-    MCQActivity, FillBlankActivity, MatchingActivity,
+    DicteeActivity, MCQActivity, FillBlankActivity, MatchingActivity,
     DragOrderActivity, ConjugationActivity, MultipleAnswerActivity, TextInputActivity
 )
 
@@ -142,6 +142,8 @@ class Command(BaseCommand):
             'ConjugationActivity': ConjugationActivity,
             'MultipleAnswerActivity': MultipleAnswerActivity,
             'TextInputActivity': TextInputActivity,
+            'DicteeActivity': DicteeActivity,
+
         }
         
         for idx, activity_data in enumerate(activities):

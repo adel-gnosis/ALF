@@ -1,0 +1,34 @@
+{
+    "dashboard": {
+        "greeting": "Hello, {{name}}! 👋",
+        "currentLevel": "Current Level: {{level}}",
+        "startJourney": "Start Your Journey",
+        "startDescription": "Determine your level with a placement test or start directly at beginner level.",
+        "placementTest": "Placement Test",
+        "startA1": "Start at Level A1.1",
+        "progress": "Progress",
+        "attempts": "Attempts",
+        "accuracy": "Accuracy",
+        "continueLearning": "Continue Learning",
+        "quickActions": "Quick Actions",
+        "practice": "Practice",
+        "levels": "Levels",
+        "stats": "Stats",
+        "profile": "Profile",
+        "streakTitle": "Learning Streak",
+        "streakDesc": "Keep learning every day to maintain your streak!",
+        "xpTotal": "Total XP",
+        "days": "Days"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success"
+    },
+    "auth": {
+        "login": "Login",
+        "register": "Register",
+        "email": "Email",
+        "password": "Password"
+    }
+}

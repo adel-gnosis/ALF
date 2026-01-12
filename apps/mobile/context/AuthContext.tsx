@@ -2,9 +2,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import storage from '../services/storage';
 import { useRouter, useSegments } from 'expo-router';
 import api from '../services/api';
+import { User } from '../types/session';
 
 type AuthContextType = {
-    user: any;
+    user: User | null;
     isLoading: boolean;
     signIn: (token: string, refreshToken: string) => Promise<void>;
     signOut: () => Promise<void>;
@@ -17,7 +18,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
     const segments = useSegments();

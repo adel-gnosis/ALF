@@ -1,0 +1,46 @@
+{
+  "subject": "Dictée",
+  "level": 1,
+  "activities": [
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Bonjour !",
+      "case_sensitive": false,
+      "difficulty": "EASY",
+      "points": 10,
+      "explanation": "N’oublie pas la majuscule et le point d’exclamation."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Je m'appelle Lina.",
+      "case_sensitive": false,
+      "difficulty": "EASY",
+      "points": 10,
+      "explanation": "Attention à l’apostrophe dans « m'appelle »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "J'ai un chat.",
+      "case_sensitive": false,
+      "difficulty": "EASY",
+      "points": 10,
+      "explanation": "Attention à l’apostrophe dans « J'ai »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Il est à l'école.",
+      "case_sensitive": false,
+      "difficulty": "EASY",
+      "points": 10,
+      "explanation": "Attention à l’accent dans « à » et à l’apostrophe."
+    }
+  ]
+}

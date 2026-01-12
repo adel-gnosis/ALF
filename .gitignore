@@ -1,6 +1,7 @@
 ﻿# =========================
 # ALF Monorepo .gitignore
 # =========================
+.pnpm/
 
 # --- Node / pnpm / turbo ---
 node_modules/

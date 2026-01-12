@@ -157,7 +157,8 @@ class SubmitActivityRequestSerializer(serializers.Serializer):
     time_spent = serializers.IntegerField(required=False, allow_null=True)
 
     # Required for idempotency
-    client_attempt_uuid = serializers.UUIDField()
+    client_attempt_uuid = serializers.UUIDField(required=False, allow_null=True)
+
 
 
 
@@ -177,16 +178,16 @@ class CompleteSessionResponseSerializer(serializers.Serializer):
     next_action = serializers.CharField()
     message = serializers.CharField()
 
-    subject_breakdown = serializers.ListField()
-    weak_subjects = serializers.ListField()
-    recommendations = serializers.ListField()
+    subject_breakdown = serializers.ListField(required=False, default=list)
+    weak_subjects = serializers.ListField(required=False, default=list)
+    recommendations = serializers.ListField(required=False, default=list)
     suggested_level = serializers.IntegerField(required=False, allow_null=True)
 
     # Gamification summary (V1)
-    xp_earned = serializers.IntegerField()
-    total_xp = serializers.IntegerField()
-    streak = serializers.DictField()
-    new_achievements = serializers.ListField()
+    xp_earned = serializers.IntegerField(required=False, default=0)
+    total_xp = serializers.IntegerField(required=False, default=0)
+    streak = serializers.DictField(required=False, default=dict)
+    new_achievements = serializers.ListField(required=False, default=list)
 
 
 

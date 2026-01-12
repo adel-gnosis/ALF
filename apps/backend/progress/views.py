@@ -1,3 +1,4 @@
+import uuid
 from rest_framework import views, viewsets, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -9,11 +10,11 @@ from .models import (
 )
 from .serializers import *
 from .services import (
-    start_session, get_next_activity, record_attempt, complete_session,
+    create_rehearsal_missed_session, start_session, get_next_activity, record_attempt, complete_session,
     get_weakness_analysis, PlacementTest, reset_session_for_replay
 )
 from activities.models import (
-    Activity, MCQActivity, FillBlankActivity, MatchingActivity,
+    Activity, DicteeActivity, MCQActivity, FillBlankActivity, MatchingActivity,
     ConjugationActivity, DragOrderActivity, MultipleAnswerActivity, TextInputActivity
 )
 from courses.models import Level
@@ -59,6 +60,41 @@ class SessionViewSet(viewsets.ViewSet):
         session = get_object_or_404(StudySession, id=pk, user=request.user)
         return Response(StudySessionDetailSerializer(session).data)
     
+    @action(detail=True, methods=["post"], url_path="rehearse-missed")
+    def rehearse_missed(self, request, pk=None):
+        """
+        POST /api/sessions/{id}/rehearse-missed/
+        Creates a rehearsal session that contains ONLY the missed activities from this session.
+        Does NOT affect progress, XP, or SRS.
+        """
+        source_session = get_object_or_404(StudySession, id=pk, user=request.user)
+
+        result = create_rehearsal_missed_session(source_session=source_session)
+
+        if result["session"] is None:
+            return Response(
+                {"detail": "No missed activities to rehearse."},
+                status=status.HTTP_200_OK
+            )
+
+        rehearsal = result["session"]
+
+        response_data = {
+            "session_id": rehearsal.id,
+            "session_type": rehearsal.session_type,
+            "set_number": rehearsal.set_number,
+            "level": rehearsal.level,
+            "subject": rehearsal.subject,
+            "missed_count": result["missed_count"],
+            "message": f"Répétition: {result['missed_count']} activités ratées (sans impact sur la progression)."
+        }
+
+        return Response(
+            StartSessionResponseSerializer(response_data).data,
+            status=status.HTTP_201_CREATED
+        )
+
+    
     @action(detail=True, methods=['get'], url_path='next-activity')
     def next_activity(self, request, pk=None):
         """GET /api/sessions/{id}/next-activity/ - Get next activity"""
@@ -97,7 +133,8 @@ class SessionViewSet(viewsets.ViewSet):
             user_answer=user_answer,
             is_correct=is_correct,
             time_spent=serializer.validated_data.get('time_spent'),
-            client_attempt_uuid=serializer.validated_data['client_attempt_uuid'],
+            client_attempt_uuid=serializer.validated_data.get('client_attempt_uuid') or uuid.uuid4(),
+
         )
 
         
@@ -243,6 +280,19 @@ class SessionViewSet(viewsets.ViewSet):
             if not isinstance(user_answer, list):
                 return False
             return sorted(user_answer) == sorted(activity.correct_indices)
+        
+        elif isinstance(activity, DicteeActivity):
+            # user_answer should be the text transcription
+            ans = str(user_answer).strip()
+            correct = str(getattr(activity, "correct_text", "")).strip()
+
+            # If not case-sensitive, compare lowercased
+            if not getattr(activity, "case_sensitive", False):
+                ans = ans.lower()
+                correct = correct.lower()
+
+            return ans == correct
+
         elif isinstance(activity, TextInputActivity):
             # correct_answers is list of acceptable strings
             ans = str(user_answer).strip()
@@ -278,6 +328,9 @@ class SessionViewSet(viewsets.ViewSet):
 
         elif isinstance(activity, FillBlankActivity):
             return activity.correct_answer
+        elif isinstance(activity, DicteeActivity):
+            return getattr(activity, "correct_text", None)
+
         elif isinstance(activity, MatchingActivity):
             request = self.request
             user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'

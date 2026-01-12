@@ -1,0 +1,46 @@
+{
+  "subject": "Dictée",
+  "level": 3,
+  "activities": [
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Ce matin, je vais au marché.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention à la virgule après « matin »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Il n'aime pas le café.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention à la négation « n'… pas » et à l’apostrophe."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "J'habite près de la gare.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention à l’accent dans « près »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Nous avons deux livres et trois cahiers.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention aux pluriels : « livres », « cahiers »."
+    }
+  ]
+}

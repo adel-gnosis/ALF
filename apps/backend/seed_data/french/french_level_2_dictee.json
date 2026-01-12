@@ -1,0 +1,46 @@
+{
+  "subject": "Dictée",
+  "level": 2,
+  "activities": [
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Je suis dans la classe.",
+      "case_sensitive": false,
+      "difficulty": "EASY",
+      "points": 10,
+      "explanation": "Écris tous les mots, sans en oublier."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Elle a une petite sœur.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention à l’accent circonflexe dans « sœur »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Nous mangeons une pomme rouge.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Accord en genre : « une pomme rouge »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Où est mon cahier ?",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention à l’accent dans « Où » et au point d’interrogation."
+    }
+  ]
+}

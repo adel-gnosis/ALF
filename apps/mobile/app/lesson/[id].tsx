@@ -72,9 +72,11 @@ export default function LessonScreen() {
         if (!currentActivity) return <Text>No activities found.</Text>;
 
         const props = {
-            data: currentActivity,
-            onAnswer: (ans: any) => setCurrentAnswer(ans)
+            activity: currentActivity,
+            onAnswer: (ans: any) => setCurrentAnswer(ans),
+            disabled: submitMutation.isPending || !!feedback,
         };
+
 
         switch (currentActivity.resourcetype) {
             case 'MCQActivity': return <MCQActivity {...props} />;
@@ -141,8 +143,9 @@ export default function LessonScreen() {
                         title="Check Answer"
                         onPress={handleCheck}
                         disabled={currentAnswer === null || submitMutation.isPending}
-                        isLoading={submitMutation.isPending}
+                        loading={submitMutation.isPending}
                     />
+
                 )}
             </View>
         </View>

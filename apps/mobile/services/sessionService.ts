@@ -37,8 +37,27 @@ export const sessionApi = {
         sessionId: string,
         data: SubmitActivityRequest
     ): Promise<SubmitActivityResponse> => {
-        const response = await api.post(`/sessions/${sessionId}/submit/`, data);
-        return response.data;
+        // Generate a random UUID v4 for idempotency
+        const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+
+        const payload = {
+            ...data,
+            client_attempt_uuid: data.client_attempt_uuid || uuid
+        };
+
+        console.log('[sessionService] Submitting payload:', JSON.stringify(payload, null, 2));
+
+        try {
+            const response = await api.post(`/sessions/${sessionId}/submit/`, payload);
+            return response.data;
+        } catch (error: any) {
+            console.error('[sessionService] Submit failed. Response:', error.response?.data);
+            console.error('[sessionService] Status:', error.response?.status);
+            throw error;
+        }
     },
 
     /**
@@ -167,4 +186,10 @@ export function useReplaySession() {
             queryClient.invalidateQueries({ queryKey: ['progress'] });
         },
     });
+}
+
+
+export async function rehearseMissedSession(sessionId: string) {
+    const res = await api.post(`/sessions/${sessionId}/rehearse-missed/`);
+    return res.data;
 }

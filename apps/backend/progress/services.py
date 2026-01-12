@@ -35,9 +35,17 @@ def _filter_by_ui_language(qs, user):
     - supported_ui_languages != [] => allow only if user's native_language is inside
     """
     user_lang = getattr(user, "native_language", None) or "fr"
-    return qs.filter(
-        Q(supported_ui_languages=[]) | Q(supported_ui_languages__contains=[user_lang])
-    )
+    
+    # SQLite fallback: Filter in Python to avoid "contains lookup not supported"
+    # This fetches all relevant rows, checks list, and returns ID-filtered QS
+    all_objs = list(qs)
+    valid_ids = []
+    for obj in all_objs:
+        langs = getattr(obj, 'supported_ui_languages', []) or []
+        if not langs or user_lang in langs:
+            valid_ids.append(obj.id)
+            
+    return qs.filter(id__in=valid_ids)
 
 
 def calculate_session_xp(session) -> int:
@@ -167,10 +175,19 @@ def build_initial_activity_queue(
 
     # ✅ NEW: filter out failed items that aren't supported by user's UI language
     user_lang = getattr(user, "native_language", None) or "fr"
-    due_failed_qs = due_failed_qs.filter(
-        Q(activity__supported_ui_languages=[]) |
-        Q(activity__supported_ui_languages__contains=[user_lang])
-    )
+    
+    # Python-side filtering for SQLite compatibility
+    all_failed = list(due_failed_qs)
+    valid_failed_ids = []
+    for f in all_failed:
+        # Check the related activity's languages
+        # Access via foreign key (already selected_related)
+        act = f.activity
+        langs = getattr(act, 'supported_ui_languages', []) or []
+        if not langs or user_lang in langs:
+             valid_failed_ids.append(f.id)
+             
+    due_failed_qs = due_failed_qs.filter(id__in=valid_failed_ids)
 
 
     due_review_ids = list(
@@ -470,6 +487,46 @@ def get_next_activity(session):
     }
 
 
+
+@transaction.atomic
+def create_rehearsal_missed_session(*, source_session: StudySession) -> dict:
+    """
+    Create a REHEARSAL_MISSED session containing ONLY the activities missed in source_session.
+    IMPORTANT: This session must NOT affect:
+      - UserProgress / SubjectProgress
+      - XP awarding
+      - FailedActivityQueue (SRS)
+      - Weakness snapshots / alerts
+    """
+
+    # Pull only incorrect attempts from THIS session
+    missed_ids = list(
+        ActivityAttempt.objects
+        .filter(user=source_session.user, session_id=source_session.id, is_correct=False)
+        .values_list("activity_id", flat=True)
+        .distinct()
+    )
+
+    # No missed items => no rehearsal session
+    if not missed_ids:
+        return {"session": None, "missed_count": 0, "missed_ids": []}
+
+    rehearsal = StudySession.objects.create(
+        user=source_session.user,
+        level=source_session.level,
+        subject=source_session.subject,
+        session_type="REHEARSAL_MISSED",
+        target_activities=len(missed_ids),
+
+        # deterministic queue for next-activity
+        initial_activity_queue=missed_ids,
+
+        # IMPORTANT: do not increment progression “set_number”
+        set_number=source_session.set_number,
+    )
+
+    return {"session": rehearsal, "missed_count": len(missed_ids), "missed_ids": missed_ids}
+
 def reset_session_for_replay(session):
     """
     Resets a session to allow replaying the exact same activities.
@@ -595,6 +652,30 @@ def record_attempt(session, activity, user_answer, is_correct, time_spent=None, 
         (session.correct_answers / session.activities_completed) * 100
         if session.activities_completed > 0 else 0
     )
+
+    # ------------------------------------------------------------
+    # REHEARSAL sessions MUST NOT affect progress or SRS
+    # ------------------------------------------------------------
+    if session.session_type == "REHEARSAL_MISSED":
+        session.save(update_fields=[
+            "activities_completed",
+            "correct_answers",
+            "accuracy_percentage",
+            "total_points_earned",
+        ])
+        return {
+            "is_correct": is_correct,
+            "points_earned": activity.points if is_correct else 0,
+            "session_progress": {
+                "completed": session.activities_completed,
+                "target": session.target_activities,
+                "correct": session.correct_answers,
+                "accuracy": session.accuracy_percentage,
+            },
+            "added_to_queue": False,
+            "resolved_from_queue": False,
+        }
+
     session.save()
     
     # Update UserProgress (overall level)
@@ -745,6 +826,50 @@ def complete_session(session):
         }
     """
 
+    if session.session_type == "REHEARSAL_MISSED":
+        session.outcome = "COMPLETED"
+        session.ended_at = timezone.now()
+        session.completion_xp_awarded = False
+
+        # keep payload JSON-serializable
+        session.completion_payload = {
+            "mode": "REHEARSAL_MISSED",
+            "accuracy": float(session.accuracy_percentage or 0),
+            "completed": int(session.activities_completed or 0),
+            "target": int(session.target_activities or 0),
+            "correct": int(session.correct_answers or 0),
+            "note": "Rehearsal session: no XP, no progress changes, no SRS changes.",
+        }
+
+        session.save(update_fields=[
+            "completion_payload",
+            "completion_xp_awarded",
+            "outcome",
+            "ended_at",
+        ])
+
+        return {
+            # Required core fields
+            "passed": False,  # rehearsal is not a pass/fail gate
+            "accuracy": float(session.accuracy_percentage or 0),
+            "outcome": "COMPLETED",
+            "next_action": "DONE",
+            "message": "Répétition terminée (aucun changement de progression).",
+
+            # Required analytics fields (must exist even if empty)
+            "subject_breakdown": [],
+            "weak_subjects": [],
+            "recommendations": [],
+            "suggested_level": None,
+
+            # Required gamification summary (V1)
+            "xp_earned": 0,
+            "total_xp": 0,
+            "streak": {},
+            "new_achievements": [],
+        }
+
+
     # Idempotent completion: if already completed, return stored payload
     if session.completion_payload:
         return session.completion_payload
@@ -806,6 +931,9 @@ def complete_session(session):
         
         if accuracy < 60:
             weak_subjects.append(subj)
+    # JSON-safe version of weak subjects (never store Subject objects in completion_payload)
+    weak_subjects_payload = [{'id': s.id, 'name': s.title} for s in weak_subjects]
+
     
     # Update or create weakness alerts
     for weak_subject in weak_subjects:
@@ -832,7 +960,7 @@ def complete_session(session):
                     'sessions_analyzed': recent_sessions.count(),
                     'average_accuracy': avg_accuracy,
                     'severity': severity,
-                    'message': f"Vous avez des difficultés avec {weak_subject.title} au Niveau {level.cefr_code}",
+                    'message': f"Vous avez des difficultés avec {weak_subject.title} au Niveau {level.code}",
                     'recommendation': f"Essayez un parcours {weak_subject.title} spécifique pour renforcer cette compétence.",
                     'is_active': True
                 }
@@ -898,7 +1026,7 @@ def complete_session(session):
             'next_action': 'NEXT_LEVEL',
             'message': f'Félicitations! Vous avez réussi avec {accuracy:.1f}% de précision!',
             'subject_breakdown': sorted(subject_breakdown, key=lambda x: x['accuracy']),
-            'weak_subjects': weak_subjects,
+            'weak_subjects': weak_subjects_payload,
             'recommendations': recommendations,
             'suggested_level': next_level.id if next_level else None
         }
@@ -928,7 +1056,7 @@ def complete_session(session):
             'next_action': 'RETRY',
             'message': f'Précision: {accuracy:.1f}%. Continuez à pratiquer ce niveau!',
             'subject_breakdown': sorted(subject_breakdown, key=lambda x: x['accuracy']),
-            'weak_subjects': weak_subjects,
+            'weak_subjects': weak_subjects_payload,
             'recommendations': recommendations,
             'can_retry': True,
             'suggested_level': None
@@ -941,7 +1069,7 @@ def complete_session(session):
         
         recommendations.append({
             'type': 'DOWNGRADE',
-            'message': f'Révisez le Niveau {prev_level.cefr_code if prev_level else level.cefr_code} pour consolider vos bases',
+            'message': f'Révisez le Niveau {prev_level.code if prev_level else level.code} pour consolider vos bases',
             'action': 'DOWNGRADE_LEVEL',
             'suggested_level': prev_level.id if prev_level else None
         })
@@ -960,7 +1088,7 @@ def complete_session(session):
             'next_action': 'DOWNGRADE',
             'message': f'Précision trop basse ({accuracy:.1f}%). Révision recommandée.',
             'subject_breakdown': sorted(subject_breakdown, key=lambda x: x['accuracy']),
-            'weak_subjects': weak_subjects,
+            'weak_subjects': weak_subjects_payload,
             'recommendations': recommendations,
             'suggested_level': prev_level.id if prev_level else None
         }
@@ -1112,6 +1240,9 @@ def get_weakness_analysis(user, level):
                 'subject_id': weak['subject_id']
             }
         })
+
+
+
     
     return {
         'overall_accuracy': sessions.aggregate(avg=models.Avg('accuracy_percentage'))['avg'],

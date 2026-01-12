@@ -1,0 +1,46 @@
+{
+  "subject": "Dictée",
+  "level": 4,
+  "activities": [
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Hier soir, j'ai regardé un film.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention à l’accord et à l’accent dans « regardé »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Demain, nous irons à la bibliothèque.",
+      "case_sensitive": false,
+      "difficulty": "MEDIUM",
+      "points": 10,
+      "explanation": "Attention à l’accent dans « bibliothèque » et « à »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "Il fait froid, mais je n'ai pas peur.",
+      "case_sensitive": false,
+      "difficulty": "HARD",
+      "points": 10,
+      "explanation": "Attention à la virgule, à « mais », et à « n'ai pas »."
+    },
+    {
+      "type": "DicteeActivity",
+      "question_text": "Écoute l’audio et écris exactement la phrase.",
+      "audio_urls": ["/media/audio/placeholder.mp3"],
+      "correct_text": "La maîtresse explique la leçon aux élèves.",
+      "case_sensitive": false,
+      "difficulty": "HARD",
+      "points": 10,
+      "explanation": "Attention aux accents : « maîtresse », « élèves »."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+    "dashboard": {
+        "greeting": "مرحباً، {{name}}! 👋",
+        "currentLevel": "المستوى الحالي: {{level}}",
+        "startJourney": "ابدأ رحلتك",
+        "startDescription": "حدد مستواك باختبار تحديد المستوى أو ابدأ مباشرة من مستوى المبتدئين.",
+        "placementTest": "اختبار تحديد المستوى",
+        "startA1": "ابدأ من المستوى A1.1",
+        "progress": "التقدم",
+        "attempts": "المحاولات",
+        "accuracy": "الدقة",
+        "continueLearning": "تابع التعلم",
+        "quickActions": "إجراءات سريعة",
+        "practice": "تمرين",
+        "levels": "المستويات",
+        "stats": "الإحصائيات",
+        "profile": "الملف الشخصي",
+        "streakTitle": "سلسلة التعلم",
+        "streakDesc": "استمر في التعلم كل يوم للحفاظ على سلسلتك!",
+        "xpTotal": "مجموع نقاط الخبرة",
+        "days": "أيام"
+    },
+    "common": {
+        "loading": "جاري التحميل...",
+        "error": "خطأ",
+        "success": "نجاح"
+    },
+    "auth": {
+        "login": "تسجيل الدخول",
+        "register": "تسجيل جديد",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور"
+    }
+}

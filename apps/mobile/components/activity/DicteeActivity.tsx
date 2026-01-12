@@ -1,115 +1,135 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from 'react';
-import { Audio } from 'expo-av';
-import { API_URL } from '../../services/api';
+import React, { useEffect, useMemo, useState } from "react";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { Audio } from "expo-av";
 
-export default function DicteeActivity({ activity, onAnswer, disabled }: { activity: any, onAnswer: (answer: any) => void, disabled?: boolean }) {
-    const [text, setText] = useState('');
-    const [sound, setSound] = useState<Audio.Sound | null>(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+import { resolveMediaUrl } from "../../services/api";
 
-    // Get audio source
-    // Use uploaded file (audio_file) if available, otherwise first url in audio_urls
-    // Or fallback to checking activity.audio_urls array if backend sends it directly
-    const audioUrl = activity.audio_urls && activity.audio_urls.length > 0
+type DicteeActivityProps = {
+  activity: any;
+  onAnswer: (answer: any) => void;
+  disabled?: boolean;
+  feedback?: "success" | "error" | null;
+};
+
+export default function DicteeActivity({
+  activity,
+  onAnswer,
+  disabled = false,
+  feedback = null,
+}: DicteeActivityProps) {
+  const [text, setText] = useState("");
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Resolve audio URL once (no require inside render)
+  const fullAudioUrl = useMemo(() => {
+    const rawPath =
+      activity?.audio_urls && Array.isArray(activity.audio_urls) && activity.audio_urls.length > 0
         ? activity.audio_urls[0]
         : null;
 
-    // Construct full URL if it's relative
-    // Remove '/api' from the end of API_URL to get the base host
-    const baseUrl = API_URL.replace(/\/api$/, '');
+    return resolveMediaUrl(rawPath);
+  }, [activity]);
 
-    const fullAudioUrl = audioUrl && audioUrl.startsWith('/')
-        ? `${baseUrl}${audioUrl}`
-        : audioUrl;
-
-    // Debug log
-    useEffect(() => {
-        if (audioUrl) {
-            console.log('[DicteeActivity] Audio setup:', {
-                rawUrl: audioUrl,
-                baseUrl,
-                fullUrl: fullAudioUrl
-            });
-        }
-    }, [audioUrl, baseUrl, fullAudioUrl]);
-
-    useEffect(() => {
-        return () => {
-            if (sound) {
-                sound.unloadAsync();
-            }
-        };
-    }, [sound]);
-
-    const playSound = async () => {
-        if (!fullAudioUrl) {
-            console.error('[DicteeActivity] No audio URL available');
-            return;
-        }
-
-        try {
-            console.log('[DicteeActivity] Playing sound:', fullAudioUrl);
-            if (sound) {
-                await sound.unloadAsync();
-            }
-
-            const { sound: newSound } = await Audio.Sound.createAsync(
-                { uri: fullAudioUrl },
-                { shouldPlay: true }
-            );
-
-            setSound(newSound);
-            setIsPlaying(true);
-
-            newSound.setOnPlaybackStatusUpdate((status: any) => {
-                if (status.didJustFinish) {
-                    setIsPlaying(false);
-                }
-            });
-        } catch (error) {
-            console.error('[DicteeActivity] Error playing sound:', error);
-            setIsPlaying(false);
-        }
+  // Cleanup sound on unmount or when sound changes
+  useEffect(() => {
+    return () => {
+      if (sound) {
+        sound.unloadAsync().catch(() => null);
+      }
     };
+  }, [sound]);
 
-    const handleChange = (val: string) => {
-        setText(val);
-        onAnswer(val);
-    };
-
+  const playSound = async () => {
     if (!fullAudioUrl) {
-        return (
-            <View className="p-4 bg-red-50 rounded-lg">
-                <Text className="text-red-600 center">Audio introuvable</Text>
-                <Text className="text-xs text-red-400 mt-2">{activity.audio_urls ? 'URL present but invalid' : 'No URL in data'}</Text>
-            </View>
-        );
+      console.error("[DicteeActivity] No audio URL available");
+      return;
     }
 
+    try {
+      setIsPlaying(true);
+
+      // Stop previous sound
+      if (sound) {
+        await sound.unloadAsync();
+        setSound(null);
+      }
+
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        { uri: fullAudioUrl },
+        { shouldPlay: true }
+      );
+
+      setSound(newSound);
+
+      newSound.setOnPlaybackStatusUpdate((status) => {
+        if (!status.isLoaded) return;
+        if (status.didJustFinish) {
+          setIsPlaying(false);
+        }
+      });
+    } catch (error) {
+      console.error("[DicteeActivity] Error playing sound:", error);
+      setIsPlaying(false);
+    }
+  };
+
+  const handleChange = (val: string) => {
+    setText(val);
+    onAnswer(val);
+  };
+
+  // Determine border + background based on feedback
+  let borderColor = "border-gray-200";
+  if (feedback === "success") borderColor = "border-green-500 bg-green-50";
+  if (feedback === "error") borderColor = "border-red-500 bg-red-50";
+
+  if (!fullAudioUrl) {
     return (
-        <View className="w-full items-center">
-            <Text className="text-lg font-semibold text-gray-800 mb-6 text-center">
-                {activity.question_text || "Écoutez et écrivez ce que vous entendez"}
-            </Text>
-
-            <TouchableOpacity
-                onPress={playSound}
-                disabled={isPlaying || disabled}
-                className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${isPlaying ? 'bg-blue-100' : 'bg-blue-500'
-                    }`}
-            >
-                <Text className="text-3xl">{isPlaying ? '🔊' : '▶️'}</Text>
-            </TouchableOpacity>
-
-            <TextInput
-                value={text}
-                onChangeText={handleChange}
-                placeholder="Écrivez le texte ici..."
-                editable={!disabled}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl bg-white text-lg mb-4"
-                multiline
-            />
-        </View>
+      <View className="p-4 bg-red-50 rounded-lg w-full items-center">
+        <Text className="text-red-600 font-bold mb-1">Audio introuvable</Text>
+        <Text className="text-xs text-red-400">
+          {activity?.audio_urls ? "URL invalide" : "Aucune URL fournie"}
+        </Text>
+      </View>
     );
+  }
+
+  return (
+    <View className="w-full items-center">
+      <Text className="text-lg font-semibold text-gray-800 mb-8 text-center px-4">
+        {activity?.question_text || "Écoutez et écrivez exactement ce que vous entendez"}
+      </Text>
+
+      <TouchableOpacity
+        onPress={playSound}
+        disabled={isPlaying || disabled}
+        className={`w-24 h-24 rounded-full items-center justify-center mb-8 shadow-md active:opacity-80 ${
+          isPlaying ? "bg-blue-100" : "bg-blue-500"
+        }`}
+      >
+        <Text className="text-4xl">{isPlaying ? "🔊" : "▶️"}</Text>
+      </TouchableOpacity>
+
+      <View className="w-full mb-2">
+        <Text className="text-gray-500 mb-2 ml-1 font-medium">Votre réponse :</Text>
+        <TextInput
+          value={text}
+          onChangeText={handleChange}
+          placeholder="Écrivez ici..."
+          editable={!disabled}
+          className={`w-full p-4 border-2 rounded-xl text-lg min-h-[120px] ${borderColor}`}
+          multiline
+          autoCapitalize="sentences"
+          textAlignVertical="top"
+        />
+      </View>
+
+      {disabled && (
+        <Text className="text-xs text-gray-400 mt-2">
+          {isPlaying ? "Audio en cours..." : "Réponse soumise"}
+        </Text>
+      )}
+    </View>
+  );
 }

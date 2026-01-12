@@ -5,14 +5,29 @@ import Button from '../Button';
 
 interface DragOrderActivityProps {
     activity: any;
-    onAnswer: (answer: number[]) => void;
+    onAnswer: (answer: string[]) => void;
     disabled?: boolean;
 }
 
+
+function shuffleArray<T>(arr: T[]): T[] {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+
 export default function DragOrderActivity({ activity, onAnswer, disabled }: DragOrderActivityProps) {
     // Extract words from activity data
-    const words = activity?.data?.words || activity?.words || [];
-    const [orderedWords, setOrderedWords] = useState<string[]>([...words]);
+    const words: string[] = activity?.data?.words || activity?.words || [];
+
+    const [orderedWords, setOrderedWords] = useState<string[]>(
+        shuffleArray(words)
+    );
+
 
     console.log('[DragOrderActivity] Rendering:', { words, disabled });
 
@@ -32,11 +47,12 @@ export default function DragOrderActivity({ activity, onAnswer, disabled }: Drag
 
     const handleSubmit = () => {
         if (disabled) return;
-        // Map words to their original indices
-        const order = orderedWords.map(word => words.indexOf(word));
-        console.log('[DragOrderActivity] Submitting order:', order);
-        onAnswer(order);
+
+        // Backend expects the ordered WORDS, not indices
+        console.log('[DragOrderActivity] Submitting order:', orderedWords);
+        onAnswer(orderedWords);
     };
+
 
     const questionText = activity?.question_text || 'Remettez les mots dans le bon ordre:';
 

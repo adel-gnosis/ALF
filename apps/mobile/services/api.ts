@@ -46,4 +46,17 @@ api.interceptors.request.use(
   }
 );
 
+export const resolveMediaUrl = (path: string | null | undefined): string | null => {
+  if (!path) return null;
+  if (path.startsWith('http')) return path;
+
+  // Remove /api suffix if present to get base host
+  const baseUrl = API_URL.replace(/\/api\/?$/, '');
+
+  // Ensure path starts with /
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+
+  return `${baseUrl}${cleanPath}`;
+};
+
 export default api;

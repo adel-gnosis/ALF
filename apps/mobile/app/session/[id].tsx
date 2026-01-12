@@ -15,6 +15,14 @@ import MultipleAnswerActivity from '../../components/activity/MultipleAnswerActi
 import TextInputActivity from '../../components/activity/TextInputActivity';
 import DicteeActivity from '../../components/activity/DicteeActivity';
 
+function genUUIDv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 export default function SessionScreen() {
     const { id: sessionId } = useLocalSearchParams<{ id: string }>();
     const router = useRouter();
@@ -22,6 +30,9 @@ export default function SessionScreen() {
     const [currentAnswer, setCurrentAnswer] = useState<any>(null);
     const [feedback, setFeedback] = useState<'success' | 'error' | null>(null);
     const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+    const [explanation, setExplanation] = useState<string | null>(null);
+    const [correctAnswer, setCorrectAnswer] = useState<any>(null);
+
     const [startTime, setStartTime] = useState<number>(Date.now());
 
     // Fetch session data (which contains next activity)
@@ -45,6 +56,9 @@ export default function SessionScreen() {
             setFeedback(null);
             setFeedbackMessage(null);
             setStartTime(Date.now());
+            setExplanation(null);
+            setCorrectAnswer(null);
+
         }
     }, [activity?.id]);
 
@@ -85,17 +99,22 @@ export default function SessionScreen() {
                 activity_id: activity.id,
                 user_answer: answerToSubmit,
                 time_spent: timeSpent,
+                client_attempt_uuid: genUUIDv4(),
             },
             {
                 onSuccess: (data) => {
                     console.log('[SessionScreen] Submit response:', data);
+                    setExplanation(data.explanation || null);
+                    setCorrectAnswer(data.correct_answer ?? null);
+
                     if (data.is_correct) {
-                        setFeedback('success');
-                        setFeedbackMessage('Correct! 🎉');
+                    setFeedback('success');
+                    setFeedbackMessage('Correct! 🎉');
                     } else {
-                        setFeedback('error');
-                        setFeedbackMessage(data.feedback || 'Incorrect');
+                    setFeedback('error');
+                    setFeedbackMessage(data.feedback || 'Incorrect');
                     }
+
                 },
                 onError: (error: any) => {
                     console.error('[SessionScreen] Submit error:', error);
@@ -221,9 +240,34 @@ export default function SessionScreen() {
                     >
                         {feedback === 'success' ? '✅ Correct!' : '❌ Incorrect'}
                     </Text>
+
+                    {/* Feedback message */}
                     <Text className="text-center text-gray-800">{feedbackMessage}</Text>
+
+                    {/* Correct answer (only if wrong) */}
+                    {feedback === 'error' && correctAnswer != null && (
+                        <Text className="text-sm text-gray-700 text-center mt-2">
+                            Réponse correcte :{" "}
+                            {Array.isArray(correctAnswer)
+                                ? correctAnswer.join(' ')
+                                : String(correctAnswer)}
+                        </Text>
+                    )}
+
+                    {/* Explanation (for all activities) */}
+                    {!!explanation && (
+                        <View className="mt-4 p-4 rounded-lg bg-white border border-gray-200">
+                            <Text className="text-sm font-semibold text-gray-800 mb-1">
+                                Explication
+                            </Text>
+                            <Text className="text-sm text-gray-700">
+                                {explanation}
+                            </Text>
+                        </View>
+                    )}
                 </View>
             )}
+
 
             {/* Actions - Only show verify for activities without built-in buttons */}
             <View className="p-4 pb-8">

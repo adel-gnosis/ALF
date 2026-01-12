@@ -175,13 +175,32 @@ class ActivityPolymorphicSerializer(PolymorphicSerializer):
             if isinstance(instance, MatchingActivity):
                 if instance.pairs_i18n:
                     rendered_pairs = {}
+
                     for fr_word, translations in instance.pairs_i18n.items():
-                        if isinstance(translations, dict):
-                            if user_lang in translations:
-                                rendered_pairs[fr_word] = translations[user_lang]
-                            elif 'fr' in translations:
-                                rendered_pairs[fr_word] = translations['fr']  # fallback
+                        if not isinstance(translations, dict):
+                            continue
+
+                        # 1) Best: user language translation
+                        if user_lang in translations:
+                            rendered_pairs[fr_word] = translations[user_lang]
+                            continue
+
+                        # 2) If a French translation exists in i18n (some activities might have it)
+                        if 'fr' in translations:
+                            rendered_pairs[fr_word] = translations['fr']
+                            continue
+
+                        # 3) Otherwise fallback to the legacy/simple pairs dict (your FR->EN storage)
+                        if isinstance(instance.pairs, dict) and fr_word in instance.pairs:
+                            rendered_pairs[fr_word] = instance.pairs[fr_word]
+                            continue
+
+                        # 4) Last fallback: pick any available translation (stable)
+                        if translations:
+                            rendered_pairs[fr_word] = next(iter(translations.values()))
+
                     data['pairs'] = rendered_pairs
+
 
                 elif instance.values_are_translatable:
                     # Legacy gettext-based pairs

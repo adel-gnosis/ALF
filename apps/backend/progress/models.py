@@ -208,7 +208,11 @@ class StudySession(models.Model):
         ('MIXED', 'Mixed (All Subjects)'),
         ('SUBJECT_FOCUSED', 'Subject Focused'),
         ('CUSTOM', 'Custom Practice'),
+
+        # NEW: does NOT affect progress, score, XP, or SRS queue
+        ('REHEARSAL_MISSED', 'Rehearsal (Missed Only - No Progress)'),
     ]
+
     session_type = models.CharField(max_length=20, choices=SESSION_TYPE_CHOICES, default='MIXED')
     
     # Set configuration

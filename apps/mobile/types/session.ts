@@ -1,3 +1,19 @@
+// User Types
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+    native_language: string;
+    total_xp: number;
+    current_streak: number;
+    placement_completed: boolean;
+    level_info?: {
+        current_level: number;
+        level_id: number;
+    };
+}
+
 // Session Types
 export interface Session {
     id: string;
@@ -95,6 +111,13 @@ export interface TextInputActivity extends BaseActivity {
     accept_partial: boolean;
 }
 
+export interface DicteeActivity extends BaseActivity {
+    resourcetype: 'DicteeActivity';
+    audio_urls: string[];
+    correct_text: string;
+    case_sensitive: boolean;
+}
+
 export type Activity =
     | MCQActivity
     | FillBlankActivity
@@ -102,7 +125,8 @@ export type Activity =
     | DragOrderActivity
     | ConjugationActivity
     | MultipleAnswerActivity
-    | TextInputActivity;
+    | TextInputActivity
+    | DicteeActivity;
 
 // Session API Response Types
 export interface StartSessionRequest {
@@ -140,6 +164,7 @@ export interface SubmitActivityRequest {
     activity_id: number;
     user_answer: any;
     time_spent?: number;
+    client_attempt_uuid?: string;
 }
 
 export interface SubmitActivityResponse {
