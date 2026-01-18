@@ -45,7 +45,7 @@ class AdminReviewViewSet(viewsets.ViewSet):
         pending = Activity.objects.filter(
             status='PENDING'
         ).select_related(
-            'lesson', 'lesson__level', 'lesson__subject', 'created_by'
+            'lesson', 'lesson__level', 'lesson__subject', 'created_by', 'modified_by'
         ).order_by('submitted_for_review_at')
         
         activities_data = []
@@ -67,6 +67,11 @@ class AdminReviewViewSet(viewsets.ViewSet):
                     'username': activity.created_by.username,
                     'permission_level': activity.created_by.teacher_permission_level
                 },
+                'modified_by': {
+                    'id': activity.modified_by.id,
+                    'username': activity.modified_by.username
+                } if activity.modified_by else None,
+                'version_notes': activity.version_notes,
                 'submitted_at': activity.submitted_for_review_at,
                 'version': activity.version
             })

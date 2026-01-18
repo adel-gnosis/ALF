@@ -13,22 +13,141 @@
         "quickActions": "Quick Actions",
         "practice": "Practice",
         "levels": "Levels",
-        "stats": "Stats",
+        "stats": "Progress",
         "profile": "Profile",
         "streakTitle": "Learning Streak",
         "streakDesc": "Keep learning every day to maintain your streak!",
         "xpTotal": "Total XP",
-        "days": "Days"
+        "days": "Days",
+        "active": "ACTIVE"
     },
     "common": {
         "loading": "Loading...",
         "error": "Error",
-        "success": "Success"
+        "success": "Success",
+        "continue": "Continue"
     },
     "auth": {
         "login": "Login",
         "register": "Register",
         "email": "Email",
-        "password": "Password"
+        "password": "Password",
+        "username": "Username",
+        "signIn": "Sign In",
+        "createAccount": "Create Account",
+        "welcomeBack": "Welcome Back",
+        "invalidCredentials": "Invalid credentials",
+        "loginFailed": "Login failed",
+        "fillAllFields": "Please fill in all fields",
+        "welcome": "Welcome!",
+        "noAccount": "No account yet?",
+        "fullName": "Full Name",
+        "accountCreated": "Account created successfully!",
+        "createError": "Unable to create account",
+        "alreadyHaveAccount": "Already have an account?"
+    },
+    "language": {
+        "title": "Choose your learning language",
+        "subtitle": "You are learning French! Select your preferred language for instructions and interface.",
+        "continue": "Continue",
+        "fr": "French",
+        "en": "English",
+        "ar": "Arabic",
+        "frDesc": "Learn with French instructions",
+        "enDesc": "Learn with English instructions",
+        "arDesc": "Learn with Arabic instructions"
+    },
+    "profile": {
+        "title": "Profile & Settings",
+        "loading": "Loading...",
+        "learningLanguage": "Learning Language",
+        "learningLanguageDesc": "Choose the language you want to learn",
+        "uiLanguage": "UI Language",
+        "uiLanguageDesc": "Choose your preferred language for instructions and interface",
+        "account": "Account",
+        "email": "Email:",
+        "role": "Role:",
+        "signOut": "Sign Out",
+        "languageUpdated": "Language updated successfully!",
+        "languageUpdateError": "Failed to update language"
+    },
+    "navigation": {
+        "courses": "Subjects",
+        "dashboard": "Home",
+        "levels": "Levels",
+        "practice": "Practice",
+        "progress": "Progress",
+        "profile": "Profile"
+    },
+    "session": {
+        "complete": "Session Complete",
+        "congrats": "Congratulations!",
+        "keepGoing": "Keep Going!",
+        "precision": "Accuracy",
+        "subjectPerformance": "Subject Performance",
+        "recommendations": "Recommendations",
+        "nextLevel": "Next Level",
+        "replayLevel": "Replay Level",
+        "retry": "Retry",
+        "practiceErrors": "Practice Errors",
+        "backToDashboard": "Back to Dashboard",
+        "correct": "correct",
+        "finished": "Session Finished!",
+        "completed": "Session Completed",
+        "score": "Score",
+        "xpEarned": "XP Earned",
+        "successMessage": "Excellent work! You mastered this lesson.",
+        "effortMessage": "Good effort! Keep practicing to improve.",
+        "sessionComplete": "Session Complete!",
+        "noActivity": "No activity",
+        "completedAll": "You have completed all activities.",
+        "noActivityAvailable": "No activity available for this level.",
+        "viewResults": "View Results",
+        "back": "Back",
+        "activity": "Activity",
+        "retryPrevious": "🔄 Previously failed activity - Try again!",
+        "correctMessage": "Correct! 🎉",
+        "incorrect": "Incorrect",
+        "submitError": "Error during submission",
+        "correctSymbol": "✅ Correct!",
+        "incorrectSymbol": "❌ Incorrect",
+        "explanation": "Explanation",
+        "next": "Next →",
+        "verify": "Verify",
+        "unsupportedActivity": "Unsupported activity type:"
+    },
+    "index": {
+        "title": "ALF",
+        "subtitle": "Learn French",
+        "getStarted": "Get Started"
+    },
+    "activities": {
+        "dragOrder": {
+            "instruction": "Put the words in the correct order:",
+            "subInstruction": "Drag the words into the boxes",
+            "wordBank": "Word Bank",
+            "check": "Check",
+            "tapToRemove": "tap to remove"
+        },
+        "fillBlank": {
+            "missingPhrase": "Missing phrase",
+            "placeholder": "?"
+        },
+        "matching": {
+            "noData": "No activity data available",
+            "progress": "Progress",
+            "shouldMatch": "Should match:"
+        },
+        "feedback": {
+            "matching": {
+                "yourAssociations": "📋 Your associations",
+                "correct": "Correct:"
+            },
+            "dragOrder": {
+                "wordOrder": "📝 Word order",
+                "yourAnswer": "Your answer:",
+                "correctOrder": "Correct order:"
+            }
+        }
     }
 }

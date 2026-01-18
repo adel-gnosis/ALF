@@ -15,6 +15,76 @@ logger = logging.getLogger(__name__)
 
 SUPPORTED_UI_LANGS = {"en", "fr", "ar"}  # extend later if needed
 
+
+def _intersection_from_pairs_v2(pairs_v2: list) -> list[str]:
+    """
+    We compute intersection of languages that exist for ALL pairs, across BOTH sides (left/right),
+    but only where i18n is present.
+    
+    Rule:
+    - If no i18n is present anywhere -> return []
+    - If i18n exists: a language is "supported" only if it exists for every item that has i18n.
+    """
+    if not pairs_v2:
+        return []
+
+    langs = None
+    has_any_i18n = False
+
+    for pair in pairs_v2:
+        if not isinstance(pair, dict):
+            return []
+        for side in ("left", "right"):
+            item = pair.get(side)
+            if not isinstance(item, dict):
+                return []
+            i18n = item.get("i18n")
+            if not i18n:
+                continue
+
+            has_any_i18n = True
+            if not isinstance(i18n, dict):
+                return []
+
+            available = set(
+                k for k, v in i18n.items()
+                if k in SUPPORTED_UI_LANGS and isinstance(v, str) and v.strip()
+            )
+
+            langs = available if langs is None else (langs & available)
+
+    if not has_any_i18n:
+        return []
+    return sorted(langs) if langs else []
+
+def _intersection_from_choices_v2(choices_v2: list) -> list[str]:
+    if not choices_v2:
+        return []
+
+    langs = None
+    has_any_i18n = False
+
+    for ch in choices_v2:
+        if not isinstance(ch, dict):
+            continue
+        content = ch.get("content") or {}
+        if not isinstance(content, dict):
+            continue
+        i18n = content.get("i18n")
+        if not i18n or not isinstance(i18n, dict):
+            continue
+
+        has_any_i18n = True
+        available = set(
+            k for k, v in i18n.items()
+            if k in SUPPORTED_UI_LANGS and isinstance(v, str) and v.strip()
+        )
+        langs = available if langs is None else (langs & available)
+
+    if not has_any_i18n:
+        return []
+    return sorted(langs) if langs else []
+
 def _intersection_from_pairs_i18n(pairs_i18n: dict) -> list[str]:
     """
     pairs_i18n shape: { "parfait": {"en":"perfect","ar":"ممتاز"}, ... }
@@ -61,6 +131,7 @@ class ActivityCreateSerializer(serializers.Serializer):
     # Base activity fields (optional with smart defaults)
     question_text = serializers.CharField(required=False, allow_blank=True)
     question_text_key = serializers.CharField(required=False, allow_blank=True)
+    instruction_key = serializers.CharField(required=False, allow_blank=True)
     translation_data = serializers.JSONField(required=False, default=dict)
     explanation = serializers.CharField(required=False, allow_blank=True)
     explanation_key = serializers.CharField(required=False, allow_blank=True)
@@ -141,12 +212,13 @@ class ActivityCreateSerializer(serializers.Serializer):
         supported_ui_languages = []
 
         if activity_type == "MatchingActivity":
-            pairs_i18n = type_specific_data.get("pairs_i18n") or {}
-            supported_ui_languages = _intersection_from_pairs_i18n(pairs_i18n)
+            pairs_v2 = type_specific_data.get("pairs_v2") or []
+            supported_ui_languages = _intersection_from_pairs_v2(pairs_v2)
 
         elif activity_type in ("MCQActivity", "MultipleAnswerActivity"):
-            choices_i18n = type_specific_data.get("choices_i18n") or []
-            supported_ui_languages = _intersection_from_choices_i18n(choices_i18n)
+            choices_v2 = type_specific_data.get("choices_v2") or []
+            supported_ui_languages = _intersection_from_choices_v2(choices_v2)
+
 
         
         # Build kwargs for activity creation
@@ -154,16 +226,15 @@ class ActivityCreateSerializer(serializers.Serializer):
             'lesson': lesson,
             'created_by': user,
             'status': initial_status,
-            'question_text': validated_data.get('question_text', ''),
             'question_text_key': validated_data.get('question_text_key'),
+            'instruction_key': validated_data.get('instruction_key'),
             'translation_data': validated_data.get('translation_data', {}),
-            'explanation': validated_data.get('explanation', ''),
             'explanation_key': validated_data.get('explanation_key'),
             'supported_ui_languages': supported_ui_languages,
             'points': validated_data.get('points', 10),
             'difficulty': validated_data.get('difficulty', 'MEDIUM'),
             'order': validated_data.get('order', 0),
-            **type_specific_data  # Merge type-specific fields
+            **type_specific_data  # Merge type-specific fields (choices_v2, pairs_v2, etc.)
         }
         
         # Create activity
@@ -186,6 +257,7 @@ class ActivityUpdateSerializer(serializers.Serializer):
     # Allow partial updates
     question_text = serializers.CharField(required=False)
     question_text_key = serializers.CharField(required=False, allow_blank=True)
+    instruction_key = serializers.CharField(required=False, allow_blank=True)
     translation_data = serializers.JSONField(required=False)
     explanation = serializers.CharField(required=False, allow_blank=True)
     explanation_key = serializers.CharField(required=False, allow_blank=True)
@@ -208,11 +280,62 @@ class ActivityUpdateSerializer(serializers.Serializer):
         activity_type = activity.__class__.__name__
         
         # Merge existing data with updates
+        type_specific = data.get("type_specific_data", {}) or {}
+
+        # Build merged data using existing instance fields as fallback
         merged_data = {
             'activity_type': activity_type,
             'lesson_id': activity.lesson_id,
-            **data.get('type_specific_data', {})
+            **type_specific,
         }
+
+        # Fallback required type fields from existing instance (so PATCH can be partial)
+        # Matching: pairs_v2 is required
+        if activity_type == "MatchingActivity" and "pairs_v2" not in merged_data:
+            merged_data["pairs_v2"] = getattr(activity, "pairs_v2", None)
+
+        # MCQ: choices_v2 + correct_choice_id are required
+        if activity_type == "MCQActivity":
+            if "choices_v2" not in merged_data:
+                merged_data["choices_v2"] = getattr(activity, "choices_v2", None)
+            if "correct_choice_id" not in merged_data:
+                merged_data["correct_choice_id"] = getattr(activity, "correct_choice_id", None)
+
+        # MultipleAnswer: choices_v2 + correct_choice_ids required
+        if activity_type == "MultipleAnswerActivity":
+            if "choices_v2" not in merged_data:
+                merged_data["choices_v2"] = getattr(activity, "choices_v2", None)
+            if "correct_choice_ids" not in merged_data:
+                merged_data["correct_choice_ids"] = getattr(activity, "correct_choice_ids", None)
+
+        # FillBlank: correct_answer required
+        if activity_type == "FillBlankActivity" and "correct_answer" not in merged_data:
+            merged_data["correct_answer"] = getattr(activity, "correct_answer", None)
+
+        # DragOrder: words + correct_order required
+        if activity_type == "DragOrderActivity":
+            if "words" not in merged_data:
+                merged_data["words"] = getattr(activity, "words", None)
+            if "correct_order" not in merged_data:
+                merged_data["correct_order"] = getattr(activity, "correct_order", None)
+
+        # Conjugation: required conjugation fields
+        if activity_type == "ConjugationActivity":
+            for f in ("verb_infinitive", "tense", "pronoun", "correct_conjugation"):
+                if f not in merged_data:
+                    merged_data[f] = getattr(activity, f, None)
+
+        # TextInput: correct_answers required
+        if activity_type == "TextInputActivity" and "correct_answers" not in merged_data:
+            merged_data["correct_answers"] = getattr(activity, "correct_answers", None)
+
+        # Dictee: correct_text required
+        if activity_type == "DicteeActivity":
+            if "correct_text" not in merged_data:
+                merged_data["correct_text"] = getattr(activity, "correct_text", None)
+            if "audio_urls" not in merged_data:
+                merged_data["audio_urls"] = getattr(activity, "audio_urls", None)
+
         
         # Validate
         is_valid, error_msg = ActivitySchemaRegistry.validate_activity_data(
@@ -224,12 +347,20 @@ class ActivityUpdateSerializer(serializers.Serializer):
 
 
 
-        if activity_type == "MatchingActivity" and type_specific.get("pairs_i18n"):
-            computed = _intersection_from_pairs_i18n(type_specific["pairs_i18n"])
-            if not computed:
+        if activity_type == "MatchingActivity" and type_specific.get("pairs_v2"):
+            computed = _intersection_from_pairs_v2(type_specific["pairs_v2"])
+            # it's okay for computed to be [] if there's no i18n at all
+            # but if there IS i18n and intersection becomes empty, we should reject:
+            has_any_i18n = any(
+                isinstance(p, dict) and isinstance(p.get(side), dict) and p.get(side, {}).get("i18n")
+                for p in (type_specific.get("pairs_v2") or [])
+                for side in ("left", "right")
+            )
+            if has_any_i18n and not computed:
                 raise serializers.ValidationError({
-                    "type_specific_data": "pairs_i18n must include at least one complete UI language (e.g. all entries have 'en')."
+                    "type_specific_data": "pairs_v2 i18n must include at least one complete UI language across all translated items (e.g. all have 'en')."
                 })
+
 
         if activity_type in ("MCQActivity", "MultipleAnswerActivity") and type_specific.get("choices_i18n"):
             computed = _intersection_from_choices_i18n(type_specific["choices_i18n"])
@@ -275,10 +406,10 @@ class ActivityUpdateSerializer(serializers.Serializer):
             target_obj = new_version if instance.status == 'APPROVED' else instance
             atype = target_obj.__class__.__name__
 
-            if atype == "MatchingActivity" and getattr(target_obj, "pairs_i18n", None):
-                target_obj.supported_ui_languages = _intersection_from_pairs_i18n(target_obj.pairs_i18n)
-            elif atype in ("MCQActivity", "MultipleAnswerActivity") and getattr(target_obj, "choices_i18n", None):
-                target_obj.supported_ui_languages = _intersection_from_choices_i18n(target_obj.choices_i18n)
+            if atype == "MatchingActivity" and getattr(target_obj, "pairs_v2", None):
+                target_obj.supported_ui_languages = _intersection_from_pairs_v2(target_obj.pairs_v2)
+            elif atype in ("MCQActivity", "MultipleAnswerActivity") and getattr(target_obj, "choices_v2", None):
+                target_obj.supported_ui_languages = _intersection_from_choices_v2(target_obj.choices_v2)
 
             
             new_version.save()
@@ -301,8 +432,8 @@ class ActivityUpdateSerializer(serializers.Serializer):
             target_obj = instance
             atype = target_obj.__class__.__name__
 
-            if atype == "MatchingActivity" and getattr(target_obj, "pairs_i18n", None):
-                target_obj.supported_ui_languages = _intersection_from_pairs_i18n(target_obj.pairs_i18n)
+            if atype == "MatchingActivity" and getattr(target_obj, "pairs_v2", None):
+                target_obj.supported_ui_languages = _intersection_from_pairs_v2(target_obj.pairs_v2)
             elif atype in ("MCQActivity", "MultipleAnswerActivity") and getattr(target_obj, "choices_i18n", None):
                 target_obj.supported_ui_languages = _intersection_from_choices_i18n(target_obj.choices_i18n)
 
@@ -326,6 +457,10 @@ class TeacherActivityListSerializer(serializers.Serializer):
     created_at = serializers.DateTimeField()
     updated_at = serializers.DateTimeField()
     
+    # Creator and modifier info
+    created_by = serializers.SerializerMethodField()
+    modified_by = serializers.SerializerMethodField()
+    
     # Performance stats (if available)
     total_attempts = serializers.IntegerField(required=False, default=0)
     average_accuracy = serializers.FloatField(required=False, default=0.0)
@@ -340,6 +475,22 @@ class TeacherActivityListSerializer(serializers.Serializer):
             'level': obj.lesson.level.code,
             'subject': obj.lesson.subject.title
         }
+    
+    def get_created_by(self, obj):
+        if obj.created_by:
+            return {
+                'id': obj.created_by.id,
+                'username': obj.created_by.username
+            }
+        return None
+    
+    def get_modified_by(self, obj):
+        if hasattr(obj, 'modified_by') and obj.modified_by:
+            return {
+                'id': obj.modified_by.id,
+                'username': obj.modified_by.username
+            }
+        return None
 
 
 class ActivityPerformanceSerializer(serializers.Serializer):

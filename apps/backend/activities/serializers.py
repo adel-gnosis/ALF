@@ -136,83 +136,115 @@ class ActivityPolymorphicSerializer(PolymorphicSerializer):
                     # Interpolate with safe_context
                     data['question_text'] = trans_str.format(**safe_context)
                 except (KeyError, ValueError, Exception):
-                    # Fallback to original question_text on any error
+                    # No fallback field anymore
                     pass
+
+            # B. General Instruction
+            if instance.instruction_key:
+                try:
+                    trans_str = _(instance.instruction_key)
+                    # Use same context as question_text
+                    safe_context = {}
+                    if instance.translation_data:
+                        for k, v in instance.translation_data.items():
+                            if isinstance(v, str) and v.startswith('key:'):
+                                try:
+                                    safe_context[k] = _(v.replace('key:', '', 1))
+                                except:
+                                    safe_context[k] = v
+                            else:
+                                safe_context[k] = v
+                    
+                    data['instruction'] = trans_str.format(**safe_context)
+                except Exception:
+                    # Fallback to literal translated string or None
+                    try:
+                        data['instruction'] = _(instance.instruction_key)
+                    except:
+                        data['instruction'] = None
+            else:
+                data['instruction'] = None
             
-            # B. Explanation
+            # C. Explanation
             if instance.explanation_key:
                 try:
                     trans_str = _(instance.explanation_key)
                     data['explanation'] = trans_str.format(**instance.translation_data)
                 except (KeyError, ValueError, Exception):
-                    pass
+                    data['explanation'] = None
             
             # ===== ACTIVITY-SPECIFIC LOGIC =====
+
+            # ===== FILL BLANK: Phrase resolution =====
+            if isinstance(instance, FillBlankActivity):
+                if instance.phrase_key:
+                    try:
+                        data['phrase'] = _(instance.phrase_key)
+                    except Exception:
+                        data['phrase'] = instance.phrase
+                else:
+                    data['phrase'] = instance.phrase
+
             
             # C. MCQ & MultipleAnswer: Multilingual choices (teacher-created)
             if isinstance(instance, (MCQActivity, MultipleAnswerActivity)):
-                if instance.choices_i18n:
-                    # Teacher-created multilingual choices
-                    rendered_choices = []
-                    for choice in instance.choices_i18n:
-                        if isinstance(choice, dict) and user_lang in choice:
-                            rendered_choices.append(choice[user_lang])
-                        elif isinstance(choice, dict) and 'fr' in choice:
-                            rendered_choices.append(choice['fr'])  # fallback
-                    data['choices'] = rendered_choices
+                def _render_choice(ch):
+                    content = ch.get("content") or {}
+                    i18n = content.get("i18n") or {}
 
-                elif instance.choices_are_translatable and instance.choices_keys:
-                    # Legacy gettext-based choices
-                    translated_choices = []
-                    for idx, key in enumerate(instance.choices_keys):
-                        try:
-                            translated_choices.append(_(key))
-                        except Exception:
-                            translated_choices.append(instance.choices[idx] if idx < len(instance.choices) else key)
-                    data['choices'] = translated_choices
+                    rendered = content.get("value")
+                    if isinstance(i18n, dict):
+                        if user_lang in i18n and isinstance(i18n[user_lang], str) and i18n[user_lang].strip():
+                            rendered = i18n[user_lang]
+                        elif "fr" in i18n and isinstance(i18n["fr"], str) and i18n["fr"].strip():
+                            rendered = i18n["fr"]
 
-            # D. Matching: Multilingual pairs (teacher-created)
+                    return {
+                        "id": ch.get("id"),
+                        "content": content,
+                        "rendered_value": rendered,
+                    }
+
+                data["choices_v2"] = [_render_choice(ch) for ch in (instance.choices_v2 or []) if isinstance(ch, dict)]
+
+
+            # D. Matching (V2): Render pairs_v2 with UI-language fallback
             if isinstance(instance, MatchingActivity):
-                if instance.pairs_i18n:
-                    rendered_pairs = {}
+                def _render_item(item: dict):
+                    # item: {type, value, i18n?}
+                    if not isinstance(item, dict):
+                        return item
+                    t = item.get("type")
+                    v = item.get("value")
+                    i18n = item.get("i18n") or {}
 
-                    for fr_word, translations in instance.pairs_i18n.items():
-                        if not isinstance(translations, dict):
-                            continue
+                    rendered = v
+                    if isinstance(i18n, dict):
+                        # best: user lang
+                        if user_lang in i18n and isinstance(i18n[user_lang], str) and i18n[user_lang].strip():
+                            rendered = i18n[user_lang]
+                        # fallback: fr if present
+                        elif "fr" in i18n and isinstance(i18n["fr"], str) and i18n["fr"].strip():
+                            rendered = i18n["fr"]
 
-                        # 1) Best: user language translation
-                        if user_lang in translations:
-                            rendered_pairs[fr_word] = translations[user_lang]
-                            continue
+                    return {
+                        "type": t,
+                        "value": v,
+                        "rendered_value": rendered,
+                        "i18n": i18n,
+                    }
 
-                        # 2) If a French translation exists in i18n (some activities might have it)
-                        if 'fr' in translations:
-                            rendered_pairs[fr_word] = translations['fr']
-                            continue
+                rendered_pairs_v2 = []
+                for pair in (instance.pairs_v2 or []):
+                    if not isinstance(pair, dict):
+                        continue
+                    rendered_pairs_v2.append({
+                        "id": pair.get("id"),
+                        "left": _render_item(pair.get("left") or {}),
+                        "right": _render_item(pair.get("right") or {}),
+                    })
 
-                        # 3) Otherwise fallback to the legacy/simple pairs dict (your FR->EN storage)
-                        if isinstance(instance.pairs, dict) and fr_word in instance.pairs:
-                            rendered_pairs[fr_word] = instance.pairs[fr_word]
-                            continue
+                data["pairs_v2"] = rendered_pairs_v2
 
-                        # 4) Last fallback: pick any available translation (stable)
-                        if translations:
-                            rendered_pairs[fr_word] = next(iter(translations.values()))
-
-                    data['pairs'] = rendered_pairs
-
-
-                elif instance.values_are_translatable:
-                    # Legacy gettext-based pairs
-                    translated_pairs = {}
-                    for key, value in instance.pairs.items():
-                        if isinstance(value, str) and value.startswith('key:'):
-                            try:
-                                translated_pairs[key] = _(value.replace('key:', '', 1))
-                            except Exception:
-                                translated_pairs[key] = value
-                        else:
-                            translated_pairs[key] = value
-                    data['pairs'] = translated_pairs
 
             return data

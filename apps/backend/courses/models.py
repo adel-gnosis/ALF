@@ -70,20 +70,41 @@ class Subject(models.Model):
     French -> Grammar
     Math -> Algebra
     """
+
+    SUBJECT_KINDS = [
+        ("KNOWLEDGE", "Knowledge"),
+        ("SKILL", "Skill"),
+    ]
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subjects')
+
+    # Stable identifier (used in code / imports)
     code = models.CharField(max_length=20)
+
+    # Display (current)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+
+    # Future-proof i18n (optional for now)
+    title_key = models.CharField(max_length=255, blank=True, default="")
+    description_key = models.CharField(max_length=255, blank=True, default="")
+
+    # UI metadata
     icon = models.CharField(max_length=50, blank=True)
     color = models.CharField(max_length=7, blank=True)
     order = models.PositiveIntegerField(default=0)
-    
+
+    # Platform structure
+    kind = models.CharField(max_length=20, choices=SUBJECT_KINDS, default="KNOWLEDGE")
+    is_active = models.BooleanField(default=True)
+
     class Meta:
         ordering = ['course__order', 'order']
         unique_together = ['course', 'code']
-    
+
     def __str__(self):
         return f"{self.course.title} - {self.title}"
+
 
 
 class Lesson(models.Model):

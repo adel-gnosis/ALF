@@ -7,6 +7,48 @@ Easy to extend when adding new activity types
 from typing import Dict, List, Any, Optional
 
 
+def _validate_choices_v2(choices_v2):
+    if not isinstance(choices_v2, list):
+        return False, "choices_v2 must be a list"
+    if len(choices_v2) < 2:
+        return False, "choices_v2 must contain at least 2 choices"
+
+    allowed_types = {"text", "image"}  # add audio later
+    seen_ids = set()
+
+    for i, ch in enumerate(choices_v2):
+        if not isinstance(ch, dict):
+            return False, f"choices_v2[{i}] must be an object"
+        cid = ch.get("id")
+        if not isinstance(cid, str) or not cid.strip():
+            return False, f"choices_v2[{i}].id is required"
+        if cid in seen_ids:
+            return False, f"Duplicate choice id: {cid}"
+        seen_ids.add(cid)
+
+        content = ch.get("content")
+        if not isinstance(content, dict):
+            return False, f"choices_v2[{i}].content must be an object"
+
+        t = content.get("type")
+        v = content.get("value")
+        if t not in allowed_types:
+            return False, f"choices_v2[{i}].content.type must be one of {sorted(allowed_types)}"
+        if not isinstance(v, str) or not v.strip():
+            return False, f"choices_v2[{i}].content.value is required"
+
+        i18n = content.get("i18n")
+        if i18n is not None:
+            if not isinstance(i18n, dict):
+                return False, f"choices_v2[{i}].content.i18n must be a dict"
+            for lang, txt in i18n.items():
+                if txt is None:
+                    continue
+                if not isinstance(txt, str):
+                    return False, f"choices_v2[{i}].content.i18n['{lang}'] must be a string"
+
+    return True, None
+
 class ActivitySchema:
     """Base schema for activity validation"""
     
@@ -16,6 +58,7 @@ class ActivitySchema:
             'lesson_id': {'type': 'int', 'required': True},
             'question_text': {'type': 'str', 'required': False},  # Fallback
             'question_text_key': {'type': 'str', 'required': False},  # i18n
+            'instruction_key': {'type': 'str', 'required': False},    # i18n instruction
             'translation_data': {'type': 'dict', 'required': False},  # i18n params
             'explanation': {'type': 'str', 'required': False},
             'explanation_key': {'type': 'str', 'required': False},
@@ -90,6 +133,16 @@ class MCQActivitySchema(ActivitySchema):
                 'type': 'list',
                 'required': False,
                 'help': 'Teacher-provided multilingual choices: [{"fr":"pomme","en":"apple","ar":"تفاحة"}]'
+            },
+            'choices_v2': {
+                'type': 'list',
+                'required': False,
+                'help': 'New structured choices with IDs and i18n support'
+            },
+            'correct_choice_id': {
+                'type': 'str',
+                'required': False,
+                'help': 'ID of the correct choice from choices_v2'
             }
 
         }
@@ -101,17 +154,31 @@ class MCQActivitySchema(ActivitySchema):
         if not valid:
             return False, error
         
-        # Validate correct_answer_index is within choices range
+        # Validate correct_answer_index is within choices range (LEGACY)
         choices = data.get('choices', [])
         correct_idx = data.get('correct_answer_index')
         
-        if correct_idx is not None and correct_idx >= len(choices):
+        if correct_idx is not None and choices and correct_idx >= len(choices):
             return False, f"correct_answer_index ({correct_idx}) out of range (choices length: {len(choices)})"
         
         # If using translatable choices, choices_keys should match choices length
         if data.get('choices_are_translatable') and data.get('choices_keys'):
             if len(data['choices_keys']) != len(choices):
                 return False, "choices_keys length must match choices length"
+
+        # Validate v2 fields if provided
+        choices_v2 = data.get("choices_v2")
+        if choices_v2:
+            ok, err = _validate_choices_v2(choices_v2)
+            if not ok:
+                return False, err
+
+            correct_choice_id = data.get("correct_choice_id")
+            if correct_choice_id:
+                valid_ids = {c["id"] for c in choices_v2 if isinstance(c, dict) and isinstance(c.get("id"), str)}
+                if correct_choice_id not in valid_ids:
+                    return False, "correct_choice_id must match an id from choices_v2"
+
         
         return True, None
 
@@ -144,48 +211,76 @@ class FillBlankActivitySchema(ActivitySchema):
 
 
 class MatchingActivitySchema(ActivitySchema):
-    """Schema for Matching Pairs"""
-    
+    """Schema for Matching (V2 pairs_v2)"""
+
     def __init__(self):
         super().__init__('MatchingActivity')
         self.type_specific_fields = {
-            'pairs': {
-                'type': 'dict',
-                'required': False,
-                'help': 'Dictionary of pairs. Use "key:" prefix for translatable values'
-            },
-            'pairs_i18n': {
-                'type': 'dict',
-                'required': False,
-                'help': 'Teacher-provided multilingual pairs: {"parfait":{"en":"perfect","ar":"ممتاز"}}'
-            },
-
-            'values_are_translatable': {
-                'type': 'bool',
-                'required': False,
-                'default': False,
-                'help': 'True if values are translation keys'
+            'pairs_v2': {
+                'type': 'list',
+                'required': True,
+                'min_length': 2,
+                'help': (
+                    "List of pair objects. Each pair: "
+                    "{id, left:{type,value,i18n?}, right:{type,value,i18n?}}"
+                )
             }
         }
-    
+
     def validate(self, data: Dict) -> tuple[bool, Optional[str]]:
         valid, error = self.validate_i18n_fields(data)
         if not valid:
             return False, error
-        
-        pairs = data.get('pairs') or {}
-        pairs_i18n = data.get('pairs_i18n') or {}
 
-        if not isinstance(pairs, dict):
-            return False, "pairs must be a dictionary"
-        if not isinstance(pairs_i18n, dict):
-            return False, "pairs_i18n must be a dictionary"
+        pairs_v2 = data.get('pairs_v2')
+        if not isinstance(pairs_v2, list):
+            return False, "pairs_v2 must be a list"
 
-        if len(pairs) < 2 and len(pairs_i18n) < 2:
-            return False, "Provide at least 2 pairs in either 'pairs' or 'pairs_i18n'"
+        if len(pairs_v2) < 2:
+            return False, "pairs_v2 must contain at least 2 pairs"
 
-        
+        seen_ids = set()
+        allowed_types = {"text", "image"}  # add "audio" later
+
+        def _is_nonempty_str(x):
+            return isinstance(x, str) and x.strip() != ""
+
+        for i, pair in enumerate(pairs_v2):
+            if not isinstance(pair, dict):
+                return False, f"pairs_v2[{i}] must be an object"
+
+            pid = pair.get("id")
+            if not _is_nonempty_str(pid):
+                return False, f"pairs_v2[{i}].id is required"
+            if pid in seen_ids:
+                return False, f"Duplicate pair id: {pid}"
+            seen_ids.add(pid)
+
+            for side in ("left", "right"):
+                item = pair.get(side)
+                if not isinstance(item, dict):
+                    return False, f"pairs_v2[{i}].{side} must be an object"
+
+                t = item.get("type")
+                v = item.get("value")
+                if t not in allowed_types:
+                    return False, f"pairs_v2[{i}].{side}.type must be one of {sorted(allowed_types)}"
+                if not _is_nonempty_str(v):
+                    return False, f"pairs_v2[{i}].{side}.value is required"
+
+                i18n = item.get("i18n")
+                if i18n is not None:
+                    if not isinstance(i18n, dict):
+                        return False, f"pairs_v2[{i}].{side}.i18n must be a dict"
+                    # optional: ensure i18n values are strings if provided
+                    for lang, text in i18n.items():
+                        if text is None:
+                            continue
+                        if not isinstance(text, str):
+                            return False, f"pairs_v2[{i}].{side}.i18n['{lang}'] must be a string"
+
         return True, None
+
 
 
 class DragOrderActivitySchema(ActivitySchema):
@@ -286,6 +381,16 @@ class MultipleAnswerActivitySchema(ActivitySchema):
                 'type': 'list',
                 'required': False,
                 'help': 'Teacher-provided multilingual choices: [{"fr":"pomme","en":"apple","ar":"تفاحة"}]'
+            },
+            'choices_v2': {
+                'type': 'list',
+                'required': False,
+                'help': 'New structured choices with IDs and i18n support'
+            },
+            'correct_choice_ids': {
+                'type': 'list',
+                'required': False,
+                'help': 'IDs of the correct choices from choices_v2'
             }
 
         }
@@ -298,10 +403,31 @@ class MultipleAnswerActivitySchema(ActivitySchema):
         choices = data.get('choices', [])
         correct_indices = data.get('correct_indices', [])
         
-        # All correct indices must be valid
+        # All correct indices must be valid (LEGACY)
         for idx in correct_indices:
-            if idx >= len(choices):
+            if choices and idx >= len(choices):
                 return False, f"correct_indices contains invalid index: {idx}"
+            
+        # Validate v2 fields if provided
+        choices_v2 = data.get("choices_v2")
+        if choices_v2:
+            ok, err = _validate_choices_v2(choices_v2)
+            if not ok:
+                return False, err
+
+            correct_choice_ids = data.get("correct_choice_ids")
+            if correct_choice_ids:
+                if not isinstance(correct_choice_ids, list):
+                    return False, "correct_choice_ids must be a list"
+
+                valid_ids = {c["id"] for c in choices_v2 if isinstance(c, dict) and isinstance(c.get("id"), str)}
+                for cid in correct_choice_ids:
+                    if not isinstance(cid, str) or cid not in valid_ids:
+                        return False, "Every correct_choice_id must match an id from choices_v2"
+
+                if len(set(correct_choice_ids)) != len(correct_choice_ids):
+                    return False, "correct_choice_ids contains duplicates"
+
         
         return True, None
 

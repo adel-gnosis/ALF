@@ -1,60 +1,362 @@
-# English Translation File (OPTIONAL UI)
-# Users can switch to English UI while still learning French
-
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: ALF\n"
+"POT-Creation-Date: 2026-01-17 13:44+0000\n"
+"PO-Revision-Date: 2026-01-17 13:44+0000\n"
 "Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-# Activity Instructions
-msgid "activity.mcq.translate_word"
-msgstr "What is the translation of '{word}'?"
+#. i18n key
+msgid "activity.conjugation.instruction.CONJUGATION"
+msgstr "Conjugate the verb with the given pronoun and tense."
 
-msgid "activity.fill_blank.complete_phrase"
-msgstr "Complete the phrase: {phrase}"
+#. i18n key
+msgid "activity.conjugation.instruction.DIALOGUES"
+msgstr "Conjugate the verb correctly."
 
-msgid "activity.dictee.instruction"
-msgstr "Listen and write what you hear"
+#. i18n key
+msgid "activity.conjugation.instruction.DICTEE"
+msgstr "Conjugate the verb correctly."
 
-msgid "activity.conjugation.instruction"
-msgstr "Conjugate {verb} in {tense} for {pronoun}"
+#. i18n key
+msgid "activity.conjugation.instruction.GRAMMAR"
+msgstr "Conjugate the verb correctly."
 
-msgid "activity.matching.instruction"
-msgstr "Match the French words with their translations"
+#. i18n key
+msgid "activity.conjugation.instruction.LISTENING"
+msgstr "Conjugate the verb correctly."
 
-msgid "activity.drag_order.instruction"
-msgstr "Arrange the words to form a correct French sentence"
+#. i18n key
+msgid "activity.conjugation.instruction.PRONUNCIATION"
+msgstr "Conjugate the verb correctly."
 
-msgid "activity.text_input.translate"
-msgstr "Type the French translation of '{word}'"
+#. i18n key
+msgid "activity.conjugation.instruction.READING"
+msgstr "Conjugate the verb correctly."
 
-msgid "activity.multiple_answer.select_all"
-msgstr "Select all correct answers for '{category}'"
+#. i18n key
+msgid "activity.conjugation.instruction.SPEAKING"
+msgstr "Conjugate the verb correctly."
 
-# Vocabulary (for reference in choices_keys)
-msgid "word.apple"
-msgstr "apple"
+#. i18n key
+msgid "activity.conjugation.instruction.VOCABULARY"
+msgstr "Conjugate the verb correctly."
 
-msgid "word.orange"
-msgstr "orange"
+#. i18n key
+msgid "activity.conjugation.instruction.WRITING"
+msgstr "Conjugate the verb correctly."
 
-msgid "word.book"
-msgstr "book"
+#. i18n key
+msgid "activity.conjugation.instruction.generic"
+msgstr "Conjugate the verb correctly."
 
-msgid "word.cat"
-msgstr "cat"
+#. i18n key
+msgid "activity.dictee.instruction.CONJUGATION"
+msgstr "Write what you hear."
 
-msgid "word.house"
-msgstr "house"
+#. i18n key
+msgid "activity.dictee.instruction.DIALOGUES"
+msgstr "Write what you hear."
 
-msgid "word.dog"
-msgstr "dog"
+#. i18n key
+msgid "activity.dictee.instruction.DICTEE"
+msgstr "Write what you hear."
 
-msgid "word.table"
-msgstr "table"
+#. i18n key
+msgid "activity.dictee.instruction.GRAMMAR"
+msgstr "Write what you hear."
 
-msgid "word.door"
-msgstr "door"
+#. i18n key
+msgid "activity.dictee.instruction.LISTENING"
+msgstr "Write what you hear."
 
-msgid "word.window"
-msgstr "window"
+#. i18n key
+msgid "activity.dictee.instruction.PRONUNCIATION"
+msgstr "Write what you hear."
+
+#. i18n key
+msgid "activity.dictee.instruction.READING"
+msgstr "Write what you hear."
+
+#. i18n key
+msgid "activity.dictee.instruction.SPEAKING"
+msgstr "Write what you hear."
+
+#. i18n key
+msgid "activity.dictee.instruction.VOCABULARY"
+msgstr "Write what you hear."
+
+#. i18n key
+msgid "activity.dictee.instruction.WRITING"
+msgstr "Write what you hear."
+
+#. i18n key
+msgid "activity.dictee.instruction.generic"
+msgstr "Write what you hear."
+
+#. i18n key
+msgid "activity.drag_order.instruction.CONJUGATION"
+msgstr "Put the elements in order to form the correct conjugation."
+
+#. i18n key
+msgid "activity.drag_order.instruction.DIALOGUES"
+msgstr "Reorder the lines to form a dialogue."
+
+#. i18n key
+msgid "activity.drag_order.instruction.DICTEE"
+msgstr "Reorder the words you heard."
+
+#. i18n key
+msgid "activity.drag_order.instruction.GRAMMAR"
+msgstr "Put the words in order to form a correct sentence."
+
+#. i18n key
+msgid "activity.drag_order.instruction.LISTENING"
+msgstr "Reorder based on what you hear."
+
+#. i18n key
+msgid "activity.drag_order.instruction.PRONUNCIATION"
+msgstr "Reorder to match the correct pattern."
+
+#. i18n key
+msgid "activity.drag_order.instruction.READING"
+msgstr "Reorder to match the text."
+
+#. i18n key
+msgid "activity.drag_order.instruction.SPEAKING"
+msgstr "Reorder to build a natural reply."
+
+#. i18n key
+msgid "activity.drag_order.instruction.VOCABULARY"
+msgstr "Put the words in order to form the right expression."
+
+#. i18n key
+msgid "activity.drag_order.instruction.WRITING"
+msgstr "Reorder to build a well-formed sentence."
+
+#. i18n key
+msgid "activity.drag_order.instruction.generic"
+msgstr "Put the words in the correct order."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.CONJUGATION"
+msgstr "Complete with the correct conjugation."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.DIALOGUES"
+msgstr "Complete the dialogue."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.DICTEE"
+msgstr "Complete the dictation."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.GRAMMAR"
+msgstr "Complete the sentence with the correct form."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.LISTENING"
+msgstr "Complete based on what you hear."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.PRONUNCIATION"
+msgstr "Complete with the correct sound/spelling."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.READING"
+msgstr "Complete based on the text."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.SPEAKING"
+msgstr "Complete the reply."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.VOCABULARY"
+msgstr "Complete with the correct word."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.WRITING"
+msgstr "Complete the sentence naturally."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.generic"
+msgstr "Fill in the blank."
+
+#. i18n key
+msgid "activity.matching.instruction.CONJUGATION"
+msgstr "Match pronouns with the correct forms."
+
+#. i18n key
+msgid "activity.matching.instruction.DIALOGUES"
+msgstr "Match questions with appropriate replies."
+
+#. i18n key
+msgid "activity.matching.instruction.DICTEE"
+msgstr "Match segments to form the sentence."
+
+#. i18n key
+msgid "activity.matching.instruction.GRAMMAR"
+msgstr "Match the elements that go together."
+
+#. i18n key
+msgid "activity.matching.instruction.LISTENING"
+msgstr "Match what you hear with the right choice."
+
+#. i18n key
+msgid "activity.matching.instruction.PRONUNCIATION"
+msgstr "Match sounds with examples."
+
+#. i18n key
+msgid "activity.matching.instruction.READING"
+msgstr "Match statements with the text."
+
+#. i18n key
+msgid "activity.matching.instruction.SPEAKING"
+msgstr "Match situations with replies."
+
+#. i18n key
+msgid "activity.matching.instruction.VOCABULARY"
+msgstr "Match each word with its meaning."
+
+#. i18n key
+msgid "activity.matching.instruction.WRITING"
+msgstr "Match sentences with their structure."
+
+#. i18n key
+msgid "activity.matching.instruction.generic"
+msgstr "Match the items."
+
+#. i18n key
+msgid "activity.mcq.instruction.CONJUGATION"
+msgstr "Choose the correct conjugation."
+
+#. i18n key
+msgid "activity.mcq.instruction.DIALOGUES"
+msgstr "Choose the most appropriate reply."
+
+#. i18n key
+msgid "activity.mcq.instruction.DICTEE"
+msgstr "Choose the correct transcription."
+
+#. i18n key
+msgid "activity.mcq.instruction.GRAMMAR"
+msgstr "Choose the correct grammatical form."
+
+#. i18n key
+msgid "activity.mcq.instruction.LISTENING"
+msgstr "Listen and choose the correct answer."
+
+#. i18n key
+msgid "activity.mcq.instruction.PRONUNCIATION"
+msgstr "Choose the correct sound."
+
+#. i18n key
+msgid "activity.mcq.instruction.READING"
+msgstr "Read and choose the correct answer."
+
+#. i18n key
+msgid "activity.mcq.instruction.SPEAKING"
+msgstr "Choose the best reply."
+
+#. i18n key
+msgid "activity.mcq.instruction.VOCABULARY"
+msgstr "Choose the correct meaning."
+
+#. i18n key
+msgid "activity.mcq.instruction.WRITING"
+msgstr "Choose the best sentence."
+
+#. i18n key
+msgid "activity.mcq.instruction.generic"
+msgstr "Choose the correct answer."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.CONJUGATION"
+msgstr "Select all correct conjugations."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.DIALOGUES"
+msgstr "Select all appropriate replies."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.DICTEE"
+msgstr "Select all correctly spelled options."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.GRAMMAR"
+msgstr "Select all correct grammatical forms."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.LISTENING"
+msgstr "Select all true statements based on what you hear."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.PRONUNCIATION"
+msgstr "Select all items with the correct sound."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.READING"
+msgstr "Select all true statements based on the text."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.SPEAKING"
+msgstr "Select all suitable replies."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.VOCABULARY"
+msgstr "Select all words that match the meaning."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.WRITING"
+msgstr "Select all well-formed sentences."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.generic"
+msgstr "Select all correct answers."
+
+#. i18n key
+msgid "activity.text_input.instruction.CONJUGATION"
+msgstr "Write the correct conjugation."
+
+#. i18n key
+msgid "activity.text_input.instruction.DIALOGUES"
+msgstr "Write an appropriate reply."
+
+#. i18n key
+msgid "activity.text_input.instruction.DICTEE"
+msgstr "Type the sentence you heard."
+
+#. i18n key
+msgid "activity.text_input.instruction.GRAMMAR"
+msgstr "Write the correct form."
+
+#. i18n key
+msgid "activity.text_input.instruction.LISTENING"
+msgstr "Answer based on what you hear."
+
+#. i18n key
+msgid "activity.text_input.instruction.PRONUNCIATION"
+msgstr "Type the correct transcription."
+
+#. i18n key
+msgid "activity.text_input.instruction.READING"
+msgstr "Answer based on the text."
+
+#. i18n key
+msgid "activity.text_input.instruction.SPEAKING"
+msgstr "Write what you would say."
+
+#. i18n key
+msgid "activity.text_input.instruction.VOCABULARY"
+msgstr "Use the word in a sentence."
+
+#. i18n key
+msgid "activity.text_input.instruction.WRITING"
+msgstr "Write a short answer."
+
+#. i18n key
+msgid "activity.text_input.instruction.generic"
+msgstr "Type your answer."
+

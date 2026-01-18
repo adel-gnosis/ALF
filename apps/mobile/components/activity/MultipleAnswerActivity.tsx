@@ -5,80 +5,123 @@ import Button from '../Button';
 
 interface MultipleAnswerActivityProps {
     activity: any;
-    onAnswer: (answer: number[]) => void;
+    onAnswer: (answer: any) => void;
     disabled?: boolean;
+    feedback?: 'success' | 'error' | null;
+    correctAnswer?: any;
 }
 
-export default function MultipleAnswerActivity({ activity, onAnswer, disabled }: MultipleAnswerActivityProps) {
-    const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
+export default function MultipleAnswerActivity({ activity, onAnswer, disabled, feedback, correctAnswer }: MultipleAnswerActivityProps) {
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
-    const choices = activity?.data?.choices || activity?.choices || [];
+    const choices = activity?.choices_v2 || [];
     const questionText = activity?.question_text || '';
 
-    console.log('[MultipleAnswerActivity] Rendering:', { choices, disabled, selected: selectedIndices });
+    console.log('[MultipleAnswerActivity] Rendering:', { choices, disabled, selected: selectedIds });
 
-    const toggleChoice = (index: number) => {
+    const toggleChoice = (id: string) => {
         if (disabled) return;
 
-        setSelectedIndices(prev => {
-            if (prev.includes(index)) {
-                return prev.filter(i => i !== index);
+        setSelectedIds(prev => {
+            if (prev.includes(id)) {
+                return prev.filter(i => i !== id);
             } else {
-                return [...prev, index].sort((a, b) => a - b);
+                return [...prev, id].sort();
             }
         });
     };
 
     const handleSubmit = () => {
         if (disabled) return;
-        console.log('[MultipleAnswerActivity] Submitting:', selectedIndices);
-        onAnswer(selectedIndices);
+        console.log('[MultipleAnswerActivity] Submitting:', selectedIds);
+        onAnswer({ choice_ids: selectedIds });
     };
+
+    const correctChoiceIds = correctAnswer?.format === 'v2' ? (correctAnswer.choice_ids || []) : [];
 
     return (
         <View className="w-full">
+            {activity?.instruction && (
+                <Text className="text-sm font-medium text-gray-500 mb-1 italic">
+                    {activity.instruction}
+                </Text>
+            )}
             <Text className="text-lg font-semibold text-gray-800 mb-2">{questionText}</Text>
-            <Text className="text-sm text-blue-600 mb-4">Sélectionnez TOUTES les réponses correctes</Text>
 
             <View className="mb-6">
-                {choices.map((choice: string, index: number) => {
-                    const isSelected = selectedIndices.includes(index);
+                {choices.map((choice: any) => {
+                    const isSelected = selectedIds.includes(choice.id);
+                    const isCorrect = correctChoiceIds.includes(choice.id);
+
+                    let borderColor = 'border-gray-200';
+                    let bgColor = 'bg-white';
+                    let textColor = 'text-gray-800';
+                    let checkboxBg = 'bg-white border-gray-300';
+
+                    if (isSelected) {
+                        borderColor = 'border-blue-500';
+                        bgColor = 'bg-blue-50';
+                        textColor = 'text-blue-700';
+                        checkboxBg = 'bg-blue-500 border-blue-500';
+
+                        if (feedback === 'success') {
+                            borderColor = 'border-green-500';
+                            bgColor = 'bg-green-100';
+                            textColor = 'text-green-700';
+                            checkboxBg = 'bg-green-500 border-green-500';
+                        } else if (feedback === 'error') {
+                            if (isCorrect) {
+                                borderColor = 'border-green-500';
+                                bgColor = 'bg-green-100';
+                                textColor = 'text-green-700';
+                            } else {
+                                borderColor = 'border-red-500';
+                                bgColor = 'bg-red-100';
+                                textColor = 'text-red-700';
+                                checkboxBg = 'bg-red-500 border-red-500';
+                            }
+                        }
+                    } else if (feedback === 'error' && isCorrect) {
+                        // Highlight should-have-been-selected
+                        borderColor = 'border-green-500';
+                        bgColor = 'bg-green-50';
+                        textColor = 'text-green-700';
+                    }
+
                     return (
                         <TouchableOpacity
-                            key={index}
-                            onPress={() => toggleChoice(index)}
+                            key={choice.id}
+                            onPress={() => toggleChoice(choice.id)}
                             disabled={disabled}
-                            className={`p-4 rounded-xl border-2 mb-3 flex-row items-center ${isSelected
-                                    ? 'bg-blue-50 border-blue-500'
-                                    : 'bg-white border-gray-200'
-                                }`}
+                            className={`p-4 rounded-xl border-2 mb-3 flex-row items-center ${borderColor} ${bgColor}`}
                         >
                             <View
-                                className={`w-6 h-6 rounded mr-3 border-2 items-center justify-center ${isSelected
-                                        ? 'bg-blue-500 border-blue-500'
-                                        : 'bg-white border-gray-300'
-                                    }`}
+                                className={`w-6 h-6 rounded mr-3 border-2 items-center justify-center ${checkboxBg}`}
                             >
                                 {isSelected && (
                                     <Ionicons name="checkmark" size={16} color="white" />
                                 )}
+                                {!isSelected && feedback === 'error' && isCorrect && (
+                                    <Ionicons name="checkmark" size={16} color="#10B981" />
+                                )}
                             </View>
                             <Text
-                                className={`flex-1 font-semibold ${isSelected ? 'text-blue-700' : 'text-gray-800'
-                                    }`}
+                                className={`flex-1 font-semibold ${textColor}`}
                             >
-                                {choice}
+                                {choice.rendered_value}
                             </Text>
                         </TouchableOpacity>
                     );
                 })}
             </View>
 
-            <Button
-                title={`Vérifier${selectedIndices.length > 0 ? ` (${selectedIndices.length} sélectionné${selectedIndices.length > 1 ? 's' : ''})` : ''}`}
-                onPress={handleSubmit}
-                disabled={disabled || selectedIndices.length === 0}
-            />
+            {!feedback && (
+                <Button
+                    title={`Vérifier${selectedIds.length > 0 ? ` (${selectedIds.length} sélectionné${selectedIds.length > 1 ? 's' : ''})` : ''}`}
+                    onPress={handleSubmit}
+                    disabled={disabled || selectedIds.length === 0}
+                />
+            )}
         </View>
     );
 }

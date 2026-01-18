@@ -2,50 +2,58 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSelectLanguage } from '@alf/shared';
+import { useTranslation } from 'react-i18next';
+import { changeLanguage as i18nChangeLanguage } from '../i18n';
 
 type Language = 'fr' | 'en' | 'ar';
 
 interface LanguageOption {
     code: Language;
-    name: string;
+    nameKey: string;
     nativeName: string;
     flag: string;
-    description: string;
+    descriptionKey: string;
 }
 
-const languages: LanguageOption[] = [
-    {
-        code: 'fr',
-        name: 'French',
-        nativeName: 'Français',
-        flag: '🇫🇷',
-        description: 'Apprendre avec des instructions en français',
-    },
-    {
-        code: 'en',
-        name: 'English',
-        nativeName: 'English',
-        flag: '🇬🇧',
-        description: 'Learn with English instructions',
-    },
-    {
-        code: 'ar',
-        name: 'Arabic',
-        nativeName: 'العربية',
-        flag: '🇸🇦',
-        description: 'تعلم مع تعليمات باللغة العربية',
-    },
-];
-
 export default function LanguageSelectionScreen() {
+    const { t } = useTranslation();
     const router = useRouter();
     const [selectedLanguage, setSelectedLanguage] = useState<Language>('fr');
     const selectLanguageMutation = useSelectLanguage();
 
+    const languages: LanguageOption[] = [
+        {
+            code: 'fr',
+            nameKey: 'language.fr',
+            nativeName: 'Français',
+            flag: '🇫🇷',
+            descriptionKey: 'language.frDesc',
+        },
+        {
+            code: 'en',
+            nameKey: 'language.en',
+            nativeName: 'English',
+            flag: '🇬🇧',
+            descriptionKey: 'language.enDesc',
+        },
+        {
+            code: 'ar',
+            nameKey: 'language.ar',
+            nativeName: 'العربية',
+            flag: '🇸🇦',
+            descriptionKey: 'language.arDesc',
+        },
+    ];
+
     const handleContinue = async () => {
         try {
+            // Update i18n local state and persist
+            await i18nChangeLanguage(selectedLanguage);
+
+            // Update backend preference
             await selectLanguageMutation.mutateAsync(selectedLanguage);
-            router.replace('/(tabs)/levels');
+
+            router.replace('/(tabs)/dashboard');
         } catch (error) {
             console.error('Failed to set language:', error);
         }
@@ -54,9 +62,9 @@ export default function LanguageSelectionScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
-                <Text style={styles.title}>Choose Your Learning Language</Text>
+                <Text style={styles.title}>{t('language.title')}</Text>
                 <Text style={styles.subtitle}>
-                    You're learning French! Select your preferred language for instructions and interface.
+                    {t('language.subtitle')}
                 </Text>
 
                 <View style={styles.languageGrid}>
@@ -73,8 +81,8 @@ export default function LanguageSelectionScreen() {
                             <View style={styles.cardContent}>
                                 <Text style={styles.flag}>{lang.flag}</Text>
                                 <Text style={styles.languageName}>{lang.nativeName}</Text>
-                                <Text style={styles.languageNameEn}>{lang.name}</Text>
-                                <Text style={styles.description}>{lang.description}</Text>
+                                <Text style={styles.languageNameEn}>{t(lang.nameKey)}</Text>
+                                <Text style={styles.description}>{t(lang.descriptionKey)}</Text>
                             </View>
                             {selectedLanguage === lang.code && (
                                 <View style={styles.checkmark}>
@@ -93,7 +101,7 @@ export default function LanguageSelectionScreen() {
                     {selectLanguageMutation.isPending ? (
                         <ActivityIndicator color="#fff" />
                     ) : (
-                        <Text style={styles.continueButtonText}>Continue</Text>
+                        <Text style={styles.continueButtonText}>{t('language.continue')}</Text>
                     )}
                 </TouchableOpacity>
             </View>

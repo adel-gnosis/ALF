@@ -12,7 +12,7 @@ class IsTeacher(permissions.BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and
-            request.user.role in ['TEACHER', 'ADMIN'] and
+            request.user.role in ['teacher', 'admin'] and
             request.user.is_teacher_approved
         )
 
@@ -24,7 +24,7 @@ class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and
-            request.user.role == 'ADMIN'
+            request.user.role == 'admin'
         )
 
 
@@ -40,17 +40,16 @@ class CanEditActivity(permissions.BasePermission):
         user = request.user
         
         # Admin has full access
-        if user.role == 'ADMIN':
+        if user.role == 'admin':
             return True
         
-        # Original creator can edit
+        # Teacher editing their OWN activity (any status)
         if obj.created_by == user:
             return True
         
-        # Lead teachers can edit PENDING content
-        if (user.teacher_permission_level == 'LEAD' and 
-            obj.status == 'PENDING'):
-            return True
+        # Teacher suggesting modification to OTHERS' APPROVED activity
+        if obj.status == 'APPROVED' and obj.created_by != user:
+            return True  # Backend will create new version with PENDING status
         
         return False
 
@@ -67,7 +66,7 @@ class CanDeleteActivity(permissions.BasePermission):
         user = request.user
         
         # Admin can delete anything
-        if user.role == 'ADMIN':
+        if user.role == 'admin':
             return True
         
         # Creator can only delete drafts
@@ -88,14 +87,14 @@ class CanReviewContent(permissions.BasePermission):
         user = request.user
         return (
             user.is_authenticated and
-            (user.role == 'ADMIN' or user.teacher_permission_level == 'LEAD')
+            (user.role == 'admin' or user.teacher_permission_level == 'LEAD')
         )
     
     def has_object_permission(self, request, view, obj):
         user = request.user
         
         # Admin can review anything
-        if user.role == 'ADMIN':
+        if user.role == 'admin':
             return True
         
         # Lead teachers can review others' content

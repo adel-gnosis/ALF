@@ -20,6 +20,66 @@ from activities.models import (
 from courses.models import Level
 
 
+
+def _matching_expected_map(activity, user_lang: str) -> dict:
+    """
+    Returns: {pair_id: expected_right_value_for_current_language}
+    We compare against what the student sees/should match.
+    """
+    expected = {}
+    for pair in (getattr(activity, "pairs_v2", None) or []):
+        if not isinstance(pair, dict):
+            continue
+        pid = (pair.get("id") or "").strip()
+        left = pair.get("left") or {}
+        right = pair.get("right") or {}
+        if not pid or not isinstance(left, dict) or not isinstance(right, dict):
+            continue
+
+        right_value = (right.get("value") or "").strip()
+
+        # Your current behavior: if left.i18n has user_lang, the "right" displayed value is that translation,
+        # otherwise fallback to right.value (English)
+        i18n = left.get("i18n") or {}
+        if isinstance(i18n, dict) and isinstance(i18n.get(user_lang), str) and i18n.get(user_lang).strip():
+            expected[pid] = i18n[user_lang].strip()
+        else:
+            expected[pid] = right_value
+
+    return expected
+
+
+def _parse_matching_answer(user_answer):
+    """
+    Supports BOTH:
+    - new format: {"matches":[{"pair_id":"p_001","right_value":"and"}, ...]}
+    - legacy format: {"fr_left":"and", ...}
+
+    Returns tuple: (mode, parsed)
+      mode="v2" -> parsed is {pair_id: right_value}
+      mode="legacy" -> parsed is dict 그대로
+      mode="invalid" -> parsed is None
+    """
+    if isinstance(user_answer, dict) and isinstance(user_answer.get("matches"), list):
+        out = {}
+        for i, m in enumerate(user_answer["matches"]):
+            if not isinstance(m, dict):
+                return "invalid", None
+            pid = m.get("pair_id")
+            rv = m.get("right_value")
+            if not isinstance(pid, str) or not pid.strip():
+                return "invalid", None
+            if not isinstance(rv, str):
+                return "invalid", None
+            out[pid.strip()] = rv.strip()
+        return "v2", out
+
+    # legacy dict
+    if isinstance(user_answer, dict):
+        return "legacy", user_answer
+
+    return "invalid", None
+
 # ============================================================================
 # SESSION ENDPOINTS
 # ============================================================================
@@ -230,41 +290,61 @@ class SessionViewSet(viewsets.ViewSet):
     def _check_answer(self, activity, user_answer):
         """Check if user answer is correct"""
         if isinstance(activity, MCQActivity):
-            return user_answer == activity.correct_answer_index
+            # NEW format
+            if isinstance(user_answer, dict) and isinstance(user_answer.get("choice_id"), str):
+                return user_answer["choice_id"] == getattr(activity, "correct_choice_id", "")
+
+            # LEGACY format (index)
+            if isinstance(user_answer, int):
+                # compare against old field if still present, or convert index->id if you want
+                return user_answer == getattr(activity, "correct_answer_index", None)
+
+            return False
         elif isinstance(activity, FillBlankActivity):
             return str(user_answer).strip().lower() == str(activity.correct_answer).strip().lower()
         elif isinstance(activity, MatchingActivity):
-            if not isinstance(user_answer, dict):
+            mode, parsed = _parse_matching_answer(user_answer)
+            if mode == "invalid":
                 return False
 
             user_lang = getattr(self.request.user, 'native_language', 'fr') or 'fr'
 
-            if getattr(activity, "pairs_i18n", None):
-                expected_pairs = {}
-                for fr_word, translations in (activity.pairs_i18n or {}).items():
-                    if not isinstance(translations, dict):
-                        continue
-                    if user_lang in translations and str(translations[user_lang]).strip():
-                        expected_pairs[fr_word] = translations[user_lang]
-                    elif 'fr' in translations and str(translations['fr']).strip():
-                        expected_pairs[fr_word] = translations['fr']
-                return user_answer == expected_pairs
+            # ✅ V2 matching: compare pair_id -> expected right_value
+            if mode == "v2":
+                expected = _matching_expected_map(activity, user_lang)
 
+                # Must match all pairs (strict)
+                if set(parsed.keys()) != set(expected.keys()):
+                    return False
+
+                return parsed == expected
+
+            # ✅ Legacy matching (temporary compatibility): compare fr_left -> expected displayed right
+            # (keeps your previous behavior for old clients)
             expected_pairs = {}
-            if activity.values_are_translatable:
-                for fr_word, value in (activity.pairs or {}).items():
-                    if isinstance(value, str) and value.startswith('key:'):
-                        key = value.replace('key:', '', 1)
-                        try:
-                            expected_pairs[fr_word] = _(key)
-                        except Exception:
-                            expected_pairs[fr_word] = value
-                    else:
-                        expected_pairs[fr_word] = value
-            else:
-                expected_pairs = activity.pairs or {}
+            for pair in (getattr(activity, "pairs_v2", None) or []):
+                if not isinstance(pair, dict):
+                    continue
 
-            return user_answer == expected_pairs
+                left = pair.get("left") or {}
+                right = pair.get("right") or {}
+
+                if not isinstance(left, dict) or not isinstance(right, dict):
+                    continue
+
+                left_value = (left.get("value") or "").strip()
+                right_value = (right.get("value") or "").strip()
+                if not left_value:
+                    continue
+
+                i18n = left.get("i18n") or {}
+                if isinstance(i18n, dict) and isinstance(i18n.get(user_lang), str) and i18n.get(user_lang).strip():
+                    expected_pairs[left_value] = i18n[user_lang].strip()
+                else:
+                    expected_pairs[left_value] = right_value
+
+            return parsed == expected_pairs
+
 
 
         elif isinstance(activity, ConjugationActivity):
@@ -275,11 +355,19 @@ class SessionViewSet(viewsets.ViewSet):
                 return False
             return user_answer == activity.correct_order
         elif isinstance(activity, MultipleAnswerActivity):
-            # user_answer should be list of selected indices [0, 2]
-            # correct_indices is [0, 2]
-            if not isinstance(user_answer, list):
-                return False
-            return sorted(user_answer) == sorted(activity.correct_indices)
+            # NEW format
+            if isinstance(user_answer, dict) and isinstance(user_answer.get("choice_ids"), list):
+                ids = user_answer["choice_ids"]
+                if not all(isinstance(x, str) for x in ids):
+                    return False
+                return sorted(ids) == sorted(getattr(activity, "correct_choice_ids", []) or [])
+
+            # LEGACY format (indices list)
+            if isinstance(user_answer, list) and all(isinstance(x, int) for x in user_answer):
+                return sorted(user_answer) == sorted(getattr(activity, "correct_indices", []) or [])
+
+            return False
+
         
         elif isinstance(activity, DicteeActivity):
             # user_answer should be the text transcription
@@ -309,22 +397,8 @@ class SessionViewSet(viewsets.ViewSet):
     def _get_correct_answer(self, activity):
         """Get the correct answer for an activity"""
         if isinstance(activity, MCQActivity):
-            request = self.request
-            user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
+            return {"format": "v2", "choice_id": getattr(activity, "correct_choice_id", "")}
 
-            if getattr(activity, "choices_i18n", None):
-                try:
-                    choice = activity.choices_i18n[activity.correct_answer_index]
-                    if isinstance(choice, dict):
-                        return choice.get(user_lang) or choice.get('fr') or ""
-                except Exception:
-                    return "Unknown"
-
-            # legacy fallback
-            try:
-                return activity.choices[activity.correct_answer_index]
-            except (IndexError, TypeError):
-                return "Unknown"
 
         elif isinstance(activity, FillBlankActivity):
             return activity.correct_answer
@@ -335,14 +409,28 @@ class SessionViewSet(viewsets.ViewSet):
             request = self.request
             user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
 
-            if getattr(activity, "pairs_i18n", None):
-                rendered = {}
-                for fr_word, translations in (activity.pairs_i18n or {}).items():
-                    if isinstance(translations, dict):
-                        rendered[fr_word] = translations.get(user_lang) or translations.get('fr') or ""
-                return rendered
+            expected_by_pair_id = _matching_expected_map(activity, user_lang)
 
-            return activity.pairs
+            # Also provide a human-readable view for feedback/UI
+            readable = {}
+            for pair in (getattr(activity, "pairs_v2", None) or []):
+                if not isinstance(pair, dict):
+                    continue
+                pid = (pair.get("id") or "").strip()
+                left = pair.get("left") or {}
+                if not pid or not isinstance(left, dict):
+                    continue
+                left_value = (left.get("value") or "").strip()
+                if left_value:
+                    readable[left_value] = expected_by_pair_id.get(pid)
+
+            return {
+                "format": "pairs_v2",
+                "expected": [{"pair_id": pid, "right_value": rv} for pid, rv in expected_by_pair_id.items()],
+                "readable": readable
+            }
+
+
 
         elif isinstance(activity, ConjugationActivity):
             return activity.correct_conjugation
@@ -359,25 +447,8 @@ class SessionViewSet(viewsets.ViewSet):
                     return str(activity.correct_order)
             return activity.correct_order
         elif isinstance(activity, MultipleAnswerActivity):
-            request = self.request
-            user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
+            return {"format": "v2", "choice_ids": getattr(activity, "correct_choice_ids", []) or []}
 
-            if getattr(activity, "choices_i18n", None):
-                out = []
-                for i in activity.correct_indices:
-                    try:
-                        choice = activity.choices_i18n[i]
-                        if isinstance(choice, dict):
-                            out.append(choice.get(user_lang) or choice.get('fr') or "")
-                    except Exception:
-                        continue
-                return out
-
-            # legacy fallback
-            try:
-                return [activity.choices[i] for i in activity.correct_indices]
-            except (IndexError, TypeError):
-                return activity.correct_indices
 
         elif isinstance(activity, TextInputActivity):
             return activity.correct_answers[0] if activity.correct_answers else ""

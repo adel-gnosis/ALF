@@ -6,6 +6,8 @@ interface ConjugationActivityProps {
     activity: any;
     onAnswer: (answer: string) => void;
     disabled?: boolean;
+    feedback?: 'success' | 'error' | null;
+    correctAnswer?: any;
 }
 
 export default function ConjugationActivity({ activity, onAnswer, disabled }: ConjugationActivityProps) {
@@ -24,8 +26,18 @@ export default function ConjugationActivity({ activity, onAnswer, disabled }: Co
 
     console.log('[ConjugationActivity] Rendering:', { verb, tense, pronoun, disabled });
 
+    const questionText = activity?.question_text || '';
+
     return (
         <View className="w-full">
+            {activity?.instruction && (
+                <Text className="text-sm font-medium text-gray-500 mb-1 italic">
+                    {activity.instruction}
+                </Text>
+            )}
+            {questionText && (
+                <Text className="text-lg font-semibold text-gray-800 mb-4">{questionText}</Text>
+            )}
             <View className="bg-blue-50 rounded-xl p-4 mb-6">
                 <View className="flex-row items-center mb-2">
                     <Text className="text-sm text-gray-600 mr-2">Verbe:</Text>

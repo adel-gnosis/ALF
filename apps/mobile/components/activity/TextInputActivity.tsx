@@ -6,6 +6,8 @@ interface TextInputActivityProps {
     activity: any;
     onAnswer: (answer: string) => void;
     disabled?: boolean;
+    feedback?: 'success' | 'error' | null;
+    correctAnswer?: any;
 }
 
 export default function TextInputActivity({ activity, onAnswer, disabled }: TextInputActivityProps) {
@@ -24,6 +26,11 @@ export default function TextInputActivity({ activity, onAnswer, disabled }: Text
 
     return (
         <View className="w-full">
+            {activity?.instruction && (
+                <Text className="text-sm font-medium text-gray-500 mb-1 italic">
+                    {activity.instruction}
+                </Text>
+            )}
             {questionText && (
                 <Text className="text-lg font-semibold text-gray-800 mb-4">{questionText}</Text>
             )}

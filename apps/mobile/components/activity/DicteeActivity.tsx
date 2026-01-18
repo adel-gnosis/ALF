@@ -9,6 +9,7 @@ type DicteeActivityProps = {
   onAnswer: (answer: any) => void;
   disabled?: boolean;
   feedback?: "success" | "error" | null;
+  correctAnswer?: any;
 };
 
 export default function DicteeActivity({
@@ -97,6 +98,11 @@ export default function DicteeActivity({
 
   return (
     <View className="w-full items-center">
+      {activity?.instruction && (
+        <Text className="text-sm font-medium text-gray-500 mb-1 italic text-center">
+          {activity.instruction}
+        </Text>
+      )}
       <Text className="text-lg font-semibold text-gray-800 mb-8 text-center px-4">
         {activity?.question_text || "Écoutez et écrivez exactement ce que vous entendez"}
       </Text>
@@ -104,9 +110,8 @@ export default function DicteeActivity({
       <TouchableOpacity
         onPress={playSound}
         disabled={isPlaying || disabled}
-        className={`w-24 h-24 rounded-full items-center justify-center mb-8 shadow-md active:opacity-80 ${
-          isPlaying ? "bg-blue-100" : "bg-blue-500"
-        }`}
+        className={`w-24 h-24 rounded-full items-center justify-center mb-8 shadow-md active:opacity-80 ${isPlaying ? "bg-blue-100" : "bg-blue-500"
+          }`}
       >
         <Text className="text-4xl">{isPlaying ? "🔊" : "▶️"}</Text>
       </TouchableOpacity>

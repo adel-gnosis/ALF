@@ -22,12 +22,12 @@ class ActivityChildAdmin(PolymorphicChildModelAdmin):
     base_model = Activity
 
     list_display = (
-        'question_text',
+        'id',
+        'question_text_key',
+        'instruction_key',
         'lesson',
         'points',
-        'difficulty',
         'status',
-        'order',
     )
 
     list_filter = (
@@ -35,8 +35,7 @@ class ActivityChildAdmin(PolymorphicChildModelAdmin):
         'status',
     )
 
-    list_editable = ('order',)
-    search_fields = ('question_text',)
+    search_fields = ('question_text_key', 'instruction_key')
 
 
 # =========================
@@ -159,4 +158,4 @@ class ActivityParentAdmin(PolymorphicParentModelAdmin):
         'status',
     )
 
-    search_fields = ('question_text',)
+    search_fields = ('question_text_key',)

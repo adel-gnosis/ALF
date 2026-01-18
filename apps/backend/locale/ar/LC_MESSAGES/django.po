@@ -1,60 +1,362 @@
-# Arabic Translation File (OPTIONAL UI)
-# Users can switch to Arabic UI while still learning French
-
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: ALF\n"
+"POT-Creation-Date: 2026-01-17 13:44+0000\n"
+"PO-Revision-Date: 2026-01-17 13:44+0000\n"
 "Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-# Activity Instructions
-msgid "activity.mcq.translate_word"
-msgstr "ما هي ترجمة '{word}'؟"
+#. i18n key
+msgid "activity.conjugation.instruction.CONJUGATION"
+msgstr "صرّف الفعل مع الضمير والزمن المعطيين."
 
-msgid "activity.fill_blank.complete_phrase"
-msgstr "أكمل العبارة: {phrase}"
+#. i18n key
+msgid "activity.conjugation.instruction.DIALOGUES"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "activity.dictee.instruction"
-msgstr "استمع واكتب ما تسمعه"
+#. i18n key
+msgid "activity.conjugation.instruction.DICTEE"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "activity.conjugation.instruction"
-msgstr "صرّف {verb} في {tense} لـ {pronoun}"
+#. i18n key
+msgid "activity.conjugation.instruction.GRAMMAR"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "activity.matching.instruction"
-msgstr "طابق الكلمات الفرنسية مع ترجماتها"
+#. i18n key
+msgid "activity.conjugation.instruction.LISTENING"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "activity.drag_order.instruction"
-msgstr "رتب الكلمات لتكوين جملة فرنسية صحيحة"
+#. i18n key
+msgid "activity.conjugation.instruction.PRONUNCIATION"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "activity.text_input.translate"
-msgstr "اكتب الترجمة الفرنسية لـ '{word}'"
+#. i18n key
+msgid "activity.conjugation.instruction.READING"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "activity.multiple_answer.select_all"
-msgstr "اختر جميع الإجابات الصحيحة لـ '{category}'"
+#. i18n key
+msgid "activity.conjugation.instruction.SPEAKING"
+msgstr "صرّف الفعل بشكل صحيح."
 
-# Vocabulary (for reference in choices_keys)
-msgid "word.apple"
-msgstr "تفاحة"
+#. i18n key
+msgid "activity.conjugation.instruction.VOCABULARY"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "word.orange"
-msgstr "برتقالة"
+#. i18n key
+msgid "activity.conjugation.instruction.WRITING"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "word.book"
-msgstr "كتاب"
+#. i18n key
+msgid "activity.conjugation.instruction.generic"
+msgstr "صرّف الفعل بشكل صحيح."
 
-msgid "word.cat"
-msgstr "قطة"
+#. i18n key
+msgid "activity.dictee.instruction.CONJUGATION"
+msgstr "اكتب ما تسمعه."
 
-msgid "word.house"
-msgstr "منزل"
+#. i18n key
+msgid "activity.dictee.instruction.DIALOGUES"
+msgstr "اكتب ما تسمعه."
 
-msgid "word.dog"
-msgstr "كلب"
+#. i18n key
+msgid "activity.dictee.instruction.DICTEE"
+msgstr "اكتب ما تسمعه."
 
-msgid "word.table"
-msgstr "طاولة"
+#. i18n key
+msgid "activity.dictee.instruction.GRAMMAR"
+msgstr "اكتب ما تسمعه."
 
-msgid "word.door"
-msgstr "باب"
+#. i18n key
+msgid "activity.dictee.instruction.LISTENING"
+msgstr "اكتب ما تسمعه."
 
-msgid "word.window"
-msgstr "نافذة"
+#. i18n key
+msgid "activity.dictee.instruction.PRONUNCIATION"
+msgstr "اكتب ما تسمعه."
+
+#. i18n key
+msgid "activity.dictee.instruction.READING"
+msgstr "اكتب ما تسمعه."
+
+#. i18n key
+msgid "activity.dictee.instruction.SPEAKING"
+msgstr "اكتب ما تسمعه."
+
+#. i18n key
+msgid "activity.dictee.instruction.VOCABULARY"
+msgstr "اكتب ما تسمعه."
+
+#. i18n key
+msgid "activity.dictee.instruction.WRITING"
+msgstr "اكتب ما تسمعه."
+
+#. i18n key
+msgid "activity.dictee.instruction.generic"
+msgstr "اكتب ما تسمعه."
+
+#. i18n key
+msgid "activity.drag_order.instruction.CONJUGATION"
+msgstr "رتّب العناصر لتكوين التصريف الصحيح."
+
+#. i18n key
+msgid "activity.drag_order.instruction.DIALOGUES"
+msgstr "رتّب الجمل لتكوين حوار."
+
+#. i18n key
+msgid "activity.drag_order.instruction.DICTEE"
+msgstr "رتّب الكلمات التي سمعتها."
+
+#. i18n key
+msgid "activity.drag_order.instruction.GRAMMAR"
+msgstr "رتّب الكلمات لتكوين جملة صحيحة."
+
+#. i18n key
+msgid "activity.drag_order.instruction.LISTENING"
+msgstr "أعد الترتيب اعتمادًا على ما تسمعه."
+
+#. i18n key
+msgid "activity.drag_order.instruction.PRONUNCIATION"
+msgstr "رتّب للحصول على النمط الصحيح."
+
+#. i18n key
+msgid "activity.drag_order.instruction.READING"
+msgstr "أعد الترتيب ليتطابق مع النص."
+
+#. i18n key
+msgid "activity.drag_order.instruction.SPEAKING"
+msgstr "رتّب لبناء ردّ طبيعي."
+
+#. i18n key
+msgid "activity.drag_order.instruction.VOCABULARY"
+msgstr "رتّب الكلمات لتكوين التعبير الصحيح."
+
+#. i18n key
+msgid "activity.drag_order.instruction.WRITING"
+msgstr "رتّب لبناء جملة سليمة."
+
+#. i18n key
+msgid "activity.drag_order.instruction.generic"
+msgstr "رتّب الكلمات بالترتيب الصحيح."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.CONJUGATION"
+msgstr "أكمل بالتصريف الصحيح."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.DIALOGUES"
+msgstr "أكمل الحوار."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.DICTEE"
+msgstr "أكمل الإملاء."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.GRAMMAR"
+msgstr "أكمل الجملة بالصّيغة الصحيحة."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.LISTENING"
+msgstr "أكمل اعتمادًا على ما تسمعه."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.PRONUNCIATION"
+msgstr "أكمل بالصوت/الكتابة الصحيحة."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.READING"
+msgstr "أكمل اعتمادًا على النص."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.SPEAKING"
+msgstr "أكمل الردّ."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.VOCABULARY"
+msgstr "أكمل بالكلمة الصحيحة."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.WRITING"
+msgstr "أكمل الجملة بشكل طبيعي."
+
+#. i18n key
+msgid "activity.fill_blank.instruction.generic"
+msgstr "املأ الفراغ."
+
+#. i18n key
+msgid "activity.matching.instruction.CONJUGATION"
+msgstr "طابق الضمائر مع الصيغ الصحيحة."
+
+#. i18n key
+msgid "activity.matching.instruction.DIALOGUES"
+msgstr "طابق الأسئلة مع الردود المناسبة."
+
+#. i18n key
+msgid "activity.matching.instruction.DICTEE"
+msgstr "طابق المقاطع لتكوين الجملة."
+
+#. i18n key
+msgid "activity.matching.instruction.GRAMMAR"
+msgstr "طابق العناصر المتناسبة."
+
+#. i18n key
+msgid "activity.matching.instruction.LISTENING"
+msgstr "طابق ما تسمعه مع الاختيار الصحيح."
+
+#. i18n key
+msgid "activity.matching.instruction.PRONUNCIATION"
+msgstr "طابق الأصوات مع أمثلة."
+
+#. i18n key
+msgid "activity.matching.instruction.READING"
+msgstr "طابق العبارات مع النص."
+
+#. i18n key
+msgid "activity.matching.instruction.SPEAKING"
+msgstr "طابق المواقف مع الردود."
+
+#. i18n key
+msgid "activity.matching.instruction.VOCABULARY"
+msgstr "طابق كل كلمة مع معناها."
+
+#. i18n key
+msgid "activity.matching.instruction.WRITING"
+msgstr "طابق الجمل مع بنيتها."
+
+#. i18n key
+msgid "activity.matching.instruction.generic"
+msgstr "طابق بين العناصر."
+
+#. i18n key
+msgid "activity.mcq.instruction.CONJUGATION"
+msgstr "اختر التصريف الصحيح."
+
+#. i18n key
+msgid "activity.mcq.instruction.DIALOGUES"
+msgstr "اختر الردّ الأنسب."
+
+#. i18n key
+msgid "activity.mcq.instruction.DICTEE"
+msgstr "اختر التفريغ الصحيح."
+
+#. i18n key
+msgid "activity.mcq.instruction.GRAMMAR"
+msgstr "اختر الصيغة النحوية الصحيحة."
+
+#. i18n key
+msgid "activity.mcq.instruction.LISTENING"
+msgstr "استمع واختر الإجابة الصحيحة."
+
+#. i18n key
+msgid "activity.mcq.instruction.PRONUNCIATION"
+msgstr "اختر الصوت الصحيح."
+
+#. i18n key
+msgid "activity.mcq.instruction.READING"
+msgstr "اقرأ واختر الإجابة الصحيحة."
+
+#. i18n key
+msgid "activity.mcq.instruction.SPEAKING"
+msgstr "اختر أفضل ردّ."
+
+#. i18n key
+msgid "activity.mcq.instruction.VOCABULARY"
+msgstr "اختر المعنى الصحيح."
+
+#. i18n key
+msgid "activity.mcq.instruction.WRITING"
+msgstr "اختر أفضل جملة."
+
+#. i18n key
+msgid "activity.mcq.instruction.generic"
+msgstr "اختر الإجابة الصحيحة."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.CONJUGATION"
+msgstr "اختر كل التصريفات الصحيحة."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.DIALOGUES"
+msgstr "اختر كل الردود المناسبة."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.DICTEE"
+msgstr "اختر كل الخيارات المكتوبة بشكل صحيح."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.GRAMMAR"
+msgstr "اختر كل الصيغ النحوية الصحيحة."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.LISTENING"
+msgstr "اختر كل العبارات الصحيحة حسب ما تسمعه."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.PRONUNCIATION"
+msgstr "اختر كل العناصر ذات الصوت الصحيح."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.READING"
+msgstr "اختر كل العبارات الصحيحة حسب النص."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.SPEAKING"
+msgstr "اختر كل الردود المناسبة."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.VOCABULARY"
+msgstr "اختر كل الكلمات المطابقة للمعنى."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.WRITING"
+msgstr "اختر كل الجمل السليمة."
+
+#. i18n key
+msgid "activity.multiple_answer.instruction.generic"
+msgstr "اختر كل الإجابات الصحيحة."
+
+#. i18n key
+msgid "activity.text_input.instruction.CONJUGATION"
+msgstr "اكتب التصريف الصحيح."
+
+#. i18n key
+msgid "activity.text_input.instruction.DIALOGUES"
+msgstr "اكتب ردًا مناسبًا."
+
+#. i18n key
+msgid "activity.text_input.instruction.DICTEE"
+msgstr "اكتب الجملة التي سمعتها."
+
+#. i18n key
+msgid "activity.text_input.instruction.GRAMMAR"
+msgstr "اكتب الصيغة الصحيحة."
+
+#. i18n key
+msgid "activity.text_input.instruction.LISTENING"
+msgstr "أجب اعتمادًا على ما تسمعه."
+
+#. i18n key
+msgid "activity.text_input.instruction.PRONUNCIATION"
+msgstr "اكتب التفريغ الصحيح."
+
+#. i18n key
+msgid "activity.text_input.instruction.READING"
+msgstr "أجب اعتمادًا على النص."
+
+#. i18n key
+msgid "activity.text_input.instruction.SPEAKING"
+msgstr "اكتب ما ستقوله."
+
+#. i18n key
+msgid "activity.text_input.instruction.VOCABULARY"
+msgstr "استعمل الكلمة في جملة."
+
+#. i18n key
+msgid "activity.text_input.instruction.WRITING"
+msgstr "اكتب جوابًا قصيرًا."
+
+#. i18n key
+msgid "activity.text_input.instruction.generic"
+msgstr "اكتب إجابتك."
+

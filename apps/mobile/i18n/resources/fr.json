@@ -18,17 +18,136 @@
         "streakTitle": "Série d'Apprentissage",
         "streakDesc": "Continuez à apprendre chaque jour pour maintenir votre série!",
         "xpTotal": "XP Total",
-        "days": "Jours"
+        "days": "Jours",
+        "active": "ACTIF"
     },
     "common": {
         "loading": "Chargement...",
         "error": "Erreur",
-        "success": "Succès"
+        "success": "Succès",
+        "continue": "Continuer"
     },
     "auth": {
         "login": "Se connecter",
         "register": "S'inscrire",
         "email": "Email",
-        "password": "Mot de passe"
+        "password": "Mot de passe",
+        "username": "Nom d'utilisateur",
+        "signIn": "Se connecter",
+        "createAccount": "Créer un compte",
+        "welcomeBack": "Bon retour",
+        "invalidCredentials": "Identifiants invalides",
+        "loginFailed": "Échec de connexion",
+        "fillAllFields": "Veuillez remplir tous les champs",
+        "welcome": "Bienvenue !",
+        "noAccount": "Pas encore de compte ?",
+        "fullName": "Nom complet",
+        "accountCreated": "Compte créé avec succès !",
+        "createError": "Impossible de créer le compte",
+        "alreadyHaveAccount": "Déjà un compte ?"
+    },
+    "language": {
+        "title": "Choisissez votre langue d'apprentissage",
+        "subtitle": "Vous apprenez le français ! Sélectionnez votre langue préférée pour les instructions et l'interface.",
+        "continue": "Continuer",
+        "fr": "Français",
+        "en": "Anglais",
+        "ar": "Arabe",
+        "frDesc": "Apprendre avec des instructions en français",
+        "enDesc": "Apprendre avec des instructions en anglais",
+        "arDesc": "Apprendre avec des instructions en arabe"
+    },
+    "profile": {
+        "title": "Profil & Paramètres",
+        "loading": "Chargement...",
+        "learningLanguage": "Langue d'apprentissage",
+        "learningLanguageDesc": "Choisissez la langue que vous voulez apprendre",
+        "uiLanguage": "Langue de l'interface",
+        "uiLanguageDesc": "Choisissez votre langue préférée pour les instructions et l'interface",
+        "account": "Compte",
+        "email": "Email :",
+        "role": "Rôle :",
+        "signOut": "Se déconnecter",
+        "languageUpdated": "Langue mise à jour avec succès !",
+        "languageUpdateError": "Échec de la mise à jour de la langue"
+    },
+    "navigation": {
+        "courses": "Matières",
+        "dashboard": "Accueil",
+        "levels": "Niveaux",
+        "practice": "Pratique",
+        "progress": "Progrès",
+        "profile": "Profil"
+    },
+    "session": {
+        "complete": "Session terminée",
+        "congrats": "Félicitations!",
+        "keepGoing": "Continuez!",
+        "precision": "Précision",
+        "subjectPerformance": "Performance par Sujet",
+        "recommendations": "Recommandations",
+        "nextLevel": "Niveau Suivant",
+        "replayLevel": "Rejouer ce Niveau",
+        "retry": "Réessayer",
+        "practiceErrors": "Pratiquer les Erreurs",
+        "backToDashboard": "Retour au Tableau de Bord",
+        "correct": "correct",
+        "finished": "Session Terminée!",
+        "completed": "Session Complétée",
+        "score": "Score",
+        "xpEarned": "XP Gagnés",
+        "successMessage": "Excellent travail! Vous avez maîtrisé cette leçon.",
+        "effortMessage": "Bon effort! Continuez à pratiquer pour vous améliorer.",
+        "sessionComplete": "Session Terminée!",
+        "noActivity": "Aucune activité",
+        "completedAll": "Vous avez complété toutes les activités.",
+        "noActivityAvailable": "Aucune activité disponible pour ce niveau.",
+        "viewResults": "Voir les Résultats",
+        "back": "Retour",
+        "activity": "Activité",
+        "retryPrevious": "🔄 Activité échouée précédemment - Essayez encore!",
+        "correctMessage": "Correct! 🎉",
+        "incorrect": "Incorrect",
+        "submitError": "Erreur lors de la soumission",
+        "correctSymbol": "✅ Correct!",
+        "incorrectSymbol": "❌ Incorrect",
+        "explanation": "Explication",
+        "next": "Suivant →",
+        "verify": "Vérifier",
+        "unsupportedActivity": "Type d'activité non supporté:"
+    },
+    "index": {
+        "title": "ALF",
+        "subtitle": "Apprendre le français",
+        "getStarted": "Commencer"
+    },
+    "activities": {
+        "dragOrder": {
+            "instruction": "Remettez les mots dans le bon ordre :",
+            "subInstruction": "Glissez les mots dans les cases",
+            "wordBank": "Banque de mots",
+            "check": "Vérifier",
+            "tapToRemove": "appuyez pour supprimer"
+        },
+        "fillBlank": {
+            "missingPhrase": "Phrase manquante",
+            "placeholder": "?"
+        },
+        "matching": {
+            "noData": "Aucune donnée d'activité disponible",
+            "progress": "Progression",
+            "shouldMatch": "Devrait correspondre à:"
+        },
+        "feedback": {
+            "matching": {
+                "yourAssociations": "📋 Vos associations",
+                "correct": "Correct:"
+            },
+            "dragOrder": {
+                "wordOrder": "📝 Ordre des mots",
+                "yourAnswer": "Votre réponse:",
+                "correctOrder": "Ordre correct:"
+            }
+        }
     }
 }

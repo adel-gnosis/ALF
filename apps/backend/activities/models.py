@@ -9,9 +9,7 @@ class Activity(PolymorphicModel):
     """Base activity model with i18n support"""
     lesson = models.ForeignKey(Lesson, related_name='activities', on_delete=models.CASCADE)
     
-    # Backward Compatibility (Fallback fields)
-    question_text = models.TextField()
-    explanation = models.TextField(blank=True)
+    # Backward Compatibility (DELETED - Moved to i18n keys)
     
     # Translation System (NEW)
     question_text_key = models.CharField(
@@ -19,6 +17,12 @@ class Activity(PolymorphicModel):
         null=True, 
         blank=True,
         help_text="i18n key for question (e.g., 'activity.fill_blank.instruction')"
+    )
+    instruction_key = models.CharField(
+        max_length=255, 
+        null=True, 
+        blank=True,
+        help_text="i18n key for general instruction (e.g., 'activity.mcq.instruction', 'activity.dictee.instruction')"
     )
     explanation_key = models.CharField(
         max_length=255, 
@@ -60,6 +64,14 @@ class Activity(PolymorphicModel):
         null=True, 
         blank=True,
         related_name='created_activities'
+    )
+    modified_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='modified_activities',
+        help_text="Last person who modified this version"
     )
     # ========== REPLACE is_approved WITH THIS ==========
     STATUS_CHOICES = [
@@ -180,30 +192,8 @@ class MCQActivity(Activity):
     - Case B: Translation MCQ (choices translated to learner's language)
     - Case C: Grammar concepts (choices translated to learner's language)
     """
-    choices = JSONField(help_text="List of choice strings (French for Case A)")
-    correct_answer_index = models.PositiveIntegerField()
-    
-    # For Cases B & C: Translation support
-    choices_keys = JSONField(
-        null=True, 
-        blank=True,
-        help_text="Translation keys for choices (e.g., ['word.apple', 'word.orange'])"
-    )
-    choices_are_translatable = models.BooleanField(
-        default=False,
-        help_text="True for Cases B & C (translated choices), False for Case A (French choices)"
-    )
-
-    # Teacher-created multilingual choices (no gettext)
-    # Shape: [ {"fr":"pomme","en":"apple","ar":"تفاحة"}, {"fr":"chat","en":"cat"} ]
-    choices_i18n = models.JSONField(
-        default=list,
-        blank=True,
-        help_text=(
-            "Optional multilingual choices provided by teacher. Each choice is a dict keyed by language code. "
-            "Use supported_ui_languages to prevent serving when the user's UI language is missing."
-        ),
-    )
+    choices_v2 = models.JSONField(default=list, blank=True)
+    correct_choice_id = models.CharField(max_length=64, blank=True, default="")
 
 
     class Meta:
@@ -212,12 +202,23 @@ class MCQActivity(Activity):
 
 
 class FillBlankActivity(Activity):
-    """Fill in the Blank - Universal (instruction translated, answer in French)"""
+    """Fill in the Blank - Universal (instruction + phrase separated)"""
+
+    phrase = models.TextField(
+        null=True,
+        blank=True,
+        help_text="Sentence containing blank(s), e.g. 'Je ___ à l'école.'"
+    )
+
+    phrase_key = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="i18n key for the phrase"
+    )
+
     correct_answer = models.CharField(max_length=255)
-    
-    class Meta:
-        verbose_name = 'Fill The Blank Activity'
-        verbose_name_plural = 'Fill The Blank Activities'
+
 
 
 class MatchingActivity(Activity):
@@ -225,25 +226,7 @@ class MatchingActivity(Activity):
     Match pairs
     Supports both monolingual (French-French) and bilingual (French-Translation) matching
     """
-    pairs = JSONField(
-        help_text="Dictionary of pairs. For translatable values, prefix with 'key:' (e.g., {'le chat': 'key:animal.cat'})"
-    )
-    values_are_translatable = models.BooleanField(
-        default=False,
-        help_text="True if values are translation keys, False if literal text"
-    )
-
-    # Teacher-created multilingual matching (no gettext, no keys)
-    # Shape: { "parfait": {"en":"perfect","ar":"ممتاز"}, "rapide": {"en":"fast"} }
-    pairs_i18n = models.JSONField(
-        default=dict,
-        blank=True,
-        help_text=(
-            "Teacher-provided multilingual pairs. Keys are typically French terms; values are "
-            "dicts keyed by UI language code (e.g. {'en': 'perfect', 'ar': 'ممتاز'}). "
-            "If a language is missing for any entry, exclude it from supported_ui_languages."
-        ),
-    )
+    pairs_v2 = models.JSONField(default=list, blank=True)
 
 
     class Meta:
@@ -284,28 +267,8 @@ class MultipleAnswerActivity(Activity):
     Select ALL correct answers (multiple correct options)
     Supports translation like MCQActivity
     """
-    choices = JSONField(help_text="List of answer options")
-    correct_indices = JSONField(help_text="List of indices for all correct answers")
-    
-    # Translation support
-    choices_keys = JSONField(
-        null=True, 
-        blank=True,
-        help_text="Translation keys for choices (optional)"
-    )
-    choices_are_translatable = models.BooleanField(
-        default=False,
-        help_text="True if choices should be translated to learner's language"
-    )
-
-    # Teacher-created multilingual choices (no gettext)
-    choices_i18n = models.JSONField(
-        default=list,
-        blank=True,
-        help_text=(
-            "Optional multilingual choices provided by teacher. Each choice is a dict keyed by language code."
-        ),
-    )
+    choices_v2 = models.JSONField(default=list, blank=True)
+    correct_choice_ids = models.JSONField(default=list, blank=True)
 
     
     class Meta:

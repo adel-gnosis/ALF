@@ -15,12 +15,15 @@ import MultipleAnswerActivity from '../../components/activity/MultipleAnswerActi
 import TextInputActivity from '../../components/activity/TextInputActivity';
 import DicteeActivity from '../../components/activity/DicteeActivity';
 
+// Feedback components
+import DragOrderFeedback from '../../components/activity/feedback/DragOrderFeedback';
+
 function genUUIDv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
 export default function SessionScreen() {
@@ -58,7 +61,6 @@ export default function SessionScreen() {
             setStartTime(Date.now());
             setExplanation(null);
             setCorrectAnswer(null);
-
         }
     }, [activity?.id]);
 
@@ -108,13 +110,12 @@ export default function SessionScreen() {
                     setCorrectAnswer(data.correct_answer ?? null);
 
                     if (data.is_correct) {
-                    setFeedback('success');
-                    setFeedbackMessage('Correct! 🎉');
+                        setFeedback('success');
+                        setFeedbackMessage('Correct! 🎉');
                     } else {
-                    setFeedback('error');
-                    setFeedbackMessage(data.feedback || 'Incorrect');
+                        setFeedback('error');
+                        setFeedbackMessage(data.feedback || 'Incorrect');
                     }
-
                 },
                 onError: (error: any) => {
                     console.error('[SessionScreen] Submit error:', error);
@@ -225,51 +226,54 @@ export default function SessionScreen() {
 
             {/* Activity */}
             <View className="p-4">
-                {activity && renderActivity(activity, handleAnswer, feedback !== null, feedback, feedback === 'error' ? feedbackMessage?.split(": ")[1] : null)}
+                {activity && renderActivity(
+                    activity,
+                    handleAnswer,
+                    feedback !== null,
+                    feedback,
+                    correctAnswer
+                )}
             </View>
 
-            {/* Feedback - Keep visible longer */}
+            {/* Feedback with specialized components */}
             {feedback && (
-                <View
-                    className={`mx-4 p-6 rounded-xl mb-4 ${feedback === 'success' ? 'bg-green-100 border-2 border-green-500' : 'bg-red-100 border-2 border-red-500'
-                        }`}
-                >
-                    <Text
-                        className={`text-xl font-bold text-center mb-2 ${feedback === 'success' ? 'text-green-700' : 'text-red-700'
+                <View className="mx-4 mb-4">
+                    <View
+                        className={`p-6 rounded-xl mb-4 ${feedback === 'success'
+                                ? 'bg-green-100 border-2 border-green-500'
+                                : 'bg-red-100 border-2 border-red-500'
                             }`}
                     >
-                        {feedback === 'success' ? '✅ Correct!' : '❌ Incorrect'}
-                    </Text>
-
-                    {/* Feedback message */}
-                    <Text className="text-center text-gray-800">{feedbackMessage}</Text>
-
-                    {/* Correct answer (only if wrong) */}
-                    {feedback === 'error' && correctAnswer != null && (
-                        <Text className="text-sm text-gray-700 text-center mt-2">
-                            Réponse correcte :{" "}
-                            {Array.isArray(correctAnswer)
-                                ? correctAnswer.join(' ')
-                                : String(correctAnswer)}
+                        <Text
+                            className={`text-xl font-bold text-center mb-2 ${feedback === 'success' ? 'text-green-700' : 'text-red-700'
+                                }`}
+                        >
+                            {feedback === 'success' ? '✅ Correct!' : '❌ Incorrect'}
                         </Text>
-                    )}
 
-                    {/* Explanation (for all activities) */}
-                    {!!explanation && (
-                        <View className="mt-4 p-4 rounded-lg bg-white border border-gray-200">
-                            <Text className="text-sm font-semibold text-gray-800 mb-1">
-                                Explication
-                            </Text>
-                            <Text className="text-sm text-gray-700">
-                                {explanation}
-                            </Text>
-                        </View>
+                        {/* Explanation (for all activities) */}
+                        {!!explanation && (
+                            <View className="mt-4 p-4 rounded-lg bg-white border border-gray-200">
+                                <Text className="text-sm font-semibold text-gray-800 mb-1">
+                                    Explication
+                                </Text>
+                                <Text className="text-sm text-gray-700">
+                                    {explanation}
+                                </Text>
+                            </View>
+                        )}
+                    </View>
+
+                    {/* Activity-specific feedback */}
+                    {feedback === 'error' && renderActivityFeedback(
+                        activity,
+                        currentAnswer,
+                        correctAnswer
                     )}
                 </View>
             )}
 
-
-            {/* Actions - Only show verify for activities without built-in buttons */}
+            {/* Actions */}
             <View className="p-4 pb-8">
                 {feedback ? (
                     <Button
@@ -294,7 +298,7 @@ function renderActivity(
     onAnswer: (answer: any) => void,
     disabled: boolean,
     feedbackStatus: 'success' | 'error' | null,
-    correctAnswerData: any
+    correctAnswer: any
 ) {
     console.log('[SessionScreen] Rendering activity:', activity.resourcetype);
 
@@ -302,12 +306,12 @@ function renderActivity(
         case 'MCQActivity':
             return (
                 <MCQActivity
-                    key={activity.id} // Force reset state
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
-                    feedback={feedbackStatus ? (feedbackStatus === 'success' ? 'success' : 'error') : null}
-                    correctAnswer={correctAnswerData}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         case 'FillBlankActivity':
@@ -316,14 +320,19 @@ function renderActivity(
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         case 'MatchingActivity':
             return (
                 <MatchingActivity
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         case 'DragOrderActivity':
@@ -332,6 +341,8 @@ function renderActivity(
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         case 'ConjugationActivity':
@@ -340,6 +351,8 @@ function renderActivity(
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         case 'MultipleAnswerActivity':
@@ -348,6 +361,8 @@ function renderActivity(
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         case 'TextInputActivity':
@@ -356,6 +371,8 @@ function renderActivity(
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         case 'DicteeActivity':
@@ -364,9 +381,31 @@ function renderActivity(
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
+                    feedback={feedbackStatus}
+                    correctAnswer={correctAnswer}
                 />
             );
         default:
             return <Text>Type d'activité non supporté: {(activity as any).resourcetype}</Text>;
+    }
+}
+
+function renderActivityFeedback(
+    activity: Activity,
+    userAnswer: any,
+    correctAnswer: any
+) {
+    switch (activity.resourcetype) {
+        case 'DragOrderActivity':
+            return (
+                <DragOrderFeedback
+                    userAnswer={userAnswer}
+                    correctAnswer={correctAnswer}
+                />
+            );
+        // MatchingActivity feedback is built into the component itself
+        // Other activities can be added here as needed
+        default:
+            return null;
     }
 }

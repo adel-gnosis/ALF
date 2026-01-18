@@ -1,6 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from courses.views import CourseViewSet, LevelViewSet, SubjectViewSet, LessonViewSet
+from courses.views import (
+    CourseViewSet, 
+    LevelViewSet, 
+    SubjectViewSet, 
+    LessonViewSet,
+    I18nKeyViewSet  # NEW import
+)
 from users.views import RegisterView, MeView, select_language, get_current_user, LoginView
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -9,6 +15,7 @@ router.register(r'courses', CourseViewSet)
 router.register(r'levels', LevelViewSet)
 router.register(r'subjects', SubjectViewSet)
 router.register(r'lessons', LessonViewSet)
+router.register(r'i18n', I18nKeyViewSet, basename='i18n')  # NEW registration
 
 # Progress routes will be added in Phase 2
 
@@ -26,4 +33,5 @@ urlpatterns = [
     # API Routes
     path('', include(router.urls)),
     path('', include('progress.urls')),  # Progress routes
+    path('', include('activities.urls')),  # Teacher/Admin routes
 ]

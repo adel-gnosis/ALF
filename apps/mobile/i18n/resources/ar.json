@@ -18,7 +18,8 @@
         "streakTitle": "سلسلة التعلم",
         "streakDesc": "استمر في التعلم كل يوم للحفاظ على سلسلتك!",
         "xpTotal": "مجموع نقاط الخبرة",
-        "days": "أيام"
+        "days": "أيام",
+        "active": "نشط"
     },
     "common": {
         "loading": "جاري التحميل...",
@@ -27,8 +28,118 @@
     },
     "auth": {
         "login": "تسجيل الدخول",
-        "register": "تسجيل جديد",
+        "register": "إنشاء حساب",
         "email": "البريد الإلكتروني",
-        "password": "كلمة المرور"
+        "password": "كلمة المرور",
+        "username": "اسم المستخدم",
+        "signIn": "تسجيل الدخول",
+        "createAccount": "إنشاء حساب",
+        "welcomeBack": "مرحباً بعودتك",
+        "invalidCredentials": "بيانات الاعتماد غير صالحة",
+        "loginFailed": "فشل تسجيل الدخول"
+    },
+    "language": {
+        "title": "اختر لغة التعلم",
+        "subtitle": "أنت تتعلم الفرنسية! اختر لغتك المفضلة للتعليمات والواجهة.",
+        "continue": "استمرار",
+        "fr": "الفرنسية",
+        "en": "الإنجليزية",
+        "ar": "العربية",
+        "frDesc": "تعلم مع تعليمات باللغة الفرنسية",
+        "enDesc": "تعلم مع تعليمات باللغة الإنجليزية",
+        "arDesc": "تعلم مع تعليمات باللغة العربية"
+    },
+    "profile": {
+        "title": "الملف الشخصي والإعدادات",
+        "loading": "جاري التحميل...",
+        "learningLanguage": "لغة التعلم",
+        "learningLanguageDesc": "اختر اللغة التي تريد تعلمها",
+        "uiLanguage": "لغة الواجهة",
+        "uiLanguageDesc": "اختر لغتك المفضلة للتعليمات والواجهة",
+        "account": "الحساب",
+        "email": "البريد الإلكتروني:",
+        "role": "الدور:",
+        "signOut": "تسجيل الخروج",
+        "languageUpdated": "تم تحديث اللغة بنجاح!",
+        "languageUpdateError": "فشل في تحديث اللغة"
+    },
+    "navigation": {
+        "courses": "المواد",
+        "dashboard": "الرئيسية",
+        "levels": "المستويات",
+        "practice": "التدريب",
+        "progress": "التقدم",
+        "profile": "الملف الشخصي"
+    },
+    "session": {
+        "complete": "اكتملت الجلسة",
+        "congrats": "تهانينا!",
+        "keepGoing": "استمر!",
+        "precision": "الدقة",
+        "subjectPerformance": "الأداء حسب الموضوع",
+        "recommendations": "التوصيات",
+        "nextLevel": "المستوى التالي",
+        "replayLevel": "إعادة المستوى",
+        "retry": "إعادة المحاولة",
+        "practiceErrors": "ممارسة الأخطاء",
+        "backToDashboard": "العودة إلى لوحة القيادة",
+        "correct": "صحيح",
+        "finished": "انتهت الجلسة!",
+        "completed": "اكتملت الجلسة",
+        "score": "النتيجة",
+        "xpEarned": "النقاط المكتسبة",
+        "successMessage": "عمل رائع! لقد أتقنت هذه الدرسة.",
+        "effortMessage": "جهد جيد! استمر في التدريب للتحسن.",
+        "sessionComplete": "انتهت الجلسة!",
+        "noActivity": "لا يوجد نشاط",
+        "completedAll": "لقد أكملت جميع الأنشطة.",
+        "noActivityAvailable": "لا يوجد نشاط متاح لهذا المستوى.",
+        "viewResults": "عرض النتائج",
+        "back": "العودة",
+        "activity": "النشاط",
+        "retryPrevious": "🔄 نشاط فشل سابقاً - حاول مرة أخرى!",
+        "correctMessage": "صحيح! 🎉",
+        "incorrect": "خطأ",
+        "submitError": "خطأ أثناء الإرسال",
+        "correctSymbol": "✅ صحيح!",
+        "incorrectSymbol": "❌ خطأ",
+        "explanation": "الشرح",
+        "next": "التالي →",
+        "verify": "تحقق",
+        "unsupportedActivity": "نوع النشاط غير مدعوم:"
+    },
+    "index": {
+        "title": "ALF",
+        "subtitle": "تعلم الفرنسية",
+        "getStarted": "ابدأ الآن"
+    },
+    "activities": {
+        "dragOrder": {
+            "instruction": "رتب الكلمات بالترتيب الصحيح:",
+            "subInstruction": "اسحب الكلمات إلى الصناديق",
+            "wordBank": "بنك الكلمات",
+            "check": "تحقق",
+            "tapToRemove": "اضغط للإزالة"
+        },
+        "fillBlank": {
+            "missingPhrase": "العبارة مفقودة",
+            "placeholder": "?"
+        },
+        "matching": {
+            "noData": "لا توجد بيانات نشاط متاحة",
+            "progress": "التقدم",
+            "shouldMatch": "يجب أن يطابق:"
+        },
+        "feedback": {
+            "matching": {
+                "yourAssociations": "📋 اقتراناتك",
+                "correct": "صحيح:"
+            },
+            "dragOrder": {
+                "wordOrder": "📝 ترتيب الكلمات",
+                "yourAnswer": "إجابتك:",
+                "correctOrder": "الترتيب الصحيح:"
+            }
+        }
     }
 }

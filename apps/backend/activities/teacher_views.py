@@ -89,16 +89,32 @@ class TeacherActivityViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['get'], url_path='my-content')
     def my_content(self, request):
         """
-        GET /api/teacher/activities/my-content/?status=DRAFT&lesson_id=5
+        GET /api/teacher/activities/my-content/?status=DRAFT&lesson_id=5&activity_type=MCQActivity&created_by_me=true
         
-        List all activities created by this teacher
+        List activities:
+        - Teachers: Only their own activities + all approved
+        - Admins: Everything by default, can filter by 'created_by_me'
+        
         Query params:
         - status: DRAFT | PENDING | APPROVED | REJECTED | ARCHIVED
         - lesson_id: Filter by lesson
+        - activity_type: Comma-separated list of types
+        - created_by_me: If true, filters by current user
         """
-        activities = Activity.objects.filter(
-            created_by=request.user
-        ).select_related('lesson', 'lesson__level', 'lesson__subject').order_by('-created_at')
+        if request.user.role == 'admin':
+            activities = Activity.objects.all()
+            
+            # Admins can filter to see only their own content
+            if request.query_params.get('created_by_me') == 'true':
+                activities = activities.filter(created_by=request.user)
+        else:
+            activities = Activity.objects.filter(
+                Q(status='APPROVED') | Q(created_by=request.user)
+            )
+        
+        activities = activities.select_related(
+            'lesson', 'lesson__level', 'lesson__subject', 'created_by', 'modified_by'
+        ).order_by('-created_at')
         
         # Filters
         status_filter = request.query_params.get('status')
@@ -108,6 +124,75 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         lesson_id = request.query_params.get('lesson_id')
         if lesson_id:
             activities = activities.filter(lesson_id=lesson_id)
+
+        activity_type = request.query_params.get('activity_type')
+        if activity_type:
+            types = [t.strip().lower() for t in activity_type.split(',')]
+            activities = activities.filter(polymorphic_ctype__model__in=types)
+        
+        # Annotate with performance stats
+        activities_with_stats = []
+        for activity in activities:
+            attempts = ActivityAttempt.objects.filter(activity=activity)
+            total_attempts = attempts.count()
+            avg_accuracy = 0.0
+            if total_attempts > 0:
+                correct_count = attempts.filter(is_correct=True).count()
+                avg_accuracy = (correct_count / total_attempts) * 100
+            
+            activity.total_attempts = total_attempts
+            activity.average_accuracy = avg_accuracy
+            activities_with_stats.append(activity)
+        
+        serializer = TeacherActivityListSerializer(activities_with_stats, many=True)
+        
+        return Response({
+            'total': activities.count(),
+            'activities': serializer.data
+        })
+    
+    @action(detail=False, methods=['get'], url_path='browse')
+    def browse_activities(self, request):
+        """
+        GET /api/teacher/activities/browse/?activity_type=MCQActivity,MultipleAnswerActivity
+        
+        Browse all APPROVED activities for viewing/suggesting modifications
+        Supports category filtering via comma-separated activity types
+        
+        Query params:
+        - activity_type: Comma-separated list (e.g., "MCQActivity,MultipleAnswerActivity")
+        - lesson_id, subject_id, level_id, difficulty, search
+        """
+        activities = Activity.objects.filter(
+            status='APPROVED'
+        ).select_related('lesson', 'lesson__level', 'lesson__subject', 'created_by', 'modified_by').order_by('-created_at')
+        
+        # Filters
+        activity_type = request.query_params.get('activity_type')
+        if activity_type:
+            # Support multiple types (comma-separated for categories)
+            types = [t.strip().lower() for t in activity_type.split(',')]
+            activities = activities.filter(polymorphic_ctype__model__in=types)
+        
+        lesson_id = request.query_params.get('lesson_id')
+        if lesson_id:
+            activities = activities.filter(lesson_id=lesson_id)
+        
+        subject_id = request.query_params.get('subject_id')
+        if subject_id:
+            activities = activities.filter(lesson__subject_id=subject_id)
+        
+        level_id = request.query_params.get('level_id')
+        if level_id:
+            activities = activities.filter(lesson__level_id=level_id)
+        
+        difficulty = request.query_params.get('difficulty')
+        if difficulty:
+            activities = activities.filter(difficulty=difficulty)
+        
+        search = request.query_params.get('search')
+        if search:
+            activities = activities.filter(question_text__icontains=search)
         
         # Annotate with performance stats
         activities_with_stats = []
@@ -153,9 +238,10 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         """
         PATCH /api/teacher/activities/{id}/edit/
         
-        Edit existing activity
-        If APPROVED, creates new version (v2, v3, etc.) with status=PENDING
-        If DRAFT/PENDING, updates in place
+        Edit existing activity:
+        - Creator editing own APPROVED → Auto-approve new version
+        - Teacher suggesting edit to others' APPROVED → Needs admin approval
+        - Editing DRAFT/PENDING → Update in place
         
         Body: Same as create, but all fields optional
         """
@@ -170,21 +256,50 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         )
         serializer.is_valid(raise_exception=True)
         
-        updated_activity = serializer.update(activity, serializer.validated_data)
+        # Determine if this is the creator or someone suggesting changes
+        is_creator = activity.created_by == request.user
+        is_approved = activity.status == 'APPROVED'
         
-        is_new_version = updated_activity.id != activity.id
+        if is_approved:
+            # Always create new version for APPROVED activities
+            updated_activity = serializer.update(activity, serializer.validated_data)
+            
+            if is_creator:
+                # Creator editing their own APPROVED activity → Auto-approve
+                updated_activity.status = 'APPROVED'
+                updated_activity.modified_by = request.user
+                updated_activity.save()
+                
+                # Archive old version
+                activity.status = 'ARCHIVED'
+                activity.save()
+                
+                message = f'Activity updated (v{updated_activity.version}). Auto-approved.'
+            else:
+                # Teacher suggesting modification → Needs approval
+                updated_activity.status = 'PENDING'
+                updated_activity.modified_by = request.user
+                updated_activity.save()
+                
+                message = f'Modification suggested (v{updated_activity.version}). Awaiting admin approval.'
+            
+            is_new_version = True
+        else:
+            # DRAFT or PENDING - update in place
+            updated_activity = serializer.update(activity, serializer.validated_data)
+            updated_activity.modified_by = request.user
+            updated_activity.save()
+            message = 'Activity updated.'
+            is_new_version = False
         
         return Response({
             'id': updated_activity.id,
             'status': updated_activity.status,
             'version': updated_activity.version,
-            'message': (
-                f'Created new version (v{updated_activity.version}). Awaiting re-approval.'
-                if is_new_version
-                else 'Activity updated.'
-            ),
+            'message': message,
             'is_new_version': is_new_version,
-            'needs_approval': updated_activity.status == 'PENDING'
+            'needs_approval': updated_activity.status == 'PENDING',
+            'is_suggestion': is_approved and not is_creator
         })
     
     @action(detail=True, methods=['delete'], permission_classes=[permissions.IsAuthenticated, CanDeleteActivity])

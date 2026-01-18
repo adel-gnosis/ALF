@@ -1,42 +1,103 @@
 import { View, Text, TextInput } from 'react-native';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface FillBlankActivityProps {
     activity: any;
     onAnswer: (answer: string) => void;
     disabled?: boolean;
+    feedback?: 'success' | 'error' | null;
+    correctAnswer?: any;
 }
 
-export default function FillBlankActivity({ activity, onAnswer, disabled }: FillBlankActivityProps) {
+export default function FillBlankActivity({
+    activity,
+    onAnswer,
+    disabled,
+}: FillBlankActivityProps) {
+    const { t } = useTranslation();
     const [text, setText] = useState('');
 
     const handleChange = (val: string) => {
         setText(val);
-        // Auto-submit on change for immediate feedback
         if (!disabled) {
             onAnswer(val);
         }
     };
 
-    // Extract question text and split by blank marker
-    const questionText = activity?.question_text || '';
-    const parts = questionText.split('___');
+    /**
+     * 1️⃣ Instruction (always comes from question_text)
+     * This is what gets translated via question_text_key
+     */
+    const instruction = activity?.question_text || '';
+
+    /**
+     * 2️⃣ Phrase (new field)
+     * Fallback to old question_text ONLY if it contains blanks
+     */
+    const rawPhrase =
+        activity?.phrase ||
+        (typeof activity?.question_text === 'string' &&
+            activity.question_text.includes('___')
+            ? activity.question_text
+            : '');
+
+    /**
+     * Safety: avoid crashing UI if data is malformed
+     */
+    if (!rawPhrase) {
+        return (
+            <View className="w-full items-center">
+                {!!instruction && (
+                    <Text className="text-base text-gray-600 font-semibold mb-4 text-center">
+                        {instruction}
+                    </Text>
+                )}
+                <Text className="text-sm text-gray-400">
+                    {t('activities.fillBlank.missingPhrase')}
+                </Text>
+            </View>
+        );
+    }
+
+    const parts = rawPhrase.split('___');
 
     return (
         <View className="w-full items-center">
+            {activity?.instruction && (
+                <Text className="text-sm font-medium text-gray-500 mb-1 italic text-center">
+                    {activity.instruction}
+                </Text>
+            )}
+            {/* Instruction (Specific text or legacy instruction) */}
+            {!!instruction && (
+                <Text className="text-base text-gray-600 font-semibold mb-4 text-center">
+                    {instruction}
+                </Text>
+            )}
+
+            {/* Phrase with blank */}
             <View className="flex-row flex-wrap items-center justify-center mb-8">
-                <Text className="text-xl font-bold text-gray-800">{parts[0]}</Text>
+                <Text className="text-xl font-bold text-gray-800">
+                    {parts[0]}
+                </Text>
+
                 <View className="bg-gray-100 px-4 py-2 rounded-lg border-b-2 border-blue-500 mx-1 min-w-[100px]">
                     <TextInput
                         className="text-xl font-bold text-center text-blue-600 p-0"
-                        placeholder="?"
+                        placeholder={t('activities.fillBlank.placeholder')}
                         value={text}
                         onChangeText={handleChange}
                         autoCapitalize="none"
                         editable={!disabled}
                     />
                 </View>
-                {parts[1] && <Text className="text-xl font-bold text-gray-800">{parts[1]}</Text>}
+
+                {parts[1] && (
+                    <Text className="text-xl font-bold text-gray-800">
+                        {parts[1]}
+                    </Text>
+                )}
             </View>
         </View>
     );

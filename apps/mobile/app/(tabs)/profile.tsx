@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import { useCurrentUser, useSelectLanguage } from '@alf/shared';
+import { changeLanguage } from '../../i18n';
 
 type Language = 'fr' | 'en' | 'ar';
 
@@ -19,23 +21,33 @@ const languages: LanguageOption[] = [
 ];
 
 export default function ProfileScreen() {
+    const { t, i18n } = useTranslation();
     const { signOut } = useAuth();
     const { data: user, isLoading } = useCurrentUser();
     const selectLanguageMutation = useSelectLanguage();
 
-    const handleLanguageChange = async (language: Language) => {
+    const handleLearningLanguageChange = async (language: Language) => {
         try {
             await selectLanguageMutation.mutateAsync(language);
-            Alert.alert('Success', 'Language updated successfully!');
+            Alert.alert(t('common.success'), t('profile.languageUpdated'));
         } catch (error) {
-            Alert.alert('Error', 'Failed to update language');
+            Alert.alert(t('common.error'), t('profile.languageUpdateError'));
+        }
+    };
+
+    const handleUILanguageChange = async (language: Language) => {
+        try {
+            await changeLanguage(language);
+            Alert.alert(t('common.success'), t('profile.languageUpdated'));
+        } catch (error) {
+            Alert.alert(t('common.error'), t('profile.languageUpdateError'));
         }
     };
 
     if (isLoading) {
         return (
             <View style={styles.container}>
-                <Text style={styles.loadingText}>Loading...</Text>
+                <Text style={styles.loadingText}>{t('profile.loading')}</Text>
             </View>
         );
     }
@@ -43,25 +55,26 @@ export default function ProfileScreen() {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>Profile & Settings</Text>
+                <Text style={styles.title}>{t('profile.title')}</Text>
                 <Text style={styles.username}>{user?.username || 'User'}</Text>
             </View>
 
+            {/* Learning Language Section */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>UI Language</Text>
+                <Text style={styles.sectionTitle}>{t('profile.learningLanguage')}</Text>
                 <Text style={styles.sectionSubtitle}>
-                    Choose your preferred language for instructions
+                    {t('profile.learningLanguageDesc')}
                 </Text>
 
                 <View style={styles.languageOptions}>
                     {languages.map((lang) => (
                         <TouchableOpacity
-                            key={lang.code}
+                            key={`learning-${lang.code}`}
                             style={[
                                 styles.languageOption,
                                 user?.native_language === lang.code && styles.languageOptionSelected,
                             ]}
-                            onPress={() => handleLanguageChange(lang.code)}
+                            onPress={() => handleLearningLanguageChange(lang.code)}
                             disabled={selectLanguageMutation.isPending}
                         >
                             <Text style={styles.languageFlag}>{lang.flag}</Text>
@@ -79,20 +92,52 @@ export default function ProfileScreen() {
                 </View>
             </View>
 
+            {/* UI Language Section */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Account</Text>
+                <Text style={styles.sectionTitle}>{t('profile.uiLanguage')}</Text>
+                <Text style={styles.sectionSubtitle}>
+                    {t('profile.uiLanguageDesc')}
+                </Text>
+
+                <View style={styles.languageOptions}>
+                    {languages.map((lang) => (
+                        <TouchableOpacity
+                            key={`ui-${lang.code}`}
+                            style={[
+                                styles.languageOption,
+                                i18n.language === lang.code && styles.languageOptionSelected,
+                            ]}
+                            onPress={() => handleUILanguageChange(lang.code)}
+                        >
+                            <Text style={styles.languageFlag}>{lang.flag}</Text>
+                            <View style={styles.languageInfo}>
+                                <Text style={styles.languageName}>{lang.nativeName}</Text>
+                                <Text style={styles.languageNameEn}>{lang.name}</Text>
+                            </View>
+                            {i18n.language === lang.code && (
+                                <View style={styles.checkmark}>
+                                    <Text style={styles.checkmarkText}>✓</Text>
+                                </View>
+                            )}
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>{t('profile.account')}</Text>
                 <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Email:</Text>
+                    <Text style={styles.infoLabel}>{t('profile.email')}</Text>
                     <Text style={styles.infoValue}>{user?.email || 'N/A'}</Text>
                 </View>
                 <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Role:</Text>
+                    <Text style={styles.infoLabel}>{t('profile.role')}</Text>
                     <Text style={styles.infoValue}>{user?.role || 'student'}</Text>
                 </View>
             </View>
 
             <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
-                <Text style={styles.logoutButtonText}>Sign Out</Text>
+                <Text style={styles.logoutButtonText}>{t('profile.signOut')}</Text>
             </TouchableOpacity>
         </ScrollView>
     );
