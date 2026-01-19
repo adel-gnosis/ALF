@@ -49,9 +49,15 @@ export default function ActivityCreationWizard({
         setWizardState(prev => ({ ...prev, ...updates }));
     };
 
-    const goToStep = (step: number) => {
-        setWizardState(prev => ({ ...prev, currentStep: step }));
+    type WizardStep = ActivityWizardState['currentStep'];
+
+    const goToStep = (step: WizardStep) => {
+        setWizardState(prev => ({
+            ...prev,
+            currentStep: step
+        }));
     };
+
 
     const validateStep1 = (): boolean => {
         const errors: Record<string, string> = {};
@@ -87,10 +93,11 @@ export default function ActivityCreationWizard({
     };
 
     const handleBack = () => {
-        if (wizardState.currentStep > 1) {
-            goToStep(wizardState.currentStep - 1);
-        }
+        if (wizardState.currentStep === 2) goToStep(1);
+        if (wizardState.currentStep === 3) goToStep(2);
+        if (wizardState.currentStep === 4) goToStep(3);
     };
+
 
     const handleReset = () => {
         setWizardState({
