@@ -2,6 +2,7 @@ import json
 import os
 import urllib.request
 import urllib.error
+import logging
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,6 +10,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from .models import DicteeActivity
+
+logger = logging.getLogger(__name__)
+
 
 
 class DicteeTriggerTTSAPIView(APIView):
@@ -29,25 +33,44 @@ class DicteeTriggerTTSAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        logger.info(
+            "DicteeTriggerTTSAPIView called by user=%s raw_data=%s",
+            getattr(request.user, "id", None),
+            request.data,
+        )
+
         # ---- Basic auth hardening: only staff by default ----
         # If you have custom teacher/admin roles, replace this check accordingly.
         if not getattr(request.user, "is_staff", False):
+            logger.warning(
+                "DicteeTriggerTTSAPIView forbidden for user=%s",
+                getattr(request.user, "id", None),
+            )
             return Response({"detail": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
 
         dictee_id = request.data.get("dictee_id")
+
         if not dictee_id:
             return Response({"detail": "dictee_id is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             activity = DicteeActivity.objects.get(pk=int(dictee_id))
         except (DicteeActivity.DoesNotExist, ValueError):
+            logger.warning("DicteeTriggerTTSAPIView DicteeActivity not found for id=%s", dictee_id)
             return Response({"detail": "DicteeActivity not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # text can be sent explicitly or use correct_text from DB
         text = (request.data.get("text") or activity.correct_text or "").strip()
         if not text:
-            return Response({"detail": "text is required (or correct_text must be set)"},
-                            status=status.HTTP_400_BAD_REQUEST)
+            logger.warning(
+                "DicteeTriggerTTSAPIView missing text for dictee_id=%s (correct_text empty)",
+                activity.pk,
+            )
+            return Response(
+                {"detail": "text is required (or correct_text must be set)"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
 
         voices = request.data.get("voices") or ["male", "female"]
         speeds = request.data.get("speeds") or ["1.0"]
@@ -63,6 +86,14 @@ class DicteeTriggerTTSAPIView(APIView):
         else:
             speeds_csv = ",".join([str(s).strip() for s in speeds if str(s).strip()]) or "1.0"
 
+        logger.info(
+            "DicteeTriggerTTSAPIView prepared inputs dictee_id=%s voices=%s speeds=%s",
+            activity.pk,
+            voices_csv,
+            speeds_csv,
+        )
+
+
         owner = os.environ.get("GITHUB_TTS_OWNER", "").strip()
         repo = os.environ.get("GITHUB_TTS_REPO", "").strip()
         workflow = os.environ.get("GITHUB_TTS_WORKFLOW", "dictee_tts.yml").strip()
@@ -70,12 +101,22 @@ class DicteeTriggerTTSAPIView(APIView):
         pat = os.environ.get("GITHUB_TTS_PAT", "").strip()
 
         if not (owner and repo and workflow and ref and pat):
+            logger.error(
+                "DicteeTriggerTTSAPIView misconfigured env: "
+                "owner=%r repo=%r workflow=%r ref=%r pat_present=%r",
+                owner,
+                repo,
+                workflow,
+                ref,
+                bool(pat),
+            )
             return Response(
                 {"detail": "Server misconfigured: missing one of GITHUB_TTS_OWNER/REPO/WORKFLOW/REF/PAT"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
-        url = f"https://api.github.com/repos/adel-gnosis/ALF/actions/workflows/{workflow}/dispatches"
+
+        url = f"https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow}/dispatches"
 
         payload = {
             "ref": ref,
@@ -88,6 +129,14 @@ class DicteeTriggerTTSAPIView(APIView):
         }
 
         data = json.dumps(payload).encode("utf-8")
+
+        logger.info(
+            "DicteeTriggerTTSAPIView dispatching GitHub workflow: url=%s ref=%s dictee_id=%s",
+            url,
+            ref,
+            activity.pk,
+        )
+
 
         req = urllib.request.Request(
             url,
@@ -117,6 +166,11 @@ class DicteeTriggerTTSAPIView(APIView):
 
         except urllib.error.HTTPError as e:
             body = e.read().decode("utf-8", errors="ignore")
+            logger.error(
+                "DicteeTriggerTTSAPIView GitHub HTTPError status=%s body=%s",
+                e.code,
+                body,
+            )
             return Response(
                 {
                     "detail": "GitHub dispatch failed",
@@ -126,6 +180,10 @@ class DicteeTriggerTTSAPIView(APIView):
                 status=status.HTTP_502_BAD_GATEWAY,
             )
         except Exception as e:
+            logger.exception(
+                "DicteeTriggerTTSAPIView unexpected error during GitHub dispatch: %s",
+                e,
+            )
             return Response(
                 {"detail": "GitHub dispatch failed", "error": str(e)},
                 status=status.HTTP_502_BAD_GATEWAY,

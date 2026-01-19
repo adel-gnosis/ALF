@@ -17,6 +17,7 @@ export * from './hooks/useLanguage';
 export * from './hooks/useAuth';
 export * from './hooks/useTeacher';
 export * from './hooks/useAdmin';
+export * from './hooks/useDicteeTTS';
 
 // Constants
 export * from './constants/activityCategories';

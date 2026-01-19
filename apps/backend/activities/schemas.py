@@ -87,14 +87,15 @@ class ActivitySchema:
         Validate that either raw text OR i18n key is provided
         Returns: (is_valid, error_message)
         """
-        # At least one of question_text or question_text_key must exist
-        if not data.get('question_text') and not data.get('question_text_key'):
-            return False, "Either 'question_text' or 'question_text_key' is required"
+        # At least one of question_text, question_text_key or instruction_key must exist
+        text_provided = any([
+            data.get('question_text'),
+            data.get('question_text_key'),
+            data.get('instruction_key')
+        ])
         
-        # If using i18n keys, translation_data should be present (optional but recommended)
-        if data.get('question_text_key') and not data.get('translation_data'):
-            # Warning only, not an error
-            pass
+        if not text_provided:
+            return False, "Either 'question_text', 'question_text_key', or 'instruction_key' is required"
         
         return True, None
 
@@ -495,9 +496,7 @@ class DicteeActivitySchema(ActivitySchema):
         if not valid:
             return False, error
         
-        # At least one audio source must be provided
-        if not data.get('audio_urls') and not data.get('audio_file'):
-            return False, "Either 'audio_urls' or 'audio_file' is required"
+        # Audio sources are now optional during creation to support TTS generation flow
         
         return True, None
 

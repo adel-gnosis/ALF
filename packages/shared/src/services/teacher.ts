@@ -59,5 +59,14 @@ export const teacherApi = {
     getStatsOverview: async (): Promise<TeacherStats> => {
         const response = await api.get('/teacher/stats/overview/');
         return response.data;
+    },
+
+    triggerDicteeTTS: async (data: {
+        dictee_id: number;
+        voices: string[];
+        speeds: string[];
+    }): Promise<{ triggered: boolean, dictee_id: number, voices: string, speeds: string }> => {
+        const response = await api.post('/dictee/trigger-tts/', data);
+        return response.data;
     }
 };
