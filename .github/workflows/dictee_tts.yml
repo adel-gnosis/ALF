@@ -1,0 +1,67 @@
+name: Dictee TTS
+
+on:
+  workflow_dispatch:
+    inputs:
+      dictee_id:
+        description: "DicteeActivity ID"
+        required: true
+        type: string
+      text:
+        description: "Text to synthesize (French)"
+        required: true
+        type: string
+      voice:
+        description: "Voice label stored in audio_urls (male/female/etc)"
+        required: false
+        default: "default"
+        type: string
+      speed:
+        description: "Speed label stored in filename (1.0, 0.9...)"
+        required: false
+        default: "1.0"
+        type: string
+
+jobs:
+  generate-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl unzip ffmpeg
+
+      - name: Install Piper (binary)
+        run: |
+          curl -L -o piper.zip https://github.com/rhasspy/piper/releases/latest/download/piper_linux_x86_64.zip
+          unzip -q piper.zip -d piper
+          chmod +x piper/piper
+
+      - name: Download French voice model
+        run: |
+          mkdir -p voices
+          curl -L -o voices/fr.onnx https://github.com/rhasspy/piper/releases/latest/download/fr_FR-upmc-medium.onnx
+          curl -L -o voices/fr.onnx.json https://github.com/rhasspy/piper/releases/latest/download/fr_FR-upmc-medium.onnx.json
+
+      - name: Generate MP3
+        env:
+          TEXT: ${{ inputs.text }}
+        run: |
+          echo "$TEXT" | ./piper/piper -m voices/fr.onnx -f dictee.wav
+          ffmpeg -y -i dictee.wav dictee.mp3
+
+      - name: Upload to your backend
+        env:
+          UPLOAD_URL: ${{ secrets.ALF_TTS_UPLOAD_URL }}
+          UPLOAD_TOKEN: ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}
+          DICDEE_ID: ${{ inputs.dictee_id }}
+          VOICE: ${{ inputs.voice }}
+          SPEED: ${{ inputs.speed }}
+        run: |
+          curl -s -X POST "$UPLOAD_URL" \
+            -H "Authorization: Bearer $UPLOAD_TOKEN" \
+            -F "dictee_id=$DICDEE_ID" \
+            -F "voice=$VOICE" \
+            -F "speed=$SPEED" \
+            -F "file=@dictee.mp3"
+          echo
