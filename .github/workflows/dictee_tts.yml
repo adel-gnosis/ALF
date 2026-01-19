@@ -10,57 +10,64 @@ on:
         required: true
         type: string
       voice:
+        required: false
         default: "default"
         type: string
       speed:
+        required: false
         default: "1.0"
         type: string
 
 jobs:
   generate-and-upload:
     runs-on: ubuntu-latest
-    steps:
-      - name: Debug start
-        run: |
-          echo "Starting Dictee TTS workflow"
-          echo "Text: ${{ inputs.text }}"
 
+    steps:
       - name: Install system deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl unzip ffmpeg
+          sudo apt-get install -y curl tar ffmpeg
 
-      - name: Download Piper
+      - name: Download Piper (linux x86_64)
         run: |
-          set -x
-          curl -L https://github.com/rhasspy/piper/releases/latest/download/piper_linux_x86_64.zip -o piper.zip
-          unzip -q piper.zip -d piper
+          set -euxo pipefail
+          # Known-good mirror with the Linux tarball
+          curl -L -o piper.tar.gz "https://downloads.sourceforge.net/project/piper-tts.mirror/2023.11.14-2/piper_linux_x86_64.tar.gz"
+          tar -xzf piper.tar.gz
+          # The extracted folder is usually named "piper"
           chmod +x piper/piper
+          ./piper/piper --help | head -n 5 || true
 
-      - name: Download French voice
+      - name: Download French voice (fr_FR upmc medium) from HuggingFace
         run: |
-          set -x
+          set -euxo pipefail
           mkdir -p voices
-          curl -L https://github.com/rhasspy/piper/releases/latest/download/fr_FR-upmc-medium.onnx -o voices/fr.onnx
-          curl -L https://github.com/rhasspy/piper/releases/latest/download/fr_FR-upmc-medium.onnx.json -o voices/fr.onnx.json
+          curl -L -o voices/fr_FR-upmc-medium.onnx \
+            "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/upmc/medium/fr_FR-upmc-medium.onnx"
+          curl -L -o voices/fr_FR-upmc-medium.onnx.json \
+            "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/upmc/medium/fr_FR-upmc-medium.onnx.json"
+          ls -lh voices
 
-      - name: Generate audio (non-fatal)
-        continue-on-error: true
+      - name: Generate MP3
         run: |
-          set -x
-          echo "${{ inputs.text }}" | ./piper/piper -m voices/fr.onnx -f dictee.wav
+          set -euxo pipefail
+          echo "${{ inputs.text }}" | ./piper/piper -m voices/fr_FR-upmc-medium.onnx -f dictee.wav
           ffmpeg -y -i dictee.wav dictee.mp3
           ls -lh dictee.*
 
-      - name: Upload to backend (ALWAYS RUN)
+      - name: Upload to backend
+        env:
+          UPLOAD_URL: ${{ secrets.ALF_TTS_UPLOAD_URL }}
+          UPLOAD_TOKEN: ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}
+          DICDEE_ID: ${{ inputs.dictee_id }}
+          VOICE: ${{ inputs.voice }}
+          SPEED: ${{ inputs.speed }}
         run: |
-          set -x
-          echo "UPLOAD_URL=${{ secrets.ALF_TTS_UPLOAD_URL }}"
-          ls -lh dictee.mp3 || echo "⚠️ dictee.mp3 missing"
-
-          curl -v -X POST "${{ secrets.ALF_TTS_UPLOAD_URL }}" \
-            -H "Authorization: Bearer ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}" \
-            -F "dictee_id=${{ inputs.dictee_id }}" \
-            -F "voice=${{ inputs.voice }}" \
-            -F "speed=${{ inputs.speed }}" \
+          set -euxo pipefail
+          curl -s -X POST "$UPLOAD_URL" \
+            -H "Authorization: Bearer $UPLOAD_TOKEN" \
+            -F "dictee_id=$DICDEE_ID" \
+            -F "voice=$VOICE" \
+            -F "speed=$SPEED" \
             -F "file=@dictee.mp3"
+          echo
