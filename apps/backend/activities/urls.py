@@ -1,9 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+
+from activities.tts_trigger_views import DicteeTriggerTTSAPIView
 from .teacher_views import TeacherActivityViewSet, TeacherStatsView
 from .admin_views import AdminReviewViewSet, AdminTeacherManagementViewSet
 from .student_views import report_activity
 from .tts_views import DicteeUploadAudioAPIView
+from .tts_trigger_views import DicteeTriggerTTSAPIView
 
 router = DefaultRouter()
 router.register(r'teacher/activities', TeacherActivityViewSet, basename='teacher-activities')
@@ -15,5 +18,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('activities/<int:activity_id>/report/', report_activity, name='report-activity'),
     path('dictee/upload-audio/', DicteeUploadAudioAPIView.as_view(), name='dictee-upload-audio'),
+    path("dictee/trigger-tts/", DicteeTriggerTTSAPIView.as_view(), name="dictee-trigger-tts"),
 
 ]
