@@ -9,14 +9,16 @@ on:
       text:
         required: true
         type: string
-      voice:
+      voices:
         required: false
         default: "default"
         type: string
-      speed:
+        description: "CSV list, e.g. male,female or default"
+      speeds:
         required: false
         default: "1.0"
         type: string
+        description: "CSV list, e.g. 0.9,1.0,1.1"
 
 jobs:
   generate-and-upload:
@@ -31,43 +33,78 @@ jobs:
       - name: Download Piper (linux x86_64)
         run: |
           set -euxo pipefail
-          # Known-good mirror with the Linux tarball
           curl -L -o piper.tar.gz "https://downloads.sourceforge.net/project/piper-tts.mirror/2023.11.14-2/piper_linux_x86_64.tar.gz"
           tar -xzf piper.tar.gz
-          # The extracted folder is usually named "piper"
           chmod +x piper/piper
           ./piper/piper --help | head -n 5 || true
 
-      - name: Download French voice (fr_FR upmc medium) from HuggingFace
+      - name: Download French voice model(s)
         run: |
           set -euxo pipefail
           mkdir -p voices
+
+          # NOTE:
+          # Right now you only use one French model. We keep the label "voice"
+          # but map all voices to the same model unless you add more models later.
           curl -L -o voices/fr_FR-upmc-medium.onnx \
             "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/upmc/medium/fr_FR-upmc-medium.onnx"
           curl -L -o voices/fr_FR-upmc-medium.onnx.json \
             "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/upmc/medium/fr_FR-upmc-medium.onnx.json"
+
           ls -lh voices
 
-      - name: Generate MP3
-        run: |
-          set -euxo pipefail
-          echo "${{ inputs.text }}" | ./piper/piper -m voices/fr_FR-upmc-medium.onnx -f dictee.wav
-          ffmpeg -y -i dictee.wav dictee.mp3
-          ls -lh dictee.*
-
-      - name: Upload to backend
+      - name: Generate + upload (multi voice + multi speed)
         env:
           UPLOAD_URL: ${{ secrets.ALF_TTS_UPLOAD_URL }}
           UPLOAD_TOKEN: ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}
-          DICDEE_ID: ${{ inputs.dictee_id }}
-          VOICE: ${{ inputs.voice }}
-          SPEED: ${{ inputs.speed }}
+          DICTEE_ID: ${{ inputs.dictee_id }}
+          TEXT: ${{ inputs.text }}
+          VOICES: ${{ inputs.voices }}
+          SPEEDS: ${{ inputs.speeds }}
         run: |
           set -euxo pipefail
-          curl -s -X POST "$UPLOAD_URL" \
-            -H "Authorization: Bearer $UPLOAD_TOKEN" \
-            -F "dictee_id=$DICDEE_ID" \
-            -F "voice=$VOICE" \
-            -F "speed=$SPEED" \
-            -F "file=@dictee.mp3"
-          echo
+
+          # Split CSV into arrays
+          IFS=',' read -ra VOICE_ARR <<< "${VOICES:-default}"
+          IFS=',' read -ra SPEED_ARR <<< "${SPEEDS:-1.0}"
+
+          # Helper to trim spaces
+          trim() { echo "$1" | xargs; }
+
+          # Map a "voice label" to a model path.
+          # For now all voices use the same model.
+          model_for_voice() {
+            echo "voices/fr_FR-upmc-medium.onnx"
+          }
+
+          # Generate one base wav per voice label, then speed-variants via ffmpeg atempo.
+          for raw_voice in "${VOICE_ARR[@]}"; do
+            voice="$(trim "$raw_voice")"
+            [ -n "$voice" ] || continue
+
+            model="$(model_for_voice "$voice")"
+
+            base_wav="dictee_${DICTEE_ID}_${voice}_base.wav"
+            echo "$TEXT" | ./piper/piper -m "$model" -f "$base_wav"
+
+            for raw_speed in "${SPEED_ARR[@]}"; do
+              speed="$(trim "$raw_speed")"
+              [ -n "$speed" ] || continue
+
+              # atempo supports 0.5..2.0; if you ever need outside, we'd chain filters.
+              out_mp3="dictee_${DICTEE_ID}_${voice}_x${speed}.mp3"
+
+              ffmpeg -y -i "$base_wav" -filter:a "atempo=${speed}" "$out_mp3"
+              ls -lh "$out_mp3"
+
+              # Upload
+              curl -s -X POST "$UPLOAD_URL" \
+                -H "Authorization: Bearer $UPLOAD_TOKEN" \
+                -F "dictee_id=$DICTEE_ID" \
+                -F "voice=$voice" \
+                -F "speed=$speed" \
+                -F "file=@${out_mp3}"
+
+              echo
+            done
+          done
