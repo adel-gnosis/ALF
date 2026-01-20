@@ -196,7 +196,12 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         
         search = request.query_params.get('search')
         if search:
-            activities = activities.filter(question_text__icontains=search)
+            activities = activities.filter(
+                Q(question_text_key__icontains=search) |
+                Q(instruction_key__icontains=search) |
+                Q(explanation_key__icontains=search)
+            )
+
         
         # Annotate with performance stats
         activities_with_stats = []
@@ -438,7 +443,10 @@ class TeacherActivityViewSet(viewsets.ViewSet):
             feedback_data.append({
                 'id': fb.id,
                 'activity_id': fb.activity.id,
-                'activity_question': fb.activity.question_text[:100],
+                'activity_question': (
+                    (getattr(fb.activity, "question_text_key", "") or getattr(fb.activity, "instruction_key", "") or "")
+                )[:100],
+
                 'feedback_type': fb.feedback_type,
                 'description': fb.description,
                 'user_answer': fb.user_answer,

@@ -210,6 +210,12 @@ class ActivityCreateSerializer(serializers.Serializer):
 
         # Auto-compute supported_ui_languages for multilingual teacher content
         supported_ui_languages = []
+        # Backward compatible input: if client sends raw question_text, store it as translation_data fallback
+        raw_question = (validated_data.get("question_text") or "").strip()
+        if raw_question and not validated_data.get("question_text_key"):
+            # Store as plain data until you enforce keys-only everywhere
+            validated_data["translation_data"] = {**validated_data.get("translation_data", {}), "raw_question_text": raw_question}
+
 
         if activity_type == "MatchingActivity":
             pairs_v2 = type_specific_data.get("pairs_v2") or []
@@ -277,10 +283,6 @@ class ActivityUpdateSerializer(serializers.Serializer):
     def validate(self, data):
         """Validate update data against activity schema"""
         activity = self.context['activity']
-        activity_type = activity.__class__.__name__
-        
-        # Merge existing data with updates
-        type_specific = data.get("type_specific_data", {}) or {}
 
         # Build merged data using existing instance fields as fallback
         merged_data = {
@@ -362,12 +364,23 @@ class ActivityUpdateSerializer(serializers.Serializer):
                 })
 
 
-        if activity_type in ("MCQActivity", "MultipleAnswerActivity") and type_specific.get("choices_i18n"):
-            computed = _intersection_from_choices_i18n(type_specific["choices_i18n"])
-            if not computed:
+        if activity_type in ("MCQActivity", "MultipleAnswerActivity") and type_specific.get("choices_v2"):
+            computed = _intersection_from_choices_v2(type_specific["choices_v2"])
+
+            # If there is i18n present anywhere but intersection is empty => reject
+            has_any_i18n = any(
+                isinstance(ch, dict)
+                and isinstance((ch.get("content") or {}), dict)
+                and isinstance((ch.get("content") or {}).get("i18n"), dict)
+                and bool((ch.get("content") or {}).get("i18n"))
+                for ch in (type_specific.get("choices_v2") or [])
+            )
+
+            if has_any_i18n and not computed:
                 raise serializers.ValidationError({
-                    "type_specific_data": "choices_i18n must include at least one complete UI language across all choices."
+                    "type_specific_data": "choices_v2 i18n must include at least one complete UI language across all choices (e.g. all choices have 'en')."
                 })
+
 
         
         if not is_valid:
@@ -434,8 +447,8 @@ class ActivityUpdateSerializer(serializers.Serializer):
 
             if atype == "MatchingActivity" and getattr(target_obj, "pairs_v2", None):
                 target_obj.supported_ui_languages = _intersection_from_pairs_v2(target_obj.pairs_v2)
-            elif atype in ("MCQActivity", "MultipleAnswerActivity") and getattr(target_obj, "choices_i18n", None):
-                target_obj.supported_ui_languages = _intersection_from_choices_i18n(target_obj.choices_i18n)
+            elif atype in ("MCQActivity", "MultipleAnswerActivity") and getattr(target_obj, "choices_v2", None):
+                target_obj.supported_ui_languages = _intersection_from_choices_v2(target_obj.choices_v2)
 
             instance.save()
             
@@ -449,7 +462,9 @@ class TeacherActivityListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     activity_type = serializers.SerializerMethodField()
     lesson = serializers.SerializerMethodField()
-    question_text = serializers.CharField()
+    question_text = serializers.SerializerMethodField()
+
+
     status = serializers.CharField()
     version = serializers.IntegerField()
     difficulty = serializers.CharField()
@@ -491,6 +506,26 @@ class TeacherActivityListSerializer(serializers.Serializer):
                 'username': obj.modified_by.username
             }
         return None
+    
+    def get_question_text(self, obj):
+        """
+        Legacy field 'question_text' was removed from DB.
+        For list previews, return:
+        - resolved legacy attr if it exists (safety)
+        - else the i18n key
+        - else empty string
+        """
+        if hasattr(obj, "question_text") and getattr(obj, "question_text"):
+            return getattr(obj, "question_text")
+
+        key = getattr(obj, "question_text_key", None)
+        if key:
+            return key  # you can later resolve this to real text at frontend using your i18n endpoint
+
+        # some activities may only have instruction_key (ex: dictee)
+        instr = getattr(obj, "instruction_key", None)
+        return instr or ""
+
 
 
 class ActivityPerformanceSerializer(serializers.Serializer):

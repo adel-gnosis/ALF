@@ -59,7 +59,10 @@ class AdminReviewViewSet(viewsets.ViewSet):
                     'level': activity.lesson.level.code,
                     'subject': activity.lesson.subject.title
                 },
-                'question_text': activity.question_text[:200],
+                'question_text': (
+                    (getattr(activity, "question_text_key", "") or getattr(activity, "instruction_key", "") or "")
+                )[:200],
+
                 'difficulty': activity.difficulty,
                 'points': activity.points,
                 'created_by': {
@@ -206,7 +209,10 @@ class AdminReviewViewSet(viewsets.ViewSet):
             flagged_data.append({
                 'id': activity.id,
                 'activity_type': activity.__class__.__name__,
-                'question_text': activity.question_text[:200],
+                'question_text': (
+                    (getattr(activity, "question_text_key", "") or getattr(activity, "instruction_key", "") or "")
+                )[:200],
+
                 'lesson_title': activity.lesson.title,
                 'created_by': activity.created_by.username,
                 'status': activity.status,
