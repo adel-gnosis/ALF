@@ -41,12 +41,12 @@ class DicteeTriggerTTSAPIView(APIView):
 
         # ---- Basic auth hardening: only staff by default ----
         # If you have custom teacher/admin roles, replace this check accordingly.
-        if not getattr(request.user, "is_staff", False):
-            logger.warning(
-                "DicteeTriggerTTSAPIView forbidden for user=%s",
-                getattr(request.user, "id", None),
-            )
+        role = (getattr(request.user, "role", "") or "").lower()
+        is_admin = bool(getattr(request.user, "is_superuser", False) or getattr(request.user, "is_staff", False) or role == "admin")
+
+        if not is_admin:
             return Response({"detail": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+
 
         dictee_id = request.data.get("dictee_id")
 

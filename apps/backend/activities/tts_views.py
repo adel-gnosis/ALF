@@ -37,8 +37,13 @@ class DicteeUploadAudioAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        expected = os.environ.get("DICTEE_TTS_UPLOAD_TOKEN", "")
+        if not expected:
+            return Response({"detail": "Server misconfigured"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
         if not _is_authorized(request):
             return Response({"detail": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
 
         dictee_id = request.data.get("dictee_id")
         voice = (request.data.get("voice") or "default").strip()
