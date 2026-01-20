@@ -73,7 +73,7 @@ export default function ActivityForm({ isOpen, onClose, onSuccess, editActivity,
     const [createdDicteeId, setCreatedDicteeId] = useState<number | null>(null);
 
     const { t } = useI18n();
-    const mediaBaseUrl = API_BASE_URL.replace(/\/api$/, '');
+    const mediaBaseUrl = API_BASE_URL.replace(/\/api\/?$/, '');
 
     // TTS states
     const [selectedVoices, setSelectedVoices] = useState<string[]>(['male']);
@@ -130,6 +130,16 @@ export default function ActivityForm({ isOpen, onClose, onSuccess, editActivity,
             resetForm();
         }
     }, [editActivity, isOpen]);
+
+    // Sync generatedUrls to audioUrls state so they are saved when form is submitted
+    useEffect(() => {
+        if (generatedUrls.length > 0) {
+            setAudioUrls(prev => {
+                const combined = Array.from(new Set([...prev.filter(u => u.trim()), ...generatedUrls]));
+                return combined.length > 0 ? combined : [''];
+            });
+        }
+    }, [generatedUrls]);
 
     const resetForm = () => {
         setActivityType('');
@@ -920,7 +930,9 @@ export default function ActivityForm({ isOpen, onClose, onSuccess, editActivity,
                                         </label>
                                         <div className="grid grid-cols-1 gap-2">
                                             {allUrls.map((url, i) => {
-                                                const fullUrl = url.startsWith('http') ? url : `${mediaBaseUrl}${url}`;
+                                                const cleanMediaBase = mediaBaseUrl.endsWith('/') ? mediaBaseUrl.slice(0, -1) : mediaBaseUrl;
+                                                const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+                                                const fullUrl = url.startsWith('http') ? url : `${cleanMediaBase}${cleanUrl}`;
                                                 // Extract voice/speed from filename for label
                                                 const voiceMatch = url.match(/male|female/i);
                                                 const speedMatch = url.match(/x(\d\.\d)/i);

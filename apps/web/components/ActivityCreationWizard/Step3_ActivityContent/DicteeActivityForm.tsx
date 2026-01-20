@@ -36,6 +36,16 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         0 // Always 0 during creation wizard
     );
 
+    // Sync generatedUrls to audioUrls state
+    useEffect(() => {
+        if (generatedUrls.length > 0) {
+            setAudioUrls(prev => {
+                const combined = Array.from(new Set([...prev.filter(u => u.trim()), ...generatedUrls]));
+                return combined.length > 0 ? combined : [''];
+            });
+        }
+    }, [generatedUrls]);
+
     const handleAddAudioUrl = () => {
         setAudioUrls([...audioUrls, '']);
     };
@@ -223,8 +233,11 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                                 </label>
                                 <div className="grid grid-cols-1 gap-2">
                                     {allUrls.map((url, i) => {
-                                        const mediaBaseUrl = API_BASE_URL.replace(/\/api$/, '');
-                                        const fullUrl = url.startsWith('http') ? url : `${mediaBaseUrl}${url}`;
+                                        const cleanMediaBase = API_BASE_URL.replace(/\/api\/?$/, '').endsWith('/')
+                                            ? API_BASE_URL.replace(/\/api\/?$/, '').slice(0, -1)
+                                            : API_BASE_URL.replace(/\/api\/?$/, '');
+                                        const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+                                        const fullUrl = url.startsWith('http') ? url : `${cleanMediaBase}${cleanUrl}`;
                                         return (
                                             <div key={i} className="flex items-center gap-3 bg-white dark:bg-slate-800 p-2 rounded border border-gray-100 dark:border-slate-700 shadow-sm">
                                                 <audio src={fullUrl} controls className="h-8 flex-1" />
