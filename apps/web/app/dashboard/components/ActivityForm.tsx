@@ -941,10 +941,31 @@ export default function ActivityForm({ isOpen, onClose, onSuccess, editActivity,
                                                 const label = `${voiceLabel} - ${speedLabel}`;
 
                                                 return (
-                                                    <div key={i} className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-slate-800/50 rounded border border-gray-100 dark:border-slate-800 shadow-sm">
-                                                        <span className="text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase">{label}</span>
-                                                        <audio src={fullUrl} controls className="h-8 w-full" />
-                                                        <span className="text-[9px] text-gray-400 truncate font-mono">{url}</span>
+                                                    <div key={i} className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-slate-800/50 rounded border border-gray-100 dark:border-slate-800 shadow-sm relative group">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase">{label}</span>
+                                                            <a
+                                                                href={fullUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-[9px] text-blue-500 hover:underline flex items-center gap-1"
+                                                            >
+                                                                Ouvrir ↗
+                                                            </a>
+                                                        </div>
+                                                        <audio
+                                                            src={fullUrl}
+                                                            controls
+                                                            className="h-8 w-full"
+                                                            crossOrigin="anonymous"
+                                                            onError={(e) => {
+                                                                const target = e.currentTarget;
+                                                                console.error("Audio Load Error:", fullUrl, target.error);
+                                                            }}
+                                                        />
+                                                        <span className="text-[9px] text-gray-400 truncate font-mono bg-gray-100 dark:bg-slate-900 px-1 rounded border border-gray-200 dark:border-slate-800 mt-1" title={fullUrl}>
+                                                            URL: {fullUrl}
+                                                        </span>
                                                     </div>
                                                 );
                                             })}

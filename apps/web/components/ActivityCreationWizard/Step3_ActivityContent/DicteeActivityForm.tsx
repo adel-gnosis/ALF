@@ -239,9 +239,32 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                                         const cleanUrl = url.startsWith('/') ? url : `/${url}`;
                                         const fullUrl = url.startsWith('http') ? url : `${cleanMediaBase}${cleanUrl}`;
                                         return (
-                                            <div key={i} className="flex items-center gap-3 bg-white dark:bg-slate-800 p-2 rounded border border-gray-100 dark:border-slate-700 shadow-sm">
-                                                <audio src={fullUrl} controls className="h-8 flex-1" />
-                                                <span className="text-[10px] text-gray-400 font-mono hidden sm:inline">{url.split('/').pop()}</span>
+                                            <div key={i} className="flex flex-col gap-2 bg-white dark:bg-slate-800 p-2 rounded border border-gray-100 dark:border-slate-700 shadow-sm">
+                                                <div className="flex items-center gap-3">
+                                                    <audio
+                                                        src={fullUrl}
+                                                        controls
+                                                        className="h-8 flex-1"
+                                                        crossOrigin="anonymous"
+                                                        onError={() => console.error("Audio Load Error:", fullUrl)}
+                                                    />
+                                                    <a
+                                                        href={fullUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-[10px] text-blue-500 hover:underline px-2 py-1 bg-blue-50 dark:bg-blue-900/20 rounded"
+                                                    >
+                                                        Test ↗
+                                                    </a>
+                                                </div>
+                                                <div className="bg-gray-50 dark:bg-slate-900/50 p-1.5 rounded border border-dashed border-gray-200 dark:border-slate-800">
+                                                    <p className="text-[8px] text-gray-500 truncate font-mono" title={fullUrl}>
+                                                        <span className="font-bold text-blue-500">Full URL:</span> {fullUrl}
+                                                    </p>
+                                                    <p className="text-[8px] text-gray-500 truncate font-mono">
+                                                        <span className="font-bold text-green-500">Base:</span> {cleanMediaBase}
+                                                    </p>
+                                                </div>
                                             </div>
                                         );
                                     })}

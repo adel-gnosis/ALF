@@ -28,5 +28,5 @@ urlpatterns = [
 from django.conf import settings
 from django.conf.urls.static import static
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files regardless of DEBUG status for debugging purposes
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
