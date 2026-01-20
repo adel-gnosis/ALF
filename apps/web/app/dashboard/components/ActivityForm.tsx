@@ -81,8 +81,8 @@ export default function ActivityForm({ isOpen, onClose, onSuccess, editActivity,
 
     const { triggerTTS, isGenerating, error: ttsError, isTimeout, setIsTimeout, generatedUrls } = useDicteeTTS(
         editActivity?.id || createdDicteeId || 0,
-        editActivity && 'audio_urls' in editActivity.type_specific_data
-            ? editActivity.type_specific_data.audio_urls.length
+        editActivity
+            ? ((editActivity as any).audio_urls?.length || editActivity.type_specific_data?.audio_urls?.length || 0)
             : 0
     );
 

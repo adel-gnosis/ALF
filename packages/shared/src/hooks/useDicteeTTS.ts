@@ -59,7 +59,8 @@ export const useDicteeTTS = (dicteeId: number, initialAudioUrlsCount: number): U
             try {
                 // Reuse existing detail API
                 const data = await teacherApi.getActivityDetail(dicteeId);
-                const currentUrls = data.type_specific_data?.audio_urls || [];
+                // Background usually flattens the polymorphic fields, so check both to be safe
+                const currentUrls = (data as any).audio_urls || data.type_specific_data?.audio_urls || [];
 
                 if (currentUrls.length > initialAudioUrlsCount) {
                     setGeneratedUrls(currentUrls);
