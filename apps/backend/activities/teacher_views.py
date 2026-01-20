@@ -101,7 +101,11 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         - activity_type: Comma-separated list of types
         - created_by_me: If true, filters by current user
         """
-        if request.user.role == 'admin':
+        role = (getattr(request.user, "role", "") or "").lower()
+        is_admin = bool(request.user.is_superuser or request.user.is_staff or role == "admin")
+
+        if is_admin:
+
             activities = Activity.objects.all()
             
             # Admins can filter to see only their own content
@@ -221,11 +225,12 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         
         Get detailed view of specific activity
         """
-        activity = get_object_or_404(
-            Activity,
-            id=pk,
-            created_by=request.user
-        )
+        role = (getattr(request.user, "role", "") or "").lower()
+        is_admin = bool(request.user.is_superuser or request.user.is_staff or role == "admin")
+
+        qs = Activity.objects.all() if is_admin else Activity.objects.filter(created_by=request.user)
+        activity = get_object_or_404(qs, id=pk)
+
         
         # Return full activity data (polymorphic)
         from activities.serializers import ActivityPolymorphicSerializer
@@ -335,12 +340,12 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         Submit DRAFT activity for admin review
         Changes status: DRAFT → PENDING
         """
-        activity = get_object_or_404(
-            Activity,
-            id=pk,
-            created_by=request.user,
-            status='DRAFT'
-        )
+        role = (getattr(request.user, "role", "") or "").lower()
+        is_admin = bool(request.user.is_superuser or request.user.is_staff or role == "admin")
+
+        qs = Activity.objects.all() if is_admin else Activity.objects.filter(created_by=request.user)
+        activity = get_object_or_404(qs, id=pk, status='DRAFT')
+
         
         activity.status = 'PENDING'
         activity.submitted_for_review_at = timezone.now()
@@ -361,11 +366,12 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         
         Get detailed performance analytics for this activity
         """
-        activity = get_object_or_404(
-            Activity,
-            id=pk,
-            created_by=request.user
-        )
+        role = (getattr(request.user, "role", "") or "").lower()
+        is_admin = bool(request.user.is_superuser or request.user.is_staff or role == "admin")
+
+        qs = Activity.objects.all() if is_admin else Activity.objects.filter(created_by=request.user)
+        activity = get_object_or_404(qs, id=pk)
+
         
         attempts = ActivityAttempt.objects.filter(activity=activity)
         

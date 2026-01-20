@@ -5,16 +5,41 @@ Custom permissions for teacher and admin content management
 from rest_framework import permissions
 
 
+def _is_admin(user):
+    return bool(
+        user.is_authenticated and (
+            getattr(user, "is_superuser", False)
+            or getattr(user, "is_staff", False)
+            or ((getattr(user, "role", "") or "").lower() == "admin")
+        )
+    )
+
+
 class IsTeacher(permissions.BasePermission):
     """
     Permission: User must be a teacher (approved)
+    Admin/superuser/staff always allowed (for debugging & management).
     """
     def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated and
-            request.user.role in ['teacher', 'admin'] and
-            request.user.is_teacher_approved
-        )
+        user = request.user
+        if not user.is_authenticated:
+            return False
+
+        # Always allow platform admins
+        if getattr(user, "is_superuser", False) or getattr(user, "is_staff", False):
+            return True
+
+        role = (getattr(user, "role", "") or "").lower()
+
+        # Allow admins even if not teacher-approved
+        if role == "admin":
+            return True
+
+        # Teachers must be approved
+        if role == "teacher":
+            return bool(getattr(user, "is_teacher_approved", False))
+
+        return False
 
 
 class IsAdmin(permissions.BasePermission):
@@ -22,10 +47,11 @@ class IsAdmin(permissions.BasePermission):
     Permission: User must be an admin
     """
     def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated and
-            request.user.role == 'admin'
-        )
+        user = request.user
+        if not user.is_authenticated:
+            return False
+        return bool(user.is_superuser or user.is_staff or ((getattr(user, "role", "") or "").lower() == "admin"))
+
 
 
 class CanEditActivity(permissions.BasePermission):
@@ -40,7 +66,7 @@ class CanEditActivity(permissions.BasePermission):
         user = request.user
         
         # Admin has full access
-        if user.role == 'admin':
+        if _is_admin(user):
             return True
         
         # Teacher editing their OWN activity (any status)
@@ -66,7 +92,7 @@ class CanDeleteActivity(permissions.BasePermission):
         user = request.user
         
         # Admin can delete anything
-        if user.role == 'admin':
+        if _is_admin(user):
             return True
         
         # Creator can only delete drafts
@@ -85,16 +111,22 @@ class CanReviewContent(permissions.BasePermission):
     """
     def has_permission(self, request, view):
         user = request.user
-        return (
-            user.is_authenticated and
-            (user.role == 'admin' or user.teacher_permission_level == 'LEAD')
-        )
+        if not user or not user.is_authenticated:
+            return False
+
+        # Admins always can review
+        if _is_admin(user):
+            return True
+
+        # Lead teachers can review
+        return getattr(user, "teacher_permission_level", None) == "LEAD"
+
     
     def has_object_permission(self, request, view, obj):
         user = request.user
         
         # Admin can review anything
-        if user.role == 'admin':
+        if _is_admin(user):
             return True
         
         # Lead teachers can review others' content

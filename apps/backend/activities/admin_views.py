@@ -246,7 +246,7 @@ class AdminTeacherManagementViewSet(viewsets.ViewSet):
         List all teachers with statistics
         """
         teachers = User.objects.filter(
-            Q(role='TEACHER') | Q(is_teacher_approved=True)
+            Q(role__iexact='teacher') | Q(is_teacher_approved=True)
         ).order_by('-date_joined')
         
         teachers_data = []
@@ -281,7 +281,7 @@ class AdminTeacherManagementViewSet(viewsets.ViewSet):
         
         Grant teacher ability to publish without approval
         """
-        teacher = get_object_or_404(User, id=pk, role='TEACHER')
+        teacher = get_object_or_404(User, id=pk, role__iexact='teacher')
         
         teacher.can_publish_directly = True
         teacher.save()
@@ -301,7 +301,7 @@ class AdminTeacherManagementViewSet(viewsets.ViewSet):
         
         Revoke direct publish ability
         """
-        teacher = get_object_or_404(User, id=pk, role='TEACHER')
+        teacher = get_object_or_404(User, id=pk, role__iexact='teacher')
         
         teacher.can_publish_directly = False
         teacher.save()
@@ -323,7 +323,7 @@ class AdminTeacherManagementViewSet(viewsets.ViewSet):
           "level": "BASIC" | "VERIFIED" | "LEAD"
         }
         """
-        teacher = get_object_or_404(User, id=pk, role='TEACHER')
+        teacher = get_object_or_404(User, id=pk, role__iexact='teacher')
         
         level = request.data.get('level')
         valid_levels = ['BASIC', 'VERIFIED', 'LEAD']
