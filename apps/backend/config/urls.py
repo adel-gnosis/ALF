@@ -25,8 +25,10 @@ urlpatterns = [
     path('api/', include('config.api_urls')),
 ]
 
-from django.conf import settings
-from django.conf.urls.static import static
+from django.views.static import serve
+from django.urls import re_path
 
-# Serve media files regardless of DEBUG status for debugging purposes
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Force serve media files even in production for debugging
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]
