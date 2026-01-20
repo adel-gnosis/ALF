@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/', include('config.api_urls')),
 ]
 
+from django.conf import settings
 from django.views.static import serve
 from django.urls import re_path
 
