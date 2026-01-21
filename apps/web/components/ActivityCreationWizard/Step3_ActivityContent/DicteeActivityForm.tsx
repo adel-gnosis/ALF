@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ActivityWizardState, useSubjects, ActivityType, API_BASE_URL, useDicteeTTS } from '@alf/shared';
+import { ActivityWizardState, useSubjects, API_BASE_URL, useDicteeTTS } from '@alf/shared';
 import { useCreateActivity } from '@alf/shared';
 import { useI18nKeys } from '@alf/shared';
 import { useI18n } from '../../../context/I18nContext';
@@ -20,9 +20,6 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         return subjects?.find(s => s.id === state.subjectId)?.code ?? null;
     }, [subjects, state.subjectId]);
 
-    // Removal of old instruction key logic
-
-    const [audioUrls, setAudioUrls] = useState<string[]>(['']);
     const [correctText, setCorrectText] = useState('');
     const [caseSensitive, setCaseSensitive] = useState(false);
     const [createdDicteeId, setCreatedDicteeId] = useState<number | null>(null);
@@ -32,38 +29,29 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         0 // Always 0 during creation wizard
     );
 
-    // Sync generatedUrls to audioUrls state
+    // Audio player state
+    const [selectedVoice, setSelectedVoice] = useState('');
+
+    // Audio variants with labels
+    const audioVariants = [
+        { id: 'male_default', label: t('wizard.voice_male_default') || 'Homme - Naturel', icon: '👨' },
+        { id: 'male_slow', label: t('wizard.voice_male_slow') || 'Homme - Dictée (lent)', icon: '👨‍🏫' },
+        { id: 'female_default', label: t('wizard.voice_female_default') || 'Femme - Naturelle', icon: '👩' },
+        { id: 'female_slow', label: t('wizard.voice_female_slow') || 'Femme - Dictée (lent)', icon: '👩‍🏫' }
+    ];
+
+    // Auto-select first voice when audios are generated
     useEffect(() => {
-        if (generatedUrls.length > 0) {
-            setAudioUrls(prev => {
-                const combined = Array.from(new Set([...prev.filter(u => u.trim()), ...generatedUrls]));
-                return combined.length > 0 ? combined : [''];
-            });
+        if (generatedUrls.length > 0 && !selectedVoice) {
+            setSelectedVoice(audioVariants[0].id);
         }
-    }, [generatedUrls]);
-
-    const handleAddAudioUrl = () => {
-        setAudioUrls([...audioUrls, '']);
-    };
-
-    const handleRemoveAudioUrl = (index: number) => {
-        setAudioUrls(audioUrls.filter((_, i) => i !== index));
-    };
-
-    const handleAudioUrlChange = (index: number, value: string) => {
-        const updated = [...audioUrls];
-        updated[index] = value;
-        setAudioUrls(updated);
-    };
+    }, [generatedUrls, selectedVoice]);
 
     const validateForm = (): boolean => {
         if (!correctText.trim()) {
             alert(t('wizard.validation.correct_text_required'));
             return false;
         }
-
-        // Audio URLs are now optional for Dictee
-
         return true;
     };
 
@@ -71,7 +59,6 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         if (!validateForm()) return null;
 
         const instructionKey = state.instructionKey || 'activity.dictee.instruction.generic';
-
 
         const payload = {
             activity_type: 'DicteeActivity',
@@ -82,7 +69,7 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
             points: state.points,
             order: state.order,
             type_specific_data: {
-                audio_urls: audioUrls.filter(url => url.trim()),
+                audio_urls: generatedUrls.filter(url => url.trim()),
                 correct_text: correctText.trim(),
                 case_sensitive: caseSensitive
             }
@@ -149,22 +136,55 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         }
     };
 
+    // Get instruction label from the picker component or translate the key
+    const getInstructionLabel = (key: string) => {
+        // Try to get translation for the key
+        const translated = t(key);
+        // If translation returns the key itself, show a friendly version
+        if (translated === key) {
+            return key.split('.').pop()?.replace(/_/g, ' ') || key;
+        }
+        return translated;
+    };
+
+    // Get current audio URL for selected voice
+    const getCurrentAudioUrl = () => {
+        if (!selectedVoice || generatedUrls.length === 0) return null;
+        
+        // Try to find audio URL that matches the selected voice variant
+        const matchingUrl = generatedUrls.find(url => url.includes(selectedVoice));
+        
+        if (matchingUrl) {
+            const cleanMediaBase = API_BASE_URL.replace(/\/api\/?$/, '').endsWith('/')
+                ? API_BASE_URL.replace(/\/api\/?$/, '').slice(0, -1)
+                : API_BASE_URL.replace(/\/api\/?$/, '');
+            const cleanUrl = matchingUrl.startsWith('/') ? matchingUrl : `/${matchingUrl}`;
+            return matchingUrl.startsWith('http') ? matchingUrl : `${cleanMediaBase}${cleanUrl}`;
+        }
+        
+        return null;
+    };
+
+    const currentAudioUrl = getCurrentAudioUrl();
+
     return (
-        <div className="space-y-6 text-left">
-            <div className="bg-blue-50 dark:bg-blue-900/10 border-l-4 border-blue-400 p-4 rounded">
-                <div className="flex items-start">
-                    <div className="text-3xl mr-3">🎵</div>
+        <div className="max-w-3xl mx-auto space-y-6 text-left">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 p-5 rounded-xl">
+                <div className="flex items-start gap-4">
+                    <div className="text-4xl">🎵</div>
                     <div>
-                        <h3 className="font-semibold text-blue-900 dark:text-blue-400">{t('wizard.dictee_title')}</h3>
-                        <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                            {t('wizard.dictee_desc')}
-                        </p>
+                        <h3 className="text-lg font-bold text-blue-900 dark:text-blue-300">{t('wizard.dictee_title')}</h3>
+                        <p className="text-sm text-blue-700 dark:text-blue-400 mt-1">{t('wizard.dictee_desc')}</p>
                     </div>
                 </div>
             </div>
 
-            {/* Instruction Key Selection */}
-            <div className="text-left animate-in fade-in duration-500">
+            {/* Instruction Selection - Compact with InstructionKeyPicker */}
+            <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300">
+                    📋 {t('wizard.instruction_label')}
+                </label>
                 <InstructionKeyPicker
                     activityType="DicteeActivity"
                     subjectCode={subjectCode}
@@ -172,186 +192,144 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                     selectedKey={state.instructionKey || 'activity.dictee.instruction.generic'}
                     onSelect={(key) => updateState({ instructionKey: key })}
                 />
+            </div>
 
-                {state.instructionKey && state.instructionKey.includes('custom') && (
-                    <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 rounded-lg">
-                        <p className="text-[10px] text-yellow-700 dark:text-yellow-500 font-medium">
-                            ⚠️ {t('wizard.phrase_key_warning')}
+            {/* Correct Text */}
+            <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300">
+                    ✏️ {t('wizard.correct_text_label')} <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                    value={correctText}
+                    onChange={(e) => setCorrectText(e.target.value)}
+                    placeholder={t('wizard.correct_text_placeholder')}
+                    rows={3}
+                    className="w-full border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                />
+                <p className="text-xs text-gray-500 dark:text-slate-400">{t('wizard.correct_text_desc')}</p>
+            </div>
+
+            {/* Audio Generation Section */}
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 p-5 rounded-xl space-y-4">
+                <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-purple-900 dark:text-purple-300 flex items-center gap-2">
+                        ✨ {t('wizard.audio_auto_title') || 'Audio Automatique (4 voix)'}
+                    </h4>
+                    <button
+                        type="button"
+                        onClick={handleGenerateTTS}
+                        disabled={isGenerating || createActivity.isPending || !correctText.trim()}
+                        className="px-5 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                    >
+                        {isGenerating || createActivity.isPending ? (
+                            <>
+                                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                {t('wizard.generating_audio')}
+                            </>
+                        ) : (
+                            <>
+                                <span>🎤</span>
+                                {t('wizard.generate_audio_btn')}
+                            </>
+                        )}
+                    </button>
+                </div>
+
+                {/* Timeout warning */}
+                {isTimeout && (
+                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-3 rounded-lg">
+                        <p className="text-xs text-yellow-700 dark:text-yellow-400 font-medium">
+                            ⚠️ {t('wizard.tts_timeout')}
                         </p>
+                    </div>
+                )}
+
+                {/* Error message */}
+                {ttsError && (
+                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-3 rounded-lg">
+                        <p className="text-xs text-red-700 dark:text-red-400 font-medium">{ttsError}</p>
+                    </div>
+                )}
+
+                {/* Audio Player */}
+                {generatedUrls.length > 0 && (
+                    <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-purple-100 dark:border-purple-900/50 space-y-3">
+                        <label className="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
+                            🎧 {t('wizard.audio_preview')}
+                        </label>
+                        
+                        {/* Voice Selector */}
+                        <div className="flex items-center gap-3">
+                            <select
+                                value={selectedVoice}
+                                onChange={(e) => setSelectedVoice(e.target.value)}
+                                className="flex-1 border border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white rounded-lg px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-purple-500"
+                            >
+                                {audioVariants.map(variant => (
+                                    <option key={variant.id} value={variant.id}>
+                                        {variant.icon} {variant.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Audio Player */}
+                        {currentAudioUrl && (
+                            <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-slate-900 dark:to-slate-800 p-3 rounded-lg border border-gray-200 dark:border-slate-700">
+                                <audio
+                                    key={currentAudioUrl}
+                                    src={currentAudioUrl}
+                                    controls
+                                    className="w-full h-10"
+                                    crossOrigin="anonymous"
+                                    onError={() => console.error("Audio Load Error:", currentAudioUrl)}
+                                />
+                                <p className="text-xs text-gray-500 dark:text-slate-400 mt-2 font-mono truncate" title={currentAudioUrl}>
+                                    {currentAudioUrl}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {generatedUrls.length === 0 && !isGenerating && (
+                    <div className="text-center py-6 text-sm text-purple-600 dark:text-purple-400">
+                        💡 {t('wizard.no_audio_yet') || 'Cliquez sur "Générer les audios" pour créer 4 voix différentes'}
                     </div>
                 )}
             </div>
 
-            {/* Audio URLs */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
-                    🎧 {t('wizard.audio_files_label')} <span className="text-red-500">*</span>
-                </label>
-                <div className="space-y-3">
-                    {audioUrls.map((url, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                            <input
-                                type="text"
-                                value={url}
-                                onChange={(e) => handleAudioUrlChange(index, e.target.value)}
-                                placeholder="/media/audio/phrase.mp3"
-                                className="flex-1 border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg px-4 py-2 text-base font-mono"
-                            />
-                            {audioUrls.length > 1 && (
-                                <button
-                                    type="button"
-                                    onClick={() => handleRemoveAudioUrl(index)}
-                                    className="px-3 py-2 text-red-600 hover:text-red-800 font-medium"
-                                >
-                                    ✕
-                                </button>
-                            )}
-                        </div>
-                    ))}
-                    <button
-                        type="button"
-                        onClick={handleAddAudioUrl}
-                        className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 font-medium"
-                    >
-                        + {t('wizard.add_audio_file')}
-                    </button>
-
-                    {/* Audio Preview in Wizard */}
-                    {(() => {
-                        const manualUrls = audioUrls.filter(url => url.trim());
-                        const allUrls = Array.from(new Set([...manualUrls, ...generatedUrls]));
-                        if (allUrls.length === 0) return null;
-
-                        return (
-                            <div className="mt-4 p-3 bg-gray-50 dark:bg-slate-800/50 rounded-lg border border-gray-200 dark:border-slate-800 space-y-2">
-                                <label className="block text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider">
-                                    🎧 {t('wizard.preview')}
-                                </label>
-                                <div className="grid grid-cols-1 gap-2">
-                                    {allUrls.map((url, i) => {
-                                        const cleanMediaBase = API_BASE_URL.replace(/\/api\/?$/, '').endsWith('/')
-                                            ? API_BASE_URL.replace(/\/api\/?$/, '').slice(0, -1)
-                                            : API_BASE_URL.replace(/\/api\/?$/, '');
-                                        const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-                                        const fullUrl = url.startsWith('http') ? url : `${cleanMediaBase}${cleanUrl}`;
-                                        return (
-                                            <div key={i} className="flex flex-col gap-2 bg-white dark:bg-slate-800 p-2 rounded border border-gray-100 dark:border-slate-700 shadow-sm">
-                                                <div className="flex items-center gap-3">
-                                                    <audio
-                                                        src={fullUrl}
-                                                        controls
-                                                        className="h-8 flex-1"
-                                                        crossOrigin="anonymous"
-                                                        onError={() => console.error("Audio Load Error:", fullUrl)}
-                                                    />
-                                                    <a
-                                                        href={fullUrl}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-[10px] text-blue-500 hover:underline px-2 py-1 bg-blue-50 dark:bg-blue-900/20 rounded"
-                                                    >
-                                                        Test ↗
-                                                    </a>
-                                                </div>
-                                                <div className="bg-gray-50 dark:bg-slate-900/50 p-1.5 rounded border border-dashed border-gray-200 dark:border-slate-800">
-                                                    <p className="text-[8px] text-gray-500 truncate font-mono" title={fullUrl}>
-                                                        <span className="font-bold text-blue-500">Full URL:</span> {fullUrl}
-                                                    </p>
-                                                    <p className="text-[8px] text-gray-500 truncate font-mono">
-                                                        <span className="font-bold text-green-500">Base:</span> {cleanMediaBase}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        );
-                    })()}
-                </div>
-                <p className="text-xs text-gray-500 dark:text-slate-400 mt-2">
-                    💡 {t('wizard.audio_files_hint')}
-                </p>
-            </div>
-
-            {/* Correct Text */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
-                    ✍️ {t('wizard.correct_text_label')} <span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="text"
-                    value={correctText}
-                    onChange={(e) => setCorrectText(e.target.value)}
-                    placeholder={t('wizard.correct_text_placeholder')}
-                    className="w-full border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg px-4 py-2 text-base"
-                    dir={isRTL ? 'rtl' : 'ltr'}
-                />
-                <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
-                    {t('wizard.correct_text_desc')}
-                </p>
-            </div>
-
-            {/* TTS Generation Section for Wizard */}
-            <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-100 dark:border-blue-900/30 space-y-3">
-                <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300 flex items-center gap-2">
-                    ✨ {t('wizard.generate_audio_btn')}
-                </h4>
-                <div className="flex items-center gap-3 pt-1">
-                    <button
-                        type="button"
-                        onClick={handleGenerateTTS}
-                        disabled={isGenerating || createActivity.isPending}
-                        className="px-4 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2 shadow-sm"
-                    >
-                        {isGenerating || createActivity.isPending ? (
-                            <>
-                                <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                {t('wizard.generating_audio')}
-                            </>
-                        ) : t('wizard.generate_audio_btn')}
-                    </button>
-                    {isTimeout && (
-                        <span className="text-[10px] leading-tight text-yellow-600 dark:text-yellow-400 font-medium max-w-[200px]">
-                            {t('wizard.tts_timeout')}
-                        </span>
-                    )}
-                </div>
-                {ttsError && (
-                    <p className="text-xs text-red-600 dark:text-red-400 font-medium">{ttsError}</p>
-                )}
-            </div>
-
-            {/* Options */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
+            {/* Settings */}
+            <div className="space-y-3">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300">
                     ⚙️ {t('wizard.settings_title')}
                 </label>
-                <div className="flex items-center">
+                <div className="flex items-center gap-3 bg-gray-50 dark:bg-slate-800/50 p-3 rounded-lg border border-gray-200 dark:border-slate-700">
                     <input
                         type="checkbox"
                         id="caseSensitive"
                         checked={caseSensitive}
                         onChange={(e) => setCaseSensitive(e.target.checked)}
-                        className="h-4 w-4 text-blue-600 border-gray-300 dark:border-slate-700 rounded"
+                        className="h-4 w-4 text-blue-600 border-gray-300 dark:border-slate-700 rounded focus:ring-2 focus:ring-blue-500"
                     />
-                    <label htmlFor="caseSensitive" className="ml-2 text-sm text-gray-700 dark:text-slate-300">
+                    <label htmlFor="caseSensitive" className="text-sm text-gray-700 dark:text-slate-300 cursor-pointer">
                         {t('wizard.case_sensitive')}
                     </label>
                 </div>
             </div>
 
             {/* Submit Buttons */}
-            <div className="flex justify-between items-center pt-6 border-t border-gray-200 dark:border-slate-800">
-                <div className="text-sm text-gray-500 dark:text-slate-400">
+            <div className="flex justify-between items-center pt-6 border-t-2 border-gray-200 dark:border-slate-800">
+                <p className="text-xs text-gray-500 dark:text-slate-400">
                     💾 {t('wizard.draft_hint')}
-                </div>
+                </p>
                 <div className="flex gap-3">
                     <button
                         type="button"
                         onClick={() => handleSubmit(false)}
                         disabled={createActivity.isPending}
-                        className="px-6 py-2 border border-gray-300 dark:border-slate-700 rounded-lg text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-50 transition-colors"
+                        className="px-6 py-2.5 border-2 border-gray-300 dark:border-slate-700 rounded-lg text-gray-700 dark:text-slate-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
                     >
                         {t('wizard.save_draft_btn')}
                     </button>
@@ -359,13 +337,14 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                         type="button"
                         onClick={() => handleSubmit(true)}
                         disabled={createActivity.isPending}
-                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                        className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
                     >
                         {createActivity.isPending ? t('wizard.creating') : t('wizard.create_btn')}
                     </button>
                 </div>
             </div>
-            {/* hidden button for wizard integration if needed */}
+
+            {/* Hidden button for wizard integration */}
             <button id="wizard-submit-btn" type="button" onClick={() => handleSubmit(false)} className="hidden" />
         </div>
     );
