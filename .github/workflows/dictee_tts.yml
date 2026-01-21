@@ -1,4 +1,4 @@
-name: Dictee TTS (Google Cloud)
+name: Dictee TTS (Google Cloud - Premium Voices)
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
         type: string
       voices:
         required: false
-        default: "male_default,male_slow,female_default,female_rhythm"
+        default: "male_default,male_slow,female_default,female_slow"
         type: string
         description: "Canonical variant labels (backend sends these)."
       speeds:
@@ -44,7 +44,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install google-cloud-texttospeech
 
-      - name: Generate (Google TTS) + upload (4 canonical variants)
+      - name: Generate (Google TTS) + upload (4 distinct premium voices)
         env:
           UPLOAD_URL: ${{ secrets.ALF_TTS_UPLOAD_URL }}
           UPLOAD_TOKEN: ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}
@@ -67,10 +67,10 @@ jobs:
           if not text:
               raise SystemExit("TEXT input is empty")
 
-          # variants = CSV labels: e.g. male_default,male_slow,female_default,female_rhythm
+          # variants = CSV labels: e.g. male_default,male_slow,female_default,female_slow
           variants = [v.strip() for v in variants_in.split(",") if v.strip()]
           if not variants:
-              variants = ["male_default","male_slow","female_default","female_rhythm"]
+              variants = ["male_default","male_slow","female_default","female_slow"]
 
           # speeds override (CSV). If empty, we use each variant's default speed only.
           speeds_override = [s.strip() for s in speeds_in.split(",") if s.strip()]
@@ -81,57 +81,77 @@ jobs:
               return s.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
 
           def ssml_default(t: str) -> str:
+              """Normal speaking - natural pace"""
               return f"<speak>{escape_xml(t)}</speak>"
 
-          def ssml_slow_teacher(t: str) -> str:
-              # longer breaks after sentences
+          def ssml_dictee_pauses(t: str) -> str:
+              """Perfect for dictée - strategic pauses after punctuation"""
               x = escape_xml(t)
-              x = re.sub(r'([.!?])\s+', r'\1 <break time="400ms"/> ', x)
+              # Long pauses after sentences for writing time
+              x = re.sub(r'([.!?])\s+', r'\1 <break time="600ms"/> ', x)
+              # Medium pauses after commas for breathing room
+              x = re.sub(r'([,;:])\s+', r'\1 <break time="350ms"/> ', x)
               return f"<speak>{x}</speak>"
 
-          def ssml_rhythm(t: str) -> str:
-              # medium breaks after sentences (rhythmic cadence)
-              x = escape_xml(t)
-              x = re.sub(r'([.!?])\s+', r'\1 <break time="300ms"/> ', x)
-              return f"<speak>{x}</speak>"
-
-          # Canonical 4 dictée variants
-          # (Pinned voices + per-variant SSML + per-variant default speed)
+          # ═══════════════════════════════════════════════════════════════
+          # 🎯 PREMIUM FRENCH DICTÉE VOICES (4 DISTINCT NEURAL VOICES)
+          # ═══════════════════════════════════════════════════════════════
+          #
+          # Google Cloud French Neural2 voices - carefully selected for:
+          # ✓ Natural intonation
+          # ✓ Clear pronunciation
+          # ✓ Distinct timbres
+          # ✓ Perfect for educational dictées
+          #
           VARIANT_CONFIG = {
               "male_default": {
-                  "voice_name": "fr-FR-Neural2-D",
+                  "voice_name": "fr-FR-Neural2-B",  # Mature male, warm tone, clear
                   "default_speed": 1.0,
                   "ssml_func": ssml_default,
+                  "description": "Homme naturel - voix claire"
               },
               "male_slow": {
-                  "voice_name": "fr-FR-Neural2-B",
-                  "default_speed": 0.9,
-                  "ssml_func": ssml_slow_teacher,
+                  "voice_name": "fr-FR-Neural2-D",  # Different male, authoritative, teacher-like
+                  "default_speed": 0.85,
+                  "ssml_func": ssml_dictee_pauses,
+                  "description": "Homme dictée - voix professorale avec pauses"
               },
               "female_default": {
-                  "voice_name": "fr-FR-Neural2-F",
+                  "voice_name": "fr-FR-Neural2-A",  # Young female, energetic, bright
                   "default_speed": 1.0,
                   "ssml_func": ssml_default,
+                  "description": "Femme naturelle - voix dynamique"
               },
-              "female_rhythm": {
-                  "voice_name": "fr-FR-Neural2-C",
-                  "default_speed": 1.05,
-                  "ssml_func": ssml_rhythm,
+              "female_slow": {
+                  "voice_name": "fr-FR-Neural2-C",  # Mature female, calm, pedagogical
+                  "default_speed": 0.85,
+                  "ssml_func": ssml_dictee_pauses,
+                  "description": "Femme dictée - voix pédagogique avec pauses"
               },
           }
 
           def clamp_rate(x: float) -> float:
+              """Keep speeds within Google TTS safe range"""
               if x < 0.5:
                   return 0.5
               if x > 2.0:
                   return 2.0
               return x
 
+          print("=" * 70)
+          print(f"🎯 Generating French Dictée Audio for ID: {dictee_id}")
+          print(f"📝 Text: {text[:60]}{'...' if len(text) > 60 else ''}")
+          print("=" * 70)
+
           for variant in variants:
               cfg = VARIANT_CONFIG.get(variant)
               if not cfg:
-                  print("Skipping unknown variant:", variant)
+                  print(f"⚠️  Skipping unknown variant: {variant}")
                   continue
+
+              print(f"\n🎤 Processing variant: {variant}")
+              print(f"   Voice: {cfg['voice_name']}")
+              print(f"   Description: {cfg['description']}")
 
               voice_param = texttospeech.VoiceSelectionParams(
                   language_code="fr-FR",
@@ -154,9 +174,12 @@ jobs:
               ssml = cfg["ssml_func"](text)
 
               for speaking_rate in speed_list:
+                  print(f"   ⚙️  Generating at speed: {speaking_rate}x")
+                  
                   audio_config = texttospeech.AudioConfig(
                       audio_encoding=texttospeech.AudioEncoding.MP3,
                       speaking_rate=speaking_rate,
+                      pitch=0.0,  # Natural pitch
                   )
 
                   response = client.synthesize_speech(
@@ -167,12 +190,14 @@ jobs:
 
                   safe_variant = variant.replace("/", "_").replace(" ", "_")
                   out_name = f"dictee_{dictee_id}_{safe_variant}_x{speaking_rate}.mp3"
+                  
                   with open(out_name, "wb") as f:
                       f.write(response.audio_content)
 
-                  print("Wrote", out_name, "voice=", cfg["voice_name"], "rate=", speaking_rate)
+                  file_size_kb = len(response.audio_content) / 1024
+                  print(f"   ✅ Generated: {out_name} ({file_size_kb:.1f} KB)")
 
-                  # Upload (same contract as before)
+                  # Upload to backend
                   curl_cmd = [
                       "curl", "-s", "-X", "POST",
                       os.environ["UPLOAD_URL"],
@@ -182,7 +207,17 @@ jobs:
                       "-F", f"speed={speaking_rate}",
                       "-F", f"file=@{out_name}",
                   ]
-                  print("Uploading", out_name)
-                  subprocess.check_call(curl_cmd)
+                  print(f"   📤 Uploading to backend...")
+                  result = subprocess.run(curl_cmd, capture_output=True, text=True)
+                  
+                  if result.returncode == 0:
+                      print(f"   ✅ Upload successful!")
+                  else:
+                      print(f"   ❌ Upload failed: {result.stderr}")
+                      raise SystemExit(1)
+
+          print("\n" + "=" * 70)
+          print("🎉 All variants generated and uploaded successfully!")
+          print("=" * 70)
 
           PY
