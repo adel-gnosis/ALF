@@ -32,14 +32,18 @@ export const useDicteeTTS = (dicteeId: number, initialAudioUrlsCount: number): U
         }
     });
 
-    const triggerTTS = (voices: string[], speeds: string[], explicitId?: number) => {
+    const triggerTTS = (voices?: string[], speeds?: string[], explicitId?: number) => {
         const id = explicitId || dicteeId;
         if (!id) {
             setError('No Dictee ID provided');
             return;
         }
         setIsTimeout(false);
-        triggerMutation.mutate({ dictee_id: id, voices, speeds });
+        triggerMutation.mutate({
+            dictee_id: id,
+            voices: voices || [],
+            speeds: speeds || []
+        });
     };
 
     useEffect(() => {

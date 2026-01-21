@@ -27,10 +27,6 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
     const [caseSensitive, setCaseSensitive] = useState(false);
     const [createdDicteeId, setCreatedDicteeId] = useState<number | null>(null);
 
-    // TTS states
-    const [selectedVoices, setSelectedVoices] = useState<string[]>(['male']);
-    const [selectedSpeeds, setSelectedSpeeds] = useState<string[]>(['1.0']);
-
     const { triggerTTS, isGenerating, error: ttsError, isTimeout, setIsTimeout, generatedUrls } = useDicteeTTS(
         createdDicteeId || 0,
         0 // Always 0 during creation wizard
@@ -149,7 +145,7 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         }
 
         if (currentId) {
-            triggerTTS(selectedVoices, selectedSpeeds, currentId);
+            triggerTTS([], [], currentId);
         }
     };
 
@@ -301,67 +297,11 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                 <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300 flex items-center gap-2">
                     ✨ {t('wizard.generate_audio_btn')}
                 </h4>
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-xs font-medium text-blue-700 dark:text-blue-400 mb-1">{t('wizard.tts_voices_label')}</label>
-                        <div className="flex gap-3">
-                            <label className="flex items-center gap-1.5 text-xs text-blue-800 dark:text-blue-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedVoices.includes('male')}
-                                    onChange={(e) => {
-                                        if (e.target.checked) setSelectedVoices([...selectedVoices, 'male']);
-                                        else setSelectedVoices(selectedVoices.filter(v => v !== 'male'));
-                                    }}
-                                    className="rounded border-blue-300"
-                                /> {t('wizard.tts_male')}
-                            </label>
-                            <label className="flex items-center gap-1.5 text-xs text-blue-800 dark:text-blue-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedVoices.includes('female')}
-                                    onChange={(e) => {
-                                        if (e.target.checked) setSelectedVoices([...selectedVoices, 'female']);
-                                        else setSelectedVoices(selectedVoices.filter(v => v !== 'female'));
-                                    }}
-                                    className="rounded border-blue-300"
-                                /> {t('wizard.tts_female')}
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-xs font-medium text-blue-700 dark:text-blue-400 mb-1">{t('wizard.tts_speeds_label')}</label>
-                        <div className="flex gap-3">
-                            <label className="flex items-center gap-1.5 text-xs text-blue-800 dark:text-blue-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedSpeeds.includes('0.9')}
-                                    onChange={(e) => {
-                                        if (e.target.checked) setSelectedSpeeds([...selectedSpeeds, '0.9']);
-                                        else setSelectedSpeeds(selectedSpeeds.filter(s => s !== '0.9'));
-                                    }}
-                                    className="rounded border-blue-300"
-                                /> {t('wizard.tts_slow')}
-                            </label>
-                            <label className="flex items-center gap-1.5 text-xs text-blue-800 dark:text-blue-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedSpeeds.includes('1.0')}
-                                    onChange={(e) => {
-                                        if (e.target.checked) setSelectedSpeeds([...selectedSpeeds, '1.0']);
-                                        else setSelectedSpeeds(selectedSpeeds.filter(s => s !== '1.0'));
-                                    }}
-                                    className="rounded border-blue-300"
-                                /> {t('wizard.tts_normal')}
-                            </label>
-                        </div>
-                    </div>
-                </div>
                 <div className="flex items-center gap-3 pt-1">
                     <button
                         type="button"
                         onClick={handleGenerateTTS}
-                        disabled={isGenerating || createActivity.isPending || selectedVoices.length === 0 || selectedSpeeds.length === 0}
+                        disabled={isGenerating || createActivity.isPending}
                         className="px-4 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2 shadow-sm"
                     >
                         {isGenerating || createActivity.isPending ? (

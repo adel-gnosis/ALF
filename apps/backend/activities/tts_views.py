@@ -1,3 +1,4 @@
+# tts_views.py
 import os
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -26,7 +27,7 @@ class DicteeUploadAudioAPIView(APIView):
 
     Form-data:
       dictee_id: int
-      voice: str (e.g. male/female)
+      voice: str (e.g. male_default/male_slow/female_default/female_rhythm)
       speed: str (e.g. 1.0 / 0.9)
       file: mp3/wav
 

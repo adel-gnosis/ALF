@@ -1,3 +1,4 @@
+# tts_trigger_views.py
 import json
 import os
 import urllib.request
@@ -14,7 +15,6 @@ from .models import DicteeActivity
 logger = logging.getLogger(__name__)
 
 
-
 class DicteeTriggerTTSAPIView(APIView):
     """
     POST /api/dictee/trigger-tts/
@@ -23,14 +23,18 @@ class DicteeTriggerTTSAPIView(APIView):
       {
         "dictee_id": 113,
         "text": "optional (fallback to activity.correct_text)",
-        "voices": ["male", "female"],         # optional
-        "speeds": ["0.9", "1.0"]              # optional
+        "speeds": ["0.9","1.0"]    # optional override - otherwise each variant uses its default speed
       }
 
-    Dispatches GitHub Actions workflow_dispatch for dictee_tts.yml
+    This dispatches the GitHub Actions workflow and ALWAYS requests the four canonical
+    variants: male_default, male_slow, female_default, female_rhythm.
     """
-
     permission_classes = [IsAuthenticated]
+
+    # canonical set of variants we always generate per dictee
+    DEFAULT_VARIANTS = ["male_default", "male_slow", "female_default", "female_rhythm"]
+    # safety: maximum generated outputs per dispatch (variants * speeds)
+    MAX_OUTPUTS = 8
 
     def post(self, request):
         logger.info(
@@ -40,16 +44,12 @@ class DicteeTriggerTTSAPIView(APIView):
         )
 
         # ---- Basic auth hardening: only staff by default ----
-        # If you have custom teacher/admin roles, replace this check accordingly.
         role = (getattr(request.user, "role", "") or "").lower()
         is_admin = bool(getattr(request.user, "is_superuser", False) or getattr(request.user, "is_staff", False) or role == "admin")
-
         if not is_admin:
             return Response({"detail": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
 
-
         dictee_id = request.data.get("dictee_id")
-
         if not dictee_id:
             return Response({"detail": "dictee_id is required"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -71,28 +71,51 @@ class DicteeTriggerTTSAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        # Speeds: optional override (CSV or list). If omitted, workflow will use variant defaults.
+        speeds = request.data.get("speeds") or []
+        if isinstance(speeds, str):
+            speeds_list = [s.strip() for s in speeds.split(",") if s.strip()]
+        elif isinstance(speeds, (list, tuple)):
+            speeds_list = [str(s).strip() for s in speeds if str(s).strip()]
+        else:
+            speeds_list = []
 
-        voices = request.data.get("voices") or ["male", "female"]
-        speeds = request.data.get("speeds") or ["1.0"]
+        # Use canonical variants (always). We allow an optional 'variants' param but it will be
+        # filtered to allowed defaults; if none valid, we fall back to DEFAULT_VARIANTS.
+        req_variants = request.data.get("variants")
+        if req_variants:
+            if isinstance(req_variants, str):
+                variants_list = [v.strip() for v in req_variants.split(",") if v.strip()]
+            else:
+                variants_list = [str(v).strip() for v in req_variants if str(v).strip()]
+            # keep only allowed canonical variants
+            allowed = set(self.DEFAULT_VARIANTS)
+            variants_list = [v for v in variants_list if v in allowed]
+            if not variants_list:
+                variants_list = self.DEFAULT_VARIANTS
+        else:
+            variants_list = self.DEFAULT_VARIANTS
+
+        # compute number of outputs and enforce cap
+        n_speeds = max(1, len(speeds_list))  # if empty, treated as 1 default per variant
+        total_outputs = len(variants_list) * n_speeds
+        if total_outputs > self.MAX_OUTPUTS:
+            return Response(
+                {"detail": f"Too many outputs requested: {total_outputs} (limit {self.MAX_OUTPUTS})"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Normalize to CSV strings for workflow inputs
-        if isinstance(voices, str):
-            voices_csv = voices
-        else:
-            voices_csv = ",".join([str(v).strip() for v in voices if str(v).strip()]) or "male"
-
-        if isinstance(speeds, str):
-            speeds_csv = speeds
-        else:
-            speeds_csv = ",".join([str(s).strip() for s in speeds if str(s).strip()]) or "1.0"
+        variants_csv = ",".join(variants_list)
+        speeds_csv = ",".join(speeds_list) if speeds_list else ""
 
         logger.info(
-            "DicteeTriggerTTSAPIView prepared inputs dictee_id=%s voices=%s speeds=%s",
+            "DicteeTriggerTTSAPIView prepared inputs dictee_id=%s variants=%s speeds=%s (total_outputs=%s)",
             activity.pk,
-            voices_csv,
+            variants_csv,
             speeds_csv,
+            total_outputs,
         )
-
 
         owner = os.environ.get("GITHUB_TTS_OWNER", "").strip()
         repo = os.environ.get("GITHUB_TTS_REPO", "").strip()
@@ -102,19 +125,13 @@ class DicteeTriggerTTSAPIView(APIView):
 
         if not (owner and repo and workflow and ref and pat):
             logger.error(
-                "DicteeTriggerTTSAPIView misconfigured env: "
-                "owner=%r repo=%r workflow=%r ref=%r pat_present=%r",
-                owner,
-                repo,
-                workflow,
-                ref,
-                bool(pat),
+                "DicteeTriggerTTSAPIView misconfigured env: owner=%r repo=%r workflow=%r ref=%r pat_present=%r",
+                owner, repo, workflow, ref, bool(pat),
             )
             return Response(
                 {"detail": "Server misconfigured: missing one of GITHUB_TTS_OWNER/REPO/WORKFLOW/REF/PAT"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
 
         url = f"https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow}/dispatches"
 
@@ -123,7 +140,9 @@ class DicteeTriggerTTSAPIView(APIView):
             "inputs": {
                 "dictee_id": str(activity.pk),
                 "text": text,
-                "voices": voices_csv,
+                # 'voices' is now the canonical variant labels for the workflow
+                "voices": variants_csv,
+                # speeds optional (empty means workflow uses each variant's default)
                 "speeds": speeds_csv,
             },
         }
@@ -131,12 +150,12 @@ class DicteeTriggerTTSAPIView(APIView):
         data = json.dumps(payload).encode("utf-8")
 
         logger.info(
-            "DicteeTriggerTTSAPIView dispatching GitHub workflow: url=%s ref=%s dictee_id=%s",
+            "DicteeTriggerTTSAPIView dispatching GitHub workflow: url=%s ref=%s dictee_id=%s payload=%s",
             url,
             ref,
             activity.pk,
+            payload,
         )
-
 
         req = urllib.request.Request(
             url,
@@ -146,7 +165,6 @@ class DicteeTriggerTTSAPIView(APIView):
                 "Authorization": f"Bearer {pat}",
                 "Accept": "application/vnd.github+json",
                 "Content-Type": "application/json",
-                # Recommended GitHub API versioning header
                 "X-GitHub-Api-Version": "2022-11-28",
                 "User-Agent": "ALF-Dictee-TTS-Dispatcher",
             },
@@ -156,9 +174,11 @@ class DicteeTriggerTTSAPIView(APIView):
             with urllib.request.urlopen(req, timeout=20) as resp:
                 # GitHub returns 204 No Content on success
                 if resp.status in (204, 201):
+                    logger.info("DicteeTriggerTTSAPIView dispatch successful for dictee_id=%s", activity.pk)
                     return Response(status=status.HTTP_204_NO_CONTENT)
 
                 body = resp.read().decode("utf-8", errors="ignore")
+                logger.error("Unexpected GitHub response status=%s body=%s", resp.status, body)
                 return Response(
                     {"detail": "Unexpected GitHub response", "status": resp.status, "body": body},
                     status=status.HTTP_502_BAD_GATEWAY,
