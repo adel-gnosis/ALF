@@ -27,12 +27,13 @@ class DicteeTriggerTTSAPIView(APIView):
       }
 
     This dispatches the GitHub Actions workflow and ALWAYS requests the four canonical
-    variants: male_default, male_slow, female_default, female_rhythm.
+    variants: male_default, male_slow, female_default, female_slow.
     """
     permission_classes = [IsAuthenticated]
 
-    # canonical set of variants we always generate per dictee
-    DEFAULT_VARIANTS = ["male_default", "male_slow", "female_default", "female_rhythm"]
+    # FIXED: Changed female_rhythm to female_slow to match the workflow
+    DEFAULT_VARIANTS = ["male_default", "male_slow", "female_default", "female_slow"]
+    
     # safety: maximum generated outputs per dispatch (variants * speeds)
     MAX_OUTPUTS = 8
 
