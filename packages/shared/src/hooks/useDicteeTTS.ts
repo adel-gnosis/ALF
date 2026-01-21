@@ -16,6 +16,8 @@ export const useDicteeTTS = (dicteeId: number, initialAudioUrlsCount: number): U
     const [error, setError] = useState<string | null>(null);
     const [isTimeout, setIsTimeout] = useState(false);
     const [generatedUrls, setGeneratedUrls] = useState<string[]>([]);
+    const [expectedTotalUrls, setExpectedTotalUrls] = useState<number | null>(null);
+
     const queryClient = useQueryClient();
 
     const triggerMutation = useMutation({
@@ -39,6 +41,14 @@ export const useDicteeTTS = (dicteeId: number, initialAudioUrlsCount: number): U
             return;
         }
         setIsTimeout(false);
+        
+        // FIXED: Backend now generates 4 canonical variants by default
+        // If no voices specified, expect 4 variants (male_default, male_slow, female_default, female_rhythm)
+        const voicesCount = (voices?.length ?? 0) || 4; // Changed from 1 to 4
+        const speedsCount = (speeds?.length ?? 0) || 1;
+        const expectedNew = voicesCount * speedsCount;
+        setExpectedTotalUrls(initialAudioUrlsCount + expectedNew);
+
         triggerMutation.mutate({
             dictee_id: id,
             voices: voices || [],
@@ -61,27 +71,32 @@ export const useDicteeTTS = (dicteeId: number, initialAudioUrlsCount: number): U
         // Polling logic
         pollInterval = setInterval(async () => {
             try {
-                // Reuse existing detail API
                 const data = await teacherApi.getActivityDetail(dicteeId);
-                // Background usually flattens the polymorphic fields, so check both to be safe
                 const currentUrls = (data as any).audio_urls || data.type_specific_data?.audio_urls || [];
 
+                const target = expectedTotalUrls ?? (initialAudioUrlsCount + 4); // Changed from +1 to +4
+
+                // Update UI progressively as files arrive
                 if (currentUrls.length > initialAudioUrlsCount) {
                     setGeneratedUrls(currentUrls);
-                    // Update react-query cache with fresh data
                     queryClient.setQueryData(['teacher-activity', dicteeId], data);
-                    // Also update the general activities list to be safe
                     queryClient.invalidateQueries({ queryKey: ['teacher-activities'] });
+                }
+
+                // Stop when ALL expected urls are ready
+                if (currentUrls.length >= target) {
+                    console.log(`TTS generation complete: ${currentUrls.length}/${target} files`);
                     stopPolling();
                 }
+
             } catch (err) {
                 console.error('TTS Polling error:', err);
-                // We keep polling unless it's a critical failure or timeout
             }
         }, 3000);
 
-        // Timeout logic (180 seconds = 3 minutes)
+        // Timeout (3 minutes)
         timeoutId = setTimeout(() => {
+            console.warn('TTS generation timeout reached');
             setIsTimeout(true);
             stopPolling();
         }, 180000);
@@ -90,7 +105,7 @@ export const useDicteeTTS = (dicteeId: number, initialAudioUrlsCount: number): U
             if (pollInterval) clearInterval(pollInterval);
             if (timeoutId) clearTimeout(timeoutId);
         };
-    }, [isGenerating, dicteeId, initialAudioUrlsCount, queryClient]);
+    }, [isGenerating, dicteeId, initialAudioUrlsCount, expectedTotalUrls, queryClient]);
 
     return {
         triggerTTS,
