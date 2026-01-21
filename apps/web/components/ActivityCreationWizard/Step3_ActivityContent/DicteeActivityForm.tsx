@@ -11,6 +11,45 @@ interface DicteeActivityFormProps {
     onSuccess: () => void;
 }
 
+// Reusable Audio Player Component
+interface AudioPlayerProps {
+    url: string;
+    label?: string;
+    className?: string;
+}
+
+function AudioPlayer({ url, label, className = '' }: AudioPlayerProps) {
+    const cleanMediaBase = API_BASE_URL.replace(/\/api\/?$/, '').endsWith('/')
+        ? API_BASE_URL.replace(/\/api\/?$/, '').slice(0, -1)
+        : API_BASE_URL.replace(/\/api\/?$/, '');
+    const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+    const fullUrl = url.startsWith('http') ? url : `${cleanMediaBase}${cleanUrl}`;
+
+    return (
+        <div className={`bg-gradient-to-r from-gray-50 to-gray-100 dark:from-slate-900 dark:to-slate-800 p-3 rounded-lg border border-gray-200 dark:border-slate-700 ${className}`}>
+            {label && (
+                <p className="text-xs font-medium text-gray-600 dark:text-slate-400 mb-2">{label}</p>
+            )}
+            <audio
+                key={fullUrl}
+                src={fullUrl}
+                controls
+                preload="metadata"
+                className="w-full"
+                crossOrigin="anonymous"
+                onError={(e) => console.error("Audio Load Error:", fullUrl, e)}
+                style={{
+                    height: '40px',
+                    outline: 'none'
+                }}
+            />
+            <p className="text-[10px] text-gray-500 dark:text-slate-400 mt-2 font-mono truncate" title={fullUrl}>
+                {fullUrl}
+            </p>
+        </div>
+    );
+}
+
 export default function DicteeActivityForm({ state, updateState, onSuccess }: DicteeActivityFormProps) {
     const { t, isRTL, locale } = useI18n();
     const createActivity = useCreateActivity();
@@ -30,7 +69,7 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
     );
 
     // Audio player state
-    const [selectedVoice, setSelectedVoice] = useState('');
+    const [selectedVoice, setSelectedVoice] = useState('male_default');
 
     // Audio variants with labels
     const audioVariants = [
@@ -39,13 +78,6 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         { id: 'female_default', label: t('wizard.voice_female_default') || 'Femme - Naturelle', icon: '👩' },
         { id: 'female_slow', label: t('wizard.voice_female_slow') || 'Femme - Dictée (lent)', icon: '👩‍🏫' }
     ];
-
-    // Auto-select first voice when audios are generated
-    useEffect(() => {
-        if (generatedUrls.length > 0 && !selectedVoice) {
-            setSelectedVoice(audioVariants[0].id);
-        }
-    }, [generatedUrls, selectedVoice]);
 
     const validateForm = (): boolean => {
         if (!correctText.trim()) {
@@ -136,36 +168,38 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         }
     };
 
-    // Get instruction label from the picker component or translate the key
-    const getInstructionLabel = (key: string) => {
-        // Try to get translation for the key
-        const translated = t(key);
-        // If translation returns the key itself, show a friendly version
-        if (translated === key) {
-            return key.split('.').pop()?.replace(/_/g, ' ') || key;
-        }
-        return translated;
-    };
-
-    // Get current audio URL for selected voice
+    // Get current audio URL for selected voice - FIXED MATCHING LOGIC
     const getCurrentAudioUrl = () => {
         if (!selectedVoice || generatedUrls.length === 0) return null;
         
-        // Try to find audio URL that matches the selected voice variant
-        const matchingUrl = generatedUrls.find(url => url.includes(selectedVoice));
+        console.log('Looking for voice:', selectedVoice);
+        console.log('Available URLs:', generatedUrls);
         
-        if (matchingUrl) {
-            const cleanMediaBase = API_BASE_URL.replace(/\/api\/?$/, '').endsWith('/')
-                ? API_BASE_URL.replace(/\/api\/?$/, '').slice(0, -1)
-                : API_BASE_URL.replace(/\/api\/?$/, '');
-            const cleanUrl = matchingUrl.startsWith('/') ? matchingUrl : `/${matchingUrl}`;
-            return matchingUrl.startsWith('http') ? matchingUrl : `${cleanMediaBase}${cleanUrl}`;
+        // Try exact match first
+        let matchingUrl = generatedUrls.find(url => url.includes(`_${selectedVoice}_`));
+        
+        // Fallback: try partial match
+        if (!matchingUrl) {
+            matchingUrl = generatedUrls.find(url => url.toLowerCase().includes(selectedVoice.toLowerCase()));
         }
         
-        return null;
+        // Last resort: return any URL with index based on variant order
+        if (!matchingUrl && generatedUrls.length > 0) {
+            const variantIndex = audioVariants.findIndex(v => v.id === selectedVoice);
+            if (variantIndex >= 0 && variantIndex < generatedUrls.length) {
+                matchingUrl = generatedUrls[variantIndex];
+            }
+        }
+        
+        console.log('Matched URL:', matchingUrl);
+        return matchingUrl || null;
     };
 
     const currentAudioUrl = getCurrentAudioUrl();
+
+    // Count available audio files
+    const availableCount = generatedUrls.length;
+    const expectedCount = 4;
 
     return (
         <div className="max-w-3xl mx-auto space-y-6 text-left">
@@ -180,7 +214,7 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                 </div>
             </div>
 
-            {/* Instruction Selection - Compact with InstructionKeyPicker */}
+            {/* Instruction Selection */}
             <div className="space-y-2">
                 <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300">
                     📋 {t('wizard.instruction_label')}
@@ -213,16 +247,23 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
             {/* Audio Generation Section */}
             <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 p-5 rounded-xl space-y-4">
                 <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-bold text-purple-900 dark:text-purple-300 flex items-center gap-2">
-                        ✨ {t('wizard.audio_auto_title') || 'Audio Automatique (4 voix)'}
-                    </h4>
+                    <div>
+                        <h4 className="text-sm font-bold text-purple-900 dark:text-purple-300 flex items-center gap-2">
+                            ✨ {t('wizard.audio_auto_title') || 'Audio Automatique (4 voix)'}
+                        </h4>
+                        {isGenerating && availableCount > 0 && (
+                            <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
+                                {availableCount}/{expectedCount} voix générées...
+                            </p>
+                        )}
+                    </div>
                     <button
                         type="button"
                         onClick={handleGenerateTTS}
                         disabled={isGenerating || createActivity.isPending || !correctText.trim()}
                         className="px-5 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center gap-2"
                     >
-                        {isGenerating || createActivity.isPending ? (
+                        {isGenerating ? (
                             <>
                                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 {t('wizard.generating_audio')}
@@ -256,7 +297,7 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                 {generatedUrls.length > 0 && (
                     <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-purple-100 dark:border-purple-900/50 space-y-3">
                         <label className="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
-                            🎧 {t('wizard.audio_preview')}
+                            🎧 {t('wizard.audio_preview')} ({availableCount}/{expectedCount})
                         </label>
                         
                         {/* Voice Selector */}
@@ -274,19 +315,16 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                             </select>
                         </div>
 
-                        {/* Audio Player */}
-                        {currentAudioUrl && (
-                            <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-slate-900 dark:to-slate-800 p-3 rounded-lg border border-gray-200 dark:border-slate-700">
-                                <audio
-                                    key={currentAudioUrl}
-                                    src={currentAudioUrl}
-                                    controls
-                                    className="w-full h-10"
-                                    crossOrigin="anonymous"
-                                    onError={() => console.error("Audio Load Error:", currentAudioUrl)}
-                                />
-                                <p className="text-xs text-gray-500 dark:text-slate-400 mt-2 font-mono truncate" title={currentAudioUrl}>
-                                    {currentAudioUrl}
+                        {/* Audio Player Component */}
+                        {currentAudioUrl ? (
+                            <AudioPlayer 
+                                url={currentAudioUrl} 
+                                label={audioVariants.find(v => v.id === selectedVoice)?.label}
+                            />
+                        ) : (
+                            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-3 rounded-lg text-center">
+                                <p className="text-xs text-yellow-700 dark:text-yellow-400">
+                                    ⏳ Cette voix n'est pas encore disponible. Veuillez patienter...
                                 </p>
                             </div>
                         )}
