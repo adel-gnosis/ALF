@@ -13,7 +13,7 @@ on:
         required: false
         default: "default"
         type: string
-        description: "CSV list, e.g. male,female or default"
+        description: "CSV list, e.g. male,female or explicit Google voice IDs (fr-FR-Neural2-*)"
       speeds:
         required: false
         default: "1.0"
@@ -25,35 +25,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repo (for provenance)
+        uses: actions/checkout@v4
+
       - name: Install system deps
         run: |
+          set -euxo pipefail
           sudo apt-get update
-          sudo apt-get install -y curl tar ffmpeg
+          sudo apt-get install -y curl unzip
 
-      - name: Download Piper (linux x86_64)
+      # --- Authenticate to Google Cloud using the service account JSON stored in a secret ---
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Install Python deps
         run: |
-          set -euxo pipefail
-          curl -L -o piper.tar.gz "https://downloads.sourceforge.net/project/piper-tts.mirror/2023.11.14-2/piper_linux_x86_64.tar.gz"
-          tar -xzf piper.tar.gz
-          chmod +x piper/piper
-          ./piper/piper --help | head -n 5 || true
+          python -m pip install --upgrade pip
+          pip install google-cloud-texttospeech
 
-      - name: Download French voice model(s)
-        run: |
-          set -euxo pipefail
-          mkdir -p voices
-
-          # NOTE:
-          # Right now you only use one French model. We keep the label "voice"
-          # but map all voices to the same model unless you add more models later.
-          curl -L -o voices/fr_FR-upmc-medium.onnx \
-            "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/upmc/medium/fr_FR-upmc-medium.onnx"
-          curl -L -o voices/fr_FR-upmc-medium.onnx.json \
-            "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/upmc/medium/fr_FR-upmc-medium.onnx.json"
-
-          ls -lh voices
-
-      - name: Generate + upload (multi voice + multi speed)
+      # --- Generate MP3(s) with Google Cloud Text-to-Speech and upload them back to Django ---
+      - name: Generate (Google TTS) + upload
         env:
           UPLOAD_URL: ${{ secrets.ALF_TTS_UPLOAD_URL }}
           UPLOAD_TOKEN: ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}
@@ -64,47 +57,92 @@ jobs:
         run: |
           set -euxo pipefail
 
-          # Split CSV into arrays
-          IFS=',' read -ra VOICE_ARR <<< "${VOICES:-default}"
-          IFS=',' read -ra SPEED_ARR <<< "${SPEEDS:-1.0}"
+          python - <<'PY'
+          import os, re, subprocess
+          from google.cloud import texttospeech
 
-          # Helper to trim spaces
-          trim() { echo "$1" | xargs; }
+          dictee_id = os.environ["DICTEE_ID"]
+          text = os.environ.get("TEXT","").strip()
+          voices_in = os.environ.get("VOICES","default")
+          speeds_in = os.environ.get("SPEEDS","1.0")
 
-          # Map a "voice label" to a model path.
-          # For now all voices use the same model.
-          model_for_voice() {
-            echo "voices/fr_FR-upmc-medium.onnx"
+          voices = [v.strip() for v in voices_in.split(",") if v.strip()]
+          speeds = [s.strip() for s in speeds_in.split(",") if s.strip()]
+
+          if not voices:
+            voices = ["default"]
+          if not speeds:
+            speeds = ["1.0"]
+
+          client = texttospeech.TextToSpeechClient()
+
+          # Default label -> pinned Google voice mapping (edit to taste)
+          LABEL_TO_VOICE = {
+            "male":    "fr-FR-Neural2-D",
+            "female":  "fr-FR-Neural2-F",
+            "neutral": "fr-FR-Neural2-E",
+            "default": "fr-FR-Neural2-D",
           }
 
-          # Generate one base wav per voice label, then speed-variants via ffmpeg atempo.
-          for raw_voice in "${VOICE_ARR[@]}"; do
-            voice="$(trim "$raw_voice")"
-            [ -n "$voice" ] || continue
+          def to_ssml(t: str) -> str:
+            t = t.strip()
+            t = t.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
+            # teacher-like pause after sentence punctuation
+            t = re.sub(r'([.!?])\s+', r'\1 <break time="250ms"/> ', t)
+            return f"<speak>{t}</speak>"
 
-            model="$(model_for_voice "$voice")"
+          ssml = to_ssml(text)
 
-            base_wav="dictee_${DICTEE_ID}_${voice}_base.wav"
-            echo "$TEXT" | ./piper/piper -m "$model" -f "$base_wav"
+          def resolve_voice(vlabel: str):
+            # if user passed explicit named voice (contains '-'), use it
+            if "-" in vlabel:
+              return texttospeech.VoiceSelectionParams(language_code="fr-FR", name=vlabel)
+            chosen = LABEL_TO_VOICE.get(vlabel.lower(), LABEL_TO_VOICE["default"])
+            return texttospeech.VoiceSelectionParams(language_code="fr-FR", name=chosen)
 
-            for raw_speed in "${SPEED_ARR[@]}"; do
-              speed="$(trim "$raw_speed")"
-              [ -n "$speed" ] || continue
+          for raw_voice in voices:
+            voice_label = raw_voice.strip()
+            if not voice_label:
+              continue
+            voice_param = resolve_voice(voice_label)
 
-              # atempo supports 0.5..2.0; if you ever need outside, we'd chain filters.
-              out_mp3="dictee_${DICTEE_ID}_${voice}_x${speed}.mp3"
+            for raw_speed in speeds:
+              try:
+                speaking_rate = float(raw_speed)
+              except:
+                speaking_rate = 1.0
 
-              ffmpeg -y -i "$base_wav" -filter:a "atempo=${speed}" "$out_mp3"
-              ls -lh "$out_mp3"
+              # clamp to safe Google limits
+              if speaking_rate < 0.5: speaking_rate = 0.5
+              if speaking_rate > 2.0: speaking_rate = 2.0
 
-              # Upload
-              curl -s -X POST "$UPLOAD_URL" \
-                -H "Authorization: Bearer $UPLOAD_TOKEN" \
-                -F "dictee_id=$DICTEE_ID" \
-                -F "voice=$voice" \
-                -F "speed=$speed" \
-                -F "file=@${out_mp3}"
+              audio_config = texttospeech.AudioConfig(
+                audio_encoding=texttospeech.AudioEncoding.MP3,
+                speaking_rate=speaking_rate,
+              )
 
-              echo
-            done
-          done
+              response = client.synthesize_speech(
+                input=texttospeech.SynthesisInput(ssml=ssml),
+                voice=voice_param,
+                audio_config=audio_config,
+              )
+
+              safe_voice = voice_label.replace("/", "_").replace(" ", "_")
+              out_name = f"dictee_{dictee_id}_{safe_voice}_x{speaking_rate}.mp3"
+              with open(out_name, "wb") as f:
+                f.write(response.audio_content)
+              print("Wrote", out_name)
+
+              # Upload using same contract as before
+              curl_cmd = [
+                "curl", "-s", "-X", "POST",
+                os.environ["UPLOAD_URL"],
+                "-H", f"Authorization: Bearer {os.environ['UPLOAD_TOKEN']}",
+                "-F", f"dictee_id={dictee_id}",
+                "-F", f"voice={voice_label}",
+                "-F", f"speed={speaking_rate}",
+                "-F", f"file=@{out_name}",
+              ]
+              print("Uploading", out_name)
+              subprocess.check_call(curl_cmd)
+          PY
