@@ -1,4 +1,4 @@
-name: Dictee TTS
+name: Dictee TTS (Google Cloud)
 
 on:
   workflow_dispatch:
@@ -11,30 +11,29 @@ on:
         type: string
       voices:
         required: false
-        default: "default"
+        default: "male_default,male_slow,female_default,female_rhythm"
         type: string
-        description: "CSV list, e.g. male,female or explicit Google voice IDs (fr-FR-Neural2-*)"
+        description: "Canonical variant labels (backend sends these)."
       speeds:
         required: false
-        default: "1.0"
+        default: ""
         type: string
-        description: "CSV list, e.g. 0.9,1.0,1.1"
+        description: "Optional override CSV (if empty, each variant uses its default speed)."
 
 jobs:
   generate-and-upload:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo (for provenance)
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install system deps
         run: |
           set -euxo pipefail
           sudo apt-get update
-          sudo apt-get install -y curl unzip
+          sudo apt-get install -y curl
 
-      # --- Authenticate to Google Cloud using the service account JSON stored in a secret ---
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -45,14 +44,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install google-cloud-texttospeech
 
-      # --- Generate MP3(s) with Google Cloud Text-to-Speech and upload them back to Django ---
-      - name: Generate (Google TTS) + upload
+      - name: Generate (Google TTS) + upload (4 canonical variants)
         env:
           UPLOAD_URL: ${{ secrets.ALF_TTS_UPLOAD_URL }}
           UPLOAD_TOKEN: ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}
           DICTEE_ID: ${{ inputs.dictee_id }}
           TEXT: ${{ inputs.text }}
-          VOICES: ${{ inputs.voices }}
+          VARIANTS: ${{ inputs.voices }}
           SPEEDS: ${{ inputs.speeds }}
         run: |
           set -euxo pipefail
@@ -62,87 +60,129 @@ jobs:
           from google.cloud import texttospeech
 
           dictee_id = os.environ["DICTEE_ID"]
-          text = os.environ.get("TEXT","").strip()
-          voices_in = os.environ.get("VOICES","default")
-          speeds_in = os.environ.get("SPEEDS","1.0")
+          text = (os.environ.get("TEXT") or "").strip()
+          variants_in = os.environ.get("VARIANTS") or ""
+          speeds_in = os.environ.get("SPEEDS") or ""
 
-          voices = [v.strip() for v in voices_in.split(",") if v.strip()]
-          speeds = [s.strip() for s in speeds_in.split(",") if s.strip()]
+          if not text:
+              raise SystemExit("TEXT input is empty")
 
-          if not voices:
-            voices = ["default"]
-          if not speeds:
-            speeds = ["1.0"]
+          # variants = CSV labels: e.g. male_default,male_slow,female_default,female_rhythm
+          variants = [v.strip() for v in variants_in.split(",") if v.strip()]
+          if not variants:
+              variants = ["male_default","male_slow","female_default","female_rhythm"]
+
+          # speeds override (CSV). If empty, we use each variant's default speed only.
+          speeds_override = [s.strip() for s in speeds_in.split(",") if s.strip()]
 
           client = texttospeech.TextToSpeechClient()
 
-          # Default label -> pinned Google voice mapping (edit to taste)
-          LABEL_TO_VOICE = {
-            "male":    "fr-FR-Neural2-D",
-            "female":  "fr-FR-Neural2-F",
-            "neutral": "fr-FR-Neural2-E",
-            "default": "fr-FR-Neural2-D",
+          def escape_xml(s: str) -> str:
+              return s.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
+
+          def ssml_default(t: str) -> str:
+              return f"<speak>{escape_xml(t)}</speak>"
+
+          def ssml_slow_teacher(t: str) -> str:
+              # longer breaks after sentences
+              x = escape_xml(t)
+              x = re.sub(r'([.!?])\s+', r'\1 <break time="400ms"/> ', x)
+              return f"<speak>{x}</speak>"
+
+          def ssml_rhythm(t: str) -> str:
+              # medium breaks after sentences (rhythmic cadence)
+              x = escape_xml(t)
+              x = re.sub(r'([.!?])\s+', r'\1 <break time="300ms"/> ', x)
+              return f"<speak>{x}</speak>"
+
+          # Canonical 4 dictée variants
+          # (Pinned voices + per-variant SSML + per-variant default speed)
+          VARIANT_CONFIG = {
+              "male_default": {
+                  "voice_name": "fr-FR-Neural2-D",
+                  "default_speed": 1.0,
+                  "ssml_func": ssml_default,
+              },
+              "male_slow": {
+                  "voice_name": "fr-FR-Neural2-B",
+                  "default_speed": 0.9,
+                  "ssml_func": ssml_slow_teacher,
+              },
+              "female_default": {
+                  "voice_name": "fr-FR-Neural2-F",
+                  "default_speed": 1.0,
+                  "ssml_func": ssml_default,
+              },
+              "female_rhythm": {
+                  "voice_name": "fr-FR-Neural2-C",
+                  "default_speed": 1.05,
+                  "ssml_func": ssml_rhythm,
+              },
           }
 
-          def to_ssml(t: str) -> str:
-            t = t.strip()
-            t = t.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
-            # teacher-like pause after sentence punctuation
-            t = re.sub(r'([.!?])\s+', r'\1 <break time="250ms"/> ', t)
-            return f"<speak>{t}</speak>"
+          def clamp_rate(x: float) -> float:
+              if x < 0.5:
+                  return 0.5
+              if x > 2.0:
+                  return 2.0
+              return x
 
-          ssml = to_ssml(text)
+          for variant in variants:
+              cfg = VARIANT_CONFIG.get(variant)
+              if not cfg:
+                  print("Skipping unknown variant:", variant)
+                  continue
 
-          def resolve_voice(vlabel: str):
-            # if user passed explicit named voice (contains '-'), use it
-            if "-" in vlabel:
-              return texttospeech.VoiceSelectionParams(language_code="fr-FR", name=vlabel)
-            chosen = LABEL_TO_VOICE.get(vlabel.lower(), LABEL_TO_VOICE["default"])
-            return texttospeech.VoiceSelectionParams(language_code="fr-FR", name=chosen)
-
-          for raw_voice in voices:
-            voice_label = raw_voice.strip()
-            if not voice_label:
-              continue
-            voice_param = resolve_voice(voice_label)
-
-            for raw_speed in speeds:
-              try:
-                speaking_rate = float(raw_speed)
-              except:
-                speaking_rate = 1.0
-
-              # clamp to safe Google limits
-              if speaking_rate < 0.5: speaking_rate = 0.5
-              if speaking_rate > 2.0: speaking_rate = 2.0
-
-              audio_config = texttospeech.AudioConfig(
-                audio_encoding=texttospeech.AudioEncoding.MP3,
-                speaking_rate=speaking_rate,
+              voice_param = texttospeech.VoiceSelectionParams(
+                  language_code="fr-FR",
+                  name=cfg["voice_name"],
               )
 
-              response = client.synthesize_speech(
-                input=texttospeech.SynthesisInput(ssml=ssml),
-                voice=voice_param,
-                audio_config=audio_config,
-              )
+              # Use override speeds if provided; otherwise use the per-variant default only
+              if speeds_override:
+                  speed_list = []
+                  for s in speeds_override:
+                      try:
+                          speed_list.append(clamp_rate(float(s)))
+                      except:
+                          pass
+                  if not speed_list:
+                      speed_list = [clamp_rate(float(cfg["default_speed"]))]
+              else:
+                  speed_list = [clamp_rate(float(cfg["default_speed"]))]
 
-              safe_voice = voice_label.replace("/", "_").replace(" ", "_")
-              out_name = f"dictee_{dictee_id}_{safe_voice}_x{speaking_rate}.mp3"
-              with open(out_name, "wb") as f:
-                f.write(response.audio_content)
-              print("Wrote", out_name)
+              ssml = cfg["ssml_func"](text)
 
-              # Upload using same contract as before
-              curl_cmd = [
-                "curl", "-s", "-X", "POST",
-                os.environ["UPLOAD_URL"],
-                "-H", f"Authorization: Bearer {os.environ['UPLOAD_TOKEN']}",
-                "-F", f"dictee_id={dictee_id}",
-                "-F", f"voice={voice_label}",
-                "-F", f"speed={speaking_rate}",
-                "-F", f"file=@{out_name}",
-              ]
-              print("Uploading", out_name)
-              subprocess.check_call(curl_cmd)
+              for speaking_rate in speed_list:
+                  audio_config = texttospeech.AudioConfig(
+                      audio_encoding=texttospeech.AudioEncoding.MP3,
+                      speaking_rate=speaking_rate,
+                  )
+
+                  response = client.synthesize_speech(
+                      input=texttospeech.SynthesisInput(ssml=ssml),
+                      voice=voice_param,
+                      audio_config=audio_config,
+                  )
+
+                  safe_variant = variant.replace("/", "_").replace(" ", "_")
+                  out_name = f"dictee_{dictee_id}_{safe_variant}_x{speaking_rate}.mp3"
+                  with open(out_name, "wb") as f:
+                      f.write(response.audio_content)
+
+                  print("Wrote", out_name, "voice=", cfg["voice_name"], "rate=", speaking_rate)
+
+                  # Upload (same contract as before)
+                  curl_cmd = [
+                      "curl", "-s", "-X", "POST",
+                      os.environ["UPLOAD_URL"],
+                      "-H", f"Authorization: Bearer {os.environ['UPLOAD_TOKEN']}",
+                      "-F", f"dictee_id={dictee_id}",
+                      "-F", f"voice={safe_variant}",
+                      "-F", f"speed={speaking_rate}",
+                      "-F", f"file=@{out_name}",
+                  ]
+                  print("Uploading", out_name)
+                  subprocess.check_call(curl_cmd)
+
           PY
