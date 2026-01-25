@@ -65,13 +65,11 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
 
     const { triggerTTS, isGenerating, error: ttsError, isTimeout, setIsTimeout, generatedUrls } = useDicteeTTS(
         createdDicteeId || 0,
-        0 // Always 0 during creation wizard
+        0
     );
 
-    // Audio player state
     const [selectedVoice, setSelectedVoice] = useState('male_default');
 
-    // Audio variants with labels
     const audioVariants = [
         { id: 'male_default', label: t('wizard.voice_male_default') || 'Homme - Naturel', icon: '👨' },
         { id: 'male_slow', label: t('wizard.voice_male_slow') || 'Homme - Dictée (lent)', icon: '👨‍🏫' },
@@ -96,6 +94,7 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
             activity_type: 'DicteeActivity',
             lesson_id: state.lessonId!,
             instruction_key: instructionKey,
+            question_text_key: state.questionTextKey,
             translation_data: {},
             difficulty: state.difficulty,
             points: state.points,
@@ -154,7 +153,7 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
 
         if (!currentId) {
             try {
-                const response = await saveActivity(false); // Save as draft first
+                const response = await saveActivity(false);
                 if (response?.id) {
                     currentId = response.id;
                 }
@@ -168,92 +167,120 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
         }
     };
 
-    // Get current audio URL for selected voice - FIXED MATCHING LOGIC
     const getCurrentAudioUrl = () => {
         if (!selectedVoice || generatedUrls.length === 0) return null;
-        
-        console.log('Looking for voice:', selectedVoice);
-        console.log('Available URLs:', generatedUrls);
-        
-        // Try exact match first
+
         let matchingUrl = generatedUrls.find(url => url.includes(`_${selectedVoice}_`));
-        
-        // Fallback: try partial match
+
         if (!matchingUrl) {
             matchingUrl = generatedUrls.find(url => url.toLowerCase().includes(selectedVoice.toLowerCase()));
         }
-        
-        // Last resort: return any URL with index based on variant order
+
         if (!matchingUrl && generatedUrls.length > 0) {
             const variantIndex = audioVariants.findIndex(v => v.id === selectedVoice);
             if (variantIndex >= 0 && variantIndex < generatedUrls.length) {
                 matchingUrl = generatedUrls[variantIndex];
             }
         }
-        
-        console.log('Matched URL:', matchingUrl);
+
         return matchingUrl || null;
     };
 
     const currentAudioUrl = getCurrentAudioUrl();
-
-    // Count available audio files
     const availableCount = generatedUrls.length;
     const expectedCount = 4;
 
     return (
-        <div className="max-w-3xl mx-auto space-y-6 text-left">
-            {/* Header */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 p-5 rounded-xl">
-                <div className="flex items-start gap-4">
-                    <div className="text-4xl">🎵</div>
+        <div className="max-w-4xl mx-auto space-y-4 text-left">
+            {/* Header - Compact */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 p-3 rounded-lg">
+                <div className="flex items-center gap-3">
+                    <div className="text-2xl">🎵</div>
                     <div>
-                        <h3 className="text-lg font-bold text-blue-900 dark:text-blue-300">{t('wizard.dictee_title')}</h3>
-                        <p className="text-sm text-blue-700 dark:text-blue-400 mt-1">{t('wizard.dictee_desc')}</p>
+                        <h3 className="text-sm font-bold text-blue-900 dark:text-blue-300">{t('wizard.dictee_title')}</h3>
+                        <p className="text-xs text-blue-700 dark:text-blue-400">{t('wizard.dictee_desc')}</p>
                     </div>
                 </div>
             </div>
 
-            {/* Instruction Selection */}
-            <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300">
-                    📋 {t('wizard.instruction_label')}
-                </label>
-                <InstructionKeyPicker
-                    activityType="DicteeActivity"
-                    subjectCode={subjectCode}
-                    courseId={state.courseId}
-                    selectedKey={state.instructionKey || 'activity.dictee.instruction.generic'}
-                    onSelect={(key) => updateState({ instructionKey: key })}
-                />
+            {/* Instruction + Correct Text - Side by Side */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Instruction Selection */}
+                <div className="space-y-1.5">
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">
+                        📋 {t('wizard.instruction_label')}
+                    </label>
+                    <InstructionKeyPicker
+                        activityType="DicteeActivity"
+                        subjectCode={subjectCode}
+                        courseId={state.courseId}
+                        selectedKey={state.instructionKey || 'activity.dictee.instruction.generic'}
+                        onSelect={(key) => updateState({ instructionKey: key })}
+                    />
+                </div>
+
+                {/* Question Text Key Selection - Now a simple input */}
+                <div className="space-y-1.5">
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">
+                        ❓ {t('wizard.question_text_optional')}
+                    </label>
+                    <input
+                        type="text"
+                        value={state.questionTextKey || ''}
+                        onChange={(e) => updateState({ questionTextKey: e.target.value })}
+                        placeholder={t('wizard.question_text_placeholder') || 'Enter question text key...'}
+                        className="w-full bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                </div>
             </div>
 
-            {/* Correct Text */}
-            <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Case Sensitive Checkbox */}
+                <div className="space-y-1.5">
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">
+                        ⚙️ {t('wizard.settings_title')}
+                    </label>
+                    <div className="flex items-center gap-3 bg-gray-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 h-[42px]">
+                        <input
+                            type="checkbox"
+                            id="caseSensitive"
+                            checked={caseSensitive}
+                            onChange={(e) => setCaseSensitive(e.target.checked)}
+                            className="h-4 w-4 text-blue-600 border-gray-300 dark:border-slate-700 rounded focus:ring-2 focus:ring-blue-500"
+                        />
+                        <label htmlFor="caseSensitive" className="text-xs text-gray-700 dark:text-slate-300 cursor-pointer">
+                            {t('wizard.case_sensitive')}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            {/* Correct Text - Full width */}
+            <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">
                     ✏️ {t('wizard.correct_text_label')} <span className="text-red-500">*</span>
                 </label>
                 <textarea
                     value={correctText}
                     onChange={(e) => setCorrectText(e.target.value)}
                     placeholder={t('wizard.correct_text_placeholder')}
-                    rows={3}
-                    className="w-full border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    dir={isRTL ? 'rtl' : 'ltr'}
+                    rows={2}
+                    className="w-full border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    dir="ltr"
                 />
-                <p className="text-xs text-gray-500 dark:text-slate-400">{t('wizard.correct_text_desc')}</p>
             </div>
 
-            {/* Audio Generation Section */}
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 p-5 rounded-xl space-y-4">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h4 className="text-sm font-bold text-purple-900 dark:text-purple-300 flex items-center gap-2">
-                            ✨ {t('wizard.audio_auto_title') || 'Audio Automatique (4 voix)'}
+            {/* Audio Generation - Compact Version */}
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 p-3 rounded-lg">
+                {/* Generation Button + Status in one line */}
+                <div className="flex items-center justify-between gap-3 mb-3">
+                    <div className="flex-1">
+                        <h4 className="text-xs font-bold text-purple-900 dark:text-purple-300">
+                            ✨ {t('wizard.audio_auto_title')}
                         </h4>
                         {isGenerating && availableCount > 0 && (
-                            <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
-                                {availableCount}/{expectedCount} voix générées...
+                            <p className="text-[10px] text-purple-600 dark:text-purple-400">
+                                {t('wizard.voices_ready').replace('{count}', availableCount.toString()).replace('{total}', expectedCount.toString())}
                             </p>
                         )}
                     </div>
@@ -261,11 +288,11 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                         type="button"
                         onClick={handleGenerateTTS}
                         disabled={isGenerating || createActivity.isPending || !correctText.trim()}
-                        className="px-5 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                        className="px-4 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center gap-2"
                     >
                         {isGenerating ? (
                             <>
-                                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 {t('wizard.generating_audio')}
                             </>
                         ) : (
@@ -277,35 +304,24 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                     </button>
                 </div>
 
-                {/* Timeout warning */}
-                {isTimeout && (
-                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-3 rounded-lg">
-                        <p className="text-xs text-yellow-700 dark:text-yellow-400 font-medium">
-                            ⚠️ {t('wizard.tts_timeout')}
-                        </p>
+                {/* Errors/Warnings - Compact */}
+                {(isTimeout || ttsError) && (
+                    <div className={`p-2 rounded text-xs mb-3 ${isTimeout ? 'bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 text-yellow-700 dark:text-yellow-400' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400'}`}>
+                        {isTimeout ? `⚠️ ${t('wizard.tts_timeout')}` : ttsError}
                     </div>
                 )}
 
-                {/* Error message */}
-                {ttsError && (
-                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-3 rounded-lg">
-                        <p className="text-xs text-red-700 dark:text-red-400 font-medium">{ttsError}</p>
-                    </div>
-                )}
-
-                {/* Audio Player */}
+                {/* Audio Player - Only show when generated, compact */}
                 {generatedUrls.length > 0 && (
-                    <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-purple-100 dark:border-purple-900/50 space-y-3">
-                        <label className="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
-                            🎧 {t('wizard.audio_preview')} ({availableCount}/{expectedCount})
-                        </label>
-                        
-                        {/* Voice Selector */}
-                        <div className="flex items-center gap-3">
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                            <label className="text-[10px] font-bold text-gray-500 dark:text-slate-400 uppercase">
+                                🎧 {t('wizard.audio_preview')}
+                            </label>
                             <select
                                 value={selectedVoice}
                                 onChange={(e) => setSelectedVoice(e.target.value)}
-                                className="flex-1 border border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white rounded-lg px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-purple-500"
+                                className="flex-1 border border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white rounded-lg px-2 py-1 text-xs font-medium focus:ring-2 focus:ring-purple-500"
                             >
                                 {audioVariants.map(variant => (
                                     <option key={variant.id} value={variant.id}>
@@ -315,59 +331,31 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                             </select>
                         </div>
 
-                        {/* Audio Player Component */}
-                        {currentAudioUrl ? (
-                            <AudioPlayer 
-                                url={currentAudioUrl} 
-                                label={audioVariants.find(v => v.id === selectedVoice)?.label}
-                            />
-                        ) : (
-                            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-3 rounded-lg text-center">
-                                <p className="text-xs text-yellow-700 dark:text-yellow-400">
-                                    ⏳ Cette voix n'est pas encore disponible. Veuillez patienter...
-                                </p>
-                            </div>
+                        {currentAudioUrl && (
+                            <AudioPlayer url={currentAudioUrl} />
                         )}
                     </div>
                 )}
 
+                {/* Empty state - Only show when NO audio yet */}
                 {generatedUrls.length === 0 && !isGenerating && (
-                    <div className="text-center py-6 text-sm text-purple-600 dark:text-purple-400">
-                        💡 {t('wizard.no_audio_yet') || 'Cliquez sur "Générer les audios" pour créer 4 voix différentes'}
+                    <div className="text-center py-3 text-xs text-purple-600 dark:text-purple-400">
+                        💡 {t('wizard.no_audio_yet')}
                     </div>
                 )}
             </div>
 
-            {/* Settings */}
-            <div className="space-y-3">
-                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300">
-                    ⚙️ {t('wizard.settings_title')}
-                </label>
-                <div className="flex items-center gap-3 bg-gray-50 dark:bg-slate-800/50 p-3 rounded-lg border border-gray-200 dark:border-slate-700">
-                    <input
-                        type="checkbox"
-                        id="caseSensitive"
-                        checked={caseSensitive}
-                        onChange={(e) => setCaseSensitive(e.target.checked)}
-                        className="h-4 w-4 text-blue-600 border-gray-300 dark:border-slate-700 rounded focus:ring-2 focus:ring-blue-500"
-                    />
-                    <label htmlFor="caseSensitive" className="text-sm text-gray-700 dark:text-slate-300 cursor-pointer">
-                        {t('wizard.case_sensitive')}
-                    </label>
-                </div>
-            </div>
-
-            {/* Submit Buttons */}
-            <div className="flex justify-between items-center pt-6 border-t-2 border-gray-200 dark:border-slate-800">
-                <p className="text-xs text-gray-500 dark:text-slate-400">
+            {/* Submit Buttons - Compact */}
+            <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-slate-800">
+                <p className="text-[10px] text-gray-500 dark:text-slate-400">
                     💾 {t('wizard.draft_hint')}
                 </p>
-                <div className="flex gap-3">
+                <div className="flex gap-2">
                     <button
                         type="button"
                         onClick={() => handleSubmit(false)}
                         disabled={createActivity.isPending}
-                        className="px-6 py-2.5 border-2 border-gray-300 dark:border-slate-700 rounded-lg text-gray-700 dark:text-slate-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
+                        className="px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg text-xs text-gray-700 dark:text-slate-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
                     >
                         {t('wizard.save_draft_btn')}
                     </button>
@@ -375,14 +363,13 @@ export default function DicteeActivityForm({ state, updateState, onSuccess }: Di
                         type="button"
                         onClick={() => handleSubmit(true)}
                         disabled={createActivity.isPending}
-                        className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
+                        className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
                     >
                         {createActivity.isPending ? t('wizard.creating') : t('wizard.create_btn')}
                     </button>
                 </div>
             </div>
 
-            {/* Hidden button for wizard integration */}
             <button id="wizard-submit-btn" type="button" onClick={() => handleSubmit(false)} className="hidden" />
         </div>
     );

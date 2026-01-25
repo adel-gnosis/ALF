@@ -85,36 +85,6 @@ def _intersection_from_choices_v2(choices_v2: list) -> list[str]:
         return []
     return sorted(langs) if langs else []
 
-def _intersection_from_pairs_i18n(pairs_i18n: dict) -> list[str]:
-    """
-    pairs_i18n shape: { "parfait": {"en":"perfect","ar":"ممتاز"}, ... }
-    We compute intersection of langs that exist for ALL entries.
-    """
-    if not pairs_i18n:
-        return []
-    langs = None
-    for _, trans in pairs_i18n.items():
-        if not isinstance(trans, dict):
-            return []
-        available = set(k for k, v in trans.items() if k in SUPPORTED_UI_LANGS and str(v).strip())
-        langs = available if langs is None else (langs & available)
-    return sorted(langs) if langs else []
-
-def _intersection_from_choices_i18n(choices_i18n: list) -> list[str]:
-    """
-    choices_i18n shape: [ {"fr":"pomme","en":"apple","ar":"تفاحة"}, ... ]
-    Intersection of langs present for ALL choices.
-    """
-    if not choices_i18n:
-        return []
-    langs = None
-    for choice in choices_i18n:
-        if not isinstance(choice, dict):
-            return []
-        available = set(k for k, v in choice.items() if k in SUPPORTED_UI_LANGS and str(v).strip())
-        langs = available if langs is None else (langs & available)
-    return sorted(langs) if langs else []
-
 class ActivityCreateSerializer(serializers.Serializer):
     """
     Unified serializer for creating any activity type
@@ -281,78 +251,73 @@ class ActivityUpdateSerializer(serializers.Serializer):
     )
     
     def validate(self, data):
-        """Validate update data against activity schema"""
-        activity = self.context['activity']
+        """Validate update data against activity schema (PATCH-safe, V2-friendly)."""
+        activity = self.context["activity"]
+
+        # Always trust the instance type (PATCH requests shouldn't change it)
+        activity_type = activity.__class__.__name__
+
+        # Type-specific incoming patch data
+        type_specific = data.get("type_specific_data", {}) or {}
+        if not isinstance(type_specific, dict):
+            raise serializers.ValidationError({
+                "type_specific_data": "Must be an object (JSON dict)."
+            })
 
         # Build merged data using existing instance fields as fallback
         merged_data = {
-            'activity_type': activity_type,
-            'lesson_id': activity.lesson_id,
+            "activity_type": activity_type,
+            "lesson_id": activity.lesson_id,
             **type_specific,
         }
 
         # Fallback required type fields from existing instance (so PATCH can be partial)
-        # Matching: pairs_v2 is required
         if activity_type == "MatchingActivity" and "pairs_v2" not in merged_data:
             merged_data["pairs_v2"] = getattr(activity, "pairs_v2", None)
 
-        # MCQ: choices_v2 + correct_choice_id are required
         if activity_type == "MCQActivity":
             if "choices_v2" not in merged_data:
                 merged_data["choices_v2"] = getattr(activity, "choices_v2", None)
             if "correct_choice_id" not in merged_data:
                 merged_data["correct_choice_id"] = getattr(activity, "correct_choice_id", None)
 
-        # MultipleAnswer: choices_v2 + correct_choice_ids required
         if activity_type == "MultipleAnswerActivity":
             if "choices_v2" not in merged_data:
                 merged_data["choices_v2"] = getattr(activity, "choices_v2", None)
             if "correct_choice_ids" not in merged_data:
                 merged_data["correct_choice_ids"] = getattr(activity, "correct_choice_ids", None)
 
-        # FillBlank: correct_answer required
         if activity_type == "FillBlankActivity" and "correct_answer" not in merged_data:
             merged_data["correct_answer"] = getattr(activity, "correct_answer", None)
 
-        # DragOrder: words + correct_order required
         if activity_type == "DragOrderActivity":
             if "words" not in merged_data:
                 merged_data["words"] = getattr(activity, "words", None)
             if "correct_order" not in merged_data:
                 merged_data["correct_order"] = getattr(activity, "correct_order", None)
 
-        # Conjugation: required conjugation fields
         if activity_type == "ConjugationActivity":
             for f in ("verb_infinitive", "tense", "pronoun", "correct_conjugation"):
                 if f not in merged_data:
                     merged_data[f] = getattr(activity, f, None)
 
-        # TextInput: correct_answers required
         if activity_type == "TextInputActivity" and "correct_answers" not in merged_data:
             merged_data["correct_answers"] = getattr(activity, "correct_answers", None)
 
-        # Dictee: correct_text required
         if activity_type == "DicteeActivity":
             if "correct_text" not in merged_data:
                 merged_data["correct_text"] = getattr(activity, "correct_text", None)
             if "audio_urls" not in merged_data:
                 merged_data["audio_urls"] = getattr(activity, "audio_urls", None)
 
-        
-        # Validate
-        is_valid, error_msg = ActivitySchemaRegistry.validate_activity_data(
-            activity_type, merged_data
-        )
+        # ✅ Validate via schema registry (this is where V2-only enforcement happens)
+        is_valid, error_msg = ActivitySchemaRegistry.validate_activity_data(activity_type, merged_data)
+        if not is_valid:
+            raise serializers.ValidationError({"type_specific_data": error_msg})
 
-        activity_type = activity.__class__.__name__
-        type_specific = data.get("type_specific_data", {}) or {}
-
-
-
+        # Extra safety: if i18n exists anywhere but intersection is empty → reject
         if activity_type == "MatchingActivity" and type_specific.get("pairs_v2"):
             computed = _intersection_from_pairs_v2(type_specific["pairs_v2"])
-            # it's okay for computed to be [] if there's no i18n at all
-            # but if there IS i18n and intersection becomes empty, we should reject:
             has_any_i18n = any(
                 isinstance(p, dict) and isinstance(p.get(side), dict) and p.get(side, {}).get("i18n")
                 for p in (type_specific.get("pairs_v2") or [])
@@ -363,11 +328,8 @@ class ActivityUpdateSerializer(serializers.Serializer):
                     "type_specific_data": "pairs_v2 i18n must include at least one complete UI language across all translated items (e.g. all have 'en')."
                 })
 
-
         if activity_type in ("MCQActivity", "MultipleAnswerActivity") and type_specific.get("choices_v2"):
             computed = _intersection_from_choices_v2(type_specific["choices_v2"])
-
-            # If there is i18n present anywhere but intersection is empty => reject
             has_any_i18n = any(
                 isinstance(ch, dict)
                 and isinstance((ch.get("content") or {}), dict)
@@ -375,20 +337,13 @@ class ActivityUpdateSerializer(serializers.Serializer):
                 and bool((ch.get("content") or {}).get("i18n"))
                 for ch in (type_specific.get("choices_v2") or [])
             )
-
             if has_any_i18n and not computed:
                 raise serializers.ValidationError({
                     "type_specific_data": "choices_v2 i18n must include at least one complete UI language across all choices (e.g. all choices have 'en')."
                 })
 
-
-        
-        if not is_valid:
-            raise serializers.ValidationError({
-                'type_specific_data': error_msg
-            })
-        
         return data
+
     
     def update(self, instance, validated_data):
         """

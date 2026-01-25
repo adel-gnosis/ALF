@@ -44,7 +44,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install google-cloud-texttospeech
 
-      - name: Generate (Google TTS) + upload (4 distinct premium voices)
+      - name: Generate (Google TTS) + upload (4 dictée-grade voices)
         env:
           UPLOAD_URL: ${{ secrets.ALF_TTS_UPLOAD_URL }}
           UPLOAD_TOKEN: ${{ secrets.ALF_TTS_UPLOAD_TOKEN }}
@@ -80,68 +80,117 @@ jobs:
           def escape_xml(s: str) -> str:
               return s.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
 
+          def clamp_rate(x: float) -> float:
+              # Google TTS allows ~0.25..4.0, but we keep a tight, natural band
+              if x < 0.7:
+                  return 0.7
+              if x > 1.2:
+                  return 1.2
+              return x
+
+          def normalize_text(t: str) -> str:
+              # Keep paragraphs meaningful, avoid weird spacing that kills prosody
+              t = t.replace("\r\n", "\n").replace("\r", "\n")
+              t = re.sub(r"[ \t]+", " ", t)
+              t = re.sub(r"\n{3,}", "\n\n", t)
+              return t.strip()
+
+          # -----------------------------
+          # SSML: Natural reading (no dictée pauses)
+          # -----------------------------
           def ssml_default(t: str) -> str:
-              """Normal speaking - natural pace"""
-              return f"<speak>{escape_xml(t)}</speak>"
+              x = escape_xml(normalize_text(t))
+              # Sentence/paragraph wrappers improve prosody vs flat <speak>text</speak>
+              x = x.replace("\n\n", "</s></p><p><s>")
+              x = x.replace("\n", " <break time=\"300ms\"/> ")
+              return f"""
+          <speak>
+            <break time="200ms"/>
+            <p><s>{x}</s></p>
+            <break time="250ms"/>
+          </speak>
+          """.strip()
 
-          def ssml_dictee_pauses(t: str) -> str:
-              """Perfect for dictée - strategic pauses after punctuation"""
-              x = escape_xml(t)
-              # Long pauses after sentences for writing time
-              x = re.sub(r'([.!?])\s+', r'\1 <break time="600ms"/> ', x)
-              # Medium pauses after commas for breathing room
-              x = re.sub(r'([,;:])\s+', r'\1 <break time="350ms"/> ', x)
-              return f"<speak>{x}</speak>"
+          # -----------------------------
+          # SSML: Dictée-grade (teacher-like)
+          # - structure (<p><s>) for prosody
+          # - smart pauses after punctuation
+          # - handles newlines as "writing time"
+          # - small lead-in/out for less abrupt playback
+          # -----------------------------
+          def ssml_dictee_teacher(t: str) -> str:
+              x = normalize_text(t)
+              x = escape_xml(x)
+
+              # 1) Stronger pause after end-of-sentence (writing time)
+              x = re.sub(r'([.!?])\s+', r'\1 <break time="780ms"/> ', x)
+
+              # 2) Gentle pauses for rhythm (teacher breathing)
+              x = re.sub(r'([;])\s+',  r'\1 <break time="520ms"/> ', x)
+              x = re.sub(r'([,:])\s+', r'\1 <break time="320ms"/> ', x)
+
+              # 3) Paragraph / line breaks = extra writing time
+              x = x.replace("\n\n", ' <break time="950ms"/> ')
+              x = x.replace("\n", ' <break time="480ms"/> ')
+
+              # 4) Make quotes & parentheses breathe a bit
+              x = x.replace("«", "« ")
+              x = x.replace("»", " »")
+              x = re.sub(r'\)\s*', r') <break time="220ms"/> ', x)
+
+              # 5) Wrap in a gentle prosody tweak (NOT too slow => avoids robotic feel)
+              return f"""
+          <speak>
+            <break time="250ms"/>
+            <p><s><prosody rate="95%">{x}</prosody></s></p>
+            <break time="350ms"/>
+          </speak>
+          """.strip()
 
           # ═══════════════════════════════════════════════════════════════
-          # 🎯 PREMIUM FRENCH DICTÉE VOICES (4 DISTINCT NEURAL VOICES)
+          # 🎯 4 CANONICAL PATTERNS (distinct voices + distinct behavior)
           # ═══════════════════════════════════════════════════════════════
+          # Goal:
+          #   - 2 natural "reading" voices (male/female)
+          #   - 2 teacher-like dictée voices (male/female) with pauses + better prosody
           #
-          # Google Cloud French Neural2 voices - carefully selected for:
-          # ✓ Natural intonation
-          # ✓ Clear pronunciation
-          # ✓ Distinct timbres
-          # ✓ Perfect for educational dictées
+          # We keep speaking_rate close to natural, and let SSML handle the dictée pacing.
           #
           VARIANT_CONFIG = {
               "male_default": {
-                  "voice_name": "fr-FR-Neural2-B",  # Mature male, warm tone, clear
-                  "default_speed": 1.0,
+                  "voice_name": "fr-FR-Neural2-B",   # warm male
+                  "default_speed": 1.00,
+                  "pitch": -1.0,
                   "ssml_func": ssml_default,
-                  "description": "Homme naturel - voix claire"
+                  "description": "Homme naturel (lecture fluide)"
               },
               "male_slow": {
-                  "voice_name": "fr-FR-Neural2-D",  # Different male, authoritative, teacher-like
-                  "default_speed": 0.85,
-                  "ssml_func": ssml_dictee_pauses,
-                  "description": "Homme dictée - voix professorale avec pauses"
+                  "voice_name": "fr-FR-Neural2-D",   # authoritative male (teacher-like)
+                  "default_speed": 0.98,
+                  "pitch": -1.6,
+                  "ssml_func": ssml_dictee_teacher,
+                  "description": "Homme dictée (pauses + prosodie prof)"
               },
               "female_default": {
-                  "voice_name": "fr-FR-Neural2-A",  # Young female, energetic, bright
-                  "default_speed": 1.0,
+                  "voice_name": "fr-FR-Neural2-A",   # bright female
+                  "default_speed": 1.00,
+                  "pitch": 0.6,
                   "ssml_func": ssml_default,
-                  "description": "Femme naturelle - voix dynamique"
+                  "description": "Femme naturelle (lecture fluide)"
               },
               "female_slow": {
-                  "voice_name": "fr-FR-Neural2-C",  # Mature female, calm, pedagogical
-                  "default_speed": 0.85,
-                  "ssml_func": ssml_dictee_pauses,
-                  "description": "Femme dictée - voix pédagogique avec pauses"
+                  "voice_name": "fr-FR-Neural2-C",   # calm female (pedagogical)
+                  "default_speed": 0.98,
+                  "pitch": 0.2,
+                  "ssml_func": ssml_dictee_teacher,
+                  "description": "Femme dictée (pauses + prosodie pédagogique)"
               },
           }
 
-          def clamp_rate(x: float) -> float:
-              """Keep speeds within Google TTS safe range"""
-              if x < 0.5:
-                  return 0.5
-              if x > 2.0:
-                  return 2.0
-              return x
-
-          print("=" * 70)
-          print(f"🎯 Generating French Dictée Audio for ID: {dictee_id}")
-          print(f"📝 Text: {text[:60]}{'...' if len(text) > 60 else ''}")
-          print("=" * 70)
+          print("=" * 74)
+          print(f"🎯 Generating Dictée Audio for ID: {dictee_id}")
+          print(f"📝 Text preview: {text[:90]}{'...' if len(text) > 90 else ''}")
+          print("=" * 74)
 
           for variant in variants:
               cfg = VARIANT_CONFIG.get(variant)
@@ -149,16 +198,16 @@ jobs:
                   print(f"⚠️  Skipping unknown variant: {variant}")
                   continue
 
-              print(f"\n🎤 Processing variant: {variant}")
+              print(f"\n🎤 Variant: {variant}")
               print(f"   Voice: {cfg['voice_name']}")
-              print(f"   Description: {cfg['description']}")
+              print(f"   Mode : {cfg['description']}")
 
               voice_param = texttospeech.VoiceSelectionParams(
                   language_code="fr-FR",
                   name=cfg["voice_name"],
               )
 
-              # Use override speeds if provided; otherwise use the per-variant default only
+              # Use override speeds if provided; otherwise use per-variant default only
               if speeds_override:
                   speed_list = []
                   for s in speeds_override:
@@ -174,12 +223,17 @@ jobs:
               ssml = cfg["ssml_func"](text)
 
               for speaking_rate in speed_list:
-                  print(f"   ⚙️  Generating at speed: {speaking_rate}x")
-                  
+                  safe_variant = variant.replace("/", "_").replace(" ", "_")
+                  out_name = f"dictee_{dictee_id}_{safe_variant}_x{speaking_rate}.mp3"
+
+                  print(f"   ⚙️  Synthesize @ {speaking_rate}x → {out_name}")
+
                   audio_config = texttospeech.AudioConfig(
                       audio_encoding=texttospeech.AudioEncoding.MP3,
                       speaking_rate=speaking_rate,
-                      pitch=0.0,  # Natural pitch
+                      pitch=float(cfg.get("pitch", 0.0)),
+                      # Big improvement for real playback (phones/classes):
+                      effects_profile_id=["handset-class-device"],
                   )
 
                   response = client.synthesize_speech(
@@ -188,14 +242,11 @@ jobs:
                       audio_config=audio_config,
                   )
 
-                  safe_variant = variant.replace("/", "_").replace(" ", "_")
-                  out_name = f"dictee_{dictee_id}_{safe_variant}_x{speaking_rate}.mp3"
-                  
                   with open(out_name, "wb") as f:
                       f.write(response.audio_content)
 
                   file_size_kb = len(response.audio_content) / 1024
-                  print(f"   ✅ Generated: {out_name} ({file_size_kb:.1f} KB)")
+                  print(f"   ✅ Generated ({file_size_kb:.1f} KB)")
 
                   # Upload to backend
                   curl_cmd = [
@@ -207,17 +258,16 @@ jobs:
                       "-F", f"speed={speaking_rate}",
                       "-F", f"file=@{out_name}",
                   ]
-                  print(f"   📤 Uploading to backend...")
+                  print(f"   📤 Uploading...")
                   result = subprocess.run(curl_cmd, capture_output=True, text=True)
-                  
+
                   if result.returncode == 0:
-                      print(f"   ✅ Upload successful!")
+                      print(f"   ✅ Upload OK")
                   else:
                       print(f"   ❌ Upload failed: {result.stderr}")
                       raise SystemExit(1)
 
-          print("\n" + "=" * 70)
-          print("🎉 All variants generated and uploaded successfully!")
-          print("=" * 70)
-
+          print("\n" + "=" * 74)
+          print("🎉 All 4 patterns generated & uploaded (dictée-grade).")
+          print("=" * 74)
           PY

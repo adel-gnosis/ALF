@@ -1,5 +1,5 @@
 import api from './api';
-import { TeacherActivity, ActivityPerformance, TeacherStats } from '../types/console';
+import { TeacherActivity, ActivityPerformance, TeacherStats, MediaFile } from '../types/console';
 
 export const teacherApi = {
     createActivity: async (data: any): Promise<TeacherActivity> => {
@@ -67,6 +67,23 @@ export const teacherApi = {
         speeds: string[];
     }): Promise<{ triggered: boolean, dictee_id: number, voices: string, speeds: string }> => {
         const response = await api.post('/dictee/trigger-tts/', data);
+        return response.data;
+    },
+
+    listMedia: async (params?: { type?: 'image' | 'audio' | 'all' }): Promise<{ files: MediaFile[] }> => {
+        const response = await api.get('/teacher/media/list/', { params });
+        return response.data;
+    },
+
+    uploadMedia: async (file: File, type: 'image' | 'audio'): Promise<{ url: string, name: string, type: string }> => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('type', type);
+        const response = await api.post('/teacher/media/upload/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
         return response.data;
     }
 };

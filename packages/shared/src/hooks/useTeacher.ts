@@ -74,3 +74,15 @@ export const useBrowseActivities = (params?: {
         queryFn: () => teacherApi.browseActivities(params)
     });
 };
+
+export const useTeacherMedia = (params?: { type?: 'image' | 'audio' | 'all' }) => {
+    return useQuery({
+        queryKey: ['teacher-media', params],
+        queryFn: () => teacherApi.listMedia(params)
+    });
+};
+export const useUploadMedia = () => {
+    return useMutation({
+        mutationFn: ({ file, type }: { file: File, type: 'image' | 'audio' }) => teacherApi.uploadMedia(file, type)
+    });
+};

@@ -58,9 +58,14 @@ class TeacherActivityViewSet(viewsets.ViewSet):
           "difficulty": "EASY",
           "points": 10,
           "type_specific_data": {
-            "choices": ["le chat", "le chien", "le poisson"],
-            "correct_answer_index": 1
-          }
+            "choices_v2": [
+                {"id":"c_001","content":{"type":"text","value":"le chat"}},
+                {"id":"c_002","content":{"type":"text","value":"le chien"}},
+                {"id":"c_003","content":{"type":"text","value":"le poisson"}}
+            ],
+            "correct_choice_id": "c_002"
+            }
+
         }
         """
         serializer = ActivityCreateSerializer(

@@ -13,7 +13,7 @@ def _validate_choices_v2(choices_v2):
     if len(choices_v2) < 2:
         return False, "choices_v2 must contain at least 2 choices"
 
-    allowed_types = {"text", "image"}  # add audio later
+    allowed_types = {"text", "image", "audio"}  # ✅ now supports audio too
     seen_ids = set()
 
     for i, ch in enumerate(choices_v2):
@@ -106,47 +106,22 @@ class MCQActivitySchema(ActivitySchema):
     def __init__(self):
         super().__init__('MCQActivity')
         self.type_specific_fields = {
-            'choices': {
+            'choices_v2': {
                 'type': 'list',
                 'required': True,
                 'min_length': 2,
-                'max_length': 6,
-                'help': 'List of answer choices (French text or i18n keys)'
-            },
-            'correct_answer_index': {
-                'type': 'int',
-                'required': True,
-                'min': 0,
-                'help': 'Index of correct answer in choices array'
-            },
-            'choices_keys': {
-                'type': 'list',
-                'required': False,
-                'help': 'i18n keys for choices (for translated options)'
-            },
-            'choices_are_translatable': {
-                'type': 'bool',
-                'required': False,
-                'default': False,
-                'help': 'True if choices should be translated to learner language'
-            },
-            'choices_i18n': {
-                'type': 'list',
-                'required': False,
-                'help': 'Teacher-provided multilingual choices: [{"fr":"pomme","en":"apple","ar":"تفاحة"}]'
-            },
-            'choices_v2': {
-                'type': 'list',
-                'required': False,
-                'help': 'New structured choices with IDs and i18n support'
+                'max_length': 8,
+                'help': 'V2 choices: [{"id":"c_001","content":{"type":"text|image|audio","value":"..."}}]'
             },
             'correct_choice_id': {
                 'type': 'str',
-                'required': False,
-                'help': 'ID of the correct choice from choices_v2'
-            }
-
+                'required': True,
+                'help': 'V2: ID of the correct choice from choices_v2'
+            },
         }
+
+
+        
     
     def validate(self, data: Dict) -> tuple[bool, Optional[str]]:
         """Custom validation for MCQ"""
@@ -155,32 +130,24 @@ class MCQActivitySchema(ActivitySchema):
         if not valid:
             return False, error
         
-        # Validate correct_answer_index is within choices range (LEGACY)
-        choices = data.get('choices', [])
-        correct_idx = data.get('correct_answer_index')
-        
-        if correct_idx is not None and choices and correct_idx >= len(choices):
-            return False, f"correct_answer_index ({correct_idx}) out of range (choices length: {len(choices)})"
-        
-        # If using translatable choices, choices_keys should match choices length
-        if data.get('choices_are_translatable') and data.get('choices_keys'):
-            if len(data['choices_keys']) != len(choices):
-                return False, "choices_keys length must match choices length"
+        # ❌ Reject legacy payload keys (MCQ is V2-only now)
+        legacy_keys = {"choices", "correct_answer_index", "choices_keys", "choices_are_translatable", "choices_i18n"}
+        if any(k in data and data.get(k) is not None for k in legacy_keys):
+            return False, "Legacy MCQ fields are no longer supported. Use choices_v2 + correct_choice_id فقط."
 
-        # Validate v2 fields if provided
-        choices_v2 = data.get("choices_v2")
-        if choices_v2:
-            ok, err = _validate_choices_v2(choices_v2)
-            if not ok:
-                return False, err
+        choices_v2 = data.get("choices_v2") or []
+        ok, err = _validate_choices_v2(choices_v2)
+        if not ok:
+            return False, err
 
-            correct_choice_id = data.get("correct_choice_id")
-            if correct_choice_id:
-                valid_ids = {c["id"] for c in choices_v2 if isinstance(c, dict) and isinstance(c.get("id"), str)}
-                if correct_choice_id not in valid_ids:
-                    return False, "correct_choice_id must match an id from choices_v2"
+        correct_choice_id = data.get("correct_choice_id")
+        if not isinstance(correct_choice_id, str) or not correct_choice_id.strip():
+            return False, "correct_choice_id is required when using choices_v2"
 
-        
+        valid_ids = {c["id"] for c in choices_v2 if isinstance(c, dict) and isinstance(c.get("id"), str)}
+        if correct_choice_id not in valid_ids:
+            return False, "correct_choice_id must match an id from choices_v2"
+
         return True, None
 
 
@@ -356,78 +323,50 @@ class MultipleAnswerActivitySchema(ActivitySchema):
     def __init__(self):
         super().__init__('MultipleAnswerActivity')
         self.type_specific_fields = {
-            'choices': {
+            'choices_v2': {
                 'type': 'list',
                 'required': True,
                 'min_length': 2,
-                'help': 'List of answer options'
-            },
-            'correct_indices': {
-                'type': 'list',
-                'required': True,
-                'min_length': 1,
-                'help': 'List of indices for all correct answers'
-            },
-            'choices_keys': {
-                'type': 'list',
-                'required': False,
-                'help': 'Translation keys for choices'
-            },
-            'choices_are_translatable': {
-                'type': 'bool',
-                'required': False,
-                'default': False
-            },
-            'choices_i18n': {
-                'type': 'list',
-                'required': False,
-                'help': 'Teacher-provided multilingual choices: [{"fr":"pomme","en":"apple","ar":"تفاحة"}]'
-            },
-            'choices_v2': {
-                'type': 'list',
-                'required': False,
-                'help': 'New structured choices with IDs and i18n support'
+                'max_length': 10,
+                'help': 'V2 choices: [{"id":"c_001","content":{"type":"text|image|audio","value":"..."}}]'
             },
             'correct_choice_ids': {
                 'type': 'list',
-                'required': False,
-                'help': 'IDs of the correct choices from choices_v2'
-            }
-
+                'required': True,
+                'min_length': 1,
+                'help': 'V2: list of correct IDs from choices_v2'
+            },
         }
+
     
     def validate(self, data: Dict) -> tuple[bool, Optional[str]]:
         valid, error = self.validate_i18n_fields(data)
         if not valid:
             return False, error
         
-        choices = data.get('choices', [])
-        correct_indices = data.get('correct_indices', [])
-        
-        # All correct indices must be valid (LEGACY)
-        for idx in correct_indices:
-            if choices and idx >= len(choices):
-                return False, f"correct_indices contains invalid index: {idx}"
-            
         # Validate v2 fields if provided
-        choices_v2 = data.get("choices_v2")
-        if choices_v2:
-            ok, err = _validate_choices_v2(choices_v2)
-            if not ok:
-                return False, err
+        # ❌ Reject legacy payload keys (MultipleAnswer is V2-only now)
+        legacy_keys = {"choices", "correct_indices", "choices_keys", "choices_are_translatable", "choices_i18n"}
+        if any(k in data and data.get(k) is not None for k in legacy_keys):
+            return False, "Legacy MultipleAnswer fields are no longer supported. Use choices_v2 + correct_choice_ids فقط."
 
-            correct_choice_ids = data.get("correct_choice_ids")
-            if correct_choice_ids:
-                if not isinstance(correct_choice_ids, list):
-                    return False, "correct_choice_ids must be a list"
+        choices_v2 = data.get("choices_v2") or []
+        ok, err = _validate_choices_v2(choices_v2)
+        if not ok:
+            return False, err
 
-                valid_ids = {c["id"] for c in choices_v2 if isinstance(c, dict) and isinstance(c.get("id"), str)}
-                for cid in correct_choice_ids:
-                    if not isinstance(cid, str) or cid not in valid_ids:
-                        return False, "Every correct_choice_id must match an id from choices_v2"
+        correct_choice_ids = data.get("correct_choice_ids")
+        if not isinstance(correct_choice_ids, list) or len(correct_choice_ids) < 1:
+            return False, "correct_choice_ids is required (non-empty list) when using choices_v2"
 
-                if len(set(correct_choice_ids)) != len(correct_choice_ids):
-                    return False, "correct_choice_ids contains duplicates"
+        valid_ids = {c["id"] for c in choices_v2 if isinstance(c, dict) and isinstance(c.get("id"), str)}
+
+        for cid in correct_choice_ids:
+            if not isinstance(cid, str) or cid not in valid_ids:
+                return False, "Every correct_choice_id must match an id from choices_v2"
+
+        if len(set(correct_choice_ids)) != len(correct_choice_ids):
+            return False, "correct_choice_ids contains duplicates"
 
         
         return True, None

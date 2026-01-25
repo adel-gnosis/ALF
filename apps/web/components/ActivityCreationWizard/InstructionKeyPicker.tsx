@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useI18nKeys, useSubjects, ACTIVITY_TYPE_INFO, ActivityType } from '@alf/shared';
 import { useI18n } from '../../context/I18nContext';
-import { Search, X, Check, ChevronRight, Settings2, BookOpen, Layers, Filter } from 'lucide-react';
+import { Search, X, Check, ChevronDown, Settings2, BookOpen, Layers, Filter } from 'lucide-react';
 import SubjectIcon from '../SubjectIcon';
 
 interface InstructionKeyPickerProps {
@@ -9,7 +9,7 @@ interface InstructionKeyPickerProps {
     subjectCode: string | null;
     selectedKey: string;
     onSelect: (key: string) => void;
-    courseId?: number | null; // Optional: to filter subjects by current course
+    courseId?: number | null;
 }
 
 export default function InstructionKeyPicker({
@@ -64,52 +64,25 @@ export default function InstructionKeyPicker({
         return item.label_fr || item.label || item.key;
     };
 
-    // Find current template either in results or fetch if needed
-    // For now, we rely on the list or show the key itself
+    // Find current template
     const currentTemplate = templates.find((tpl: any) => tpl.key === selectedKey);
+    const displayLabel = currentTemplate 
+        ? getLocalizedLabel(currentTemplate) 
+        : (t(selectedKey) !== selectedKey ? t(selectedKey) : t('wizard.generic_instruction_fallback'));
 
     return (
         <div className="w-full">
-            {/* Trigger Button/UI */}
-            <div
+            {/* Compact Trigger - Just a Select-like Button */}
+            <button
+                type="button"
                 onClick={() => setIsOpen(true)}
-                className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl p-3 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 transition-all group shadow-sm hover:shadow-md"
+                className="w-full bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-left text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-blue-400 dark:hover:border-blue-600 transition-all flex items-center justify-between group"
             >
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/40 dark:to-blue-800/20 flex items-center justify-center text-xl shadow-inner">
-                            📝
-                        </div>
-                        <div className="min-w-0">
-                            <div className="text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mb-0.5">
-                                {t('wizard.instruction_label')}
-                            </div>
-                            <div className="text-sm font-bold text-gray-900 dark:text-white truncate max-w-[300px]">
-                                {currentTemplate ? getLocalizedLabel(currentTemplate) : (selectedKey || t('wizard.generic_instruction_fallback'))}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="text-[11px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded transition-colors group-hover:bg-blue-600 group-hover:text-white">
-                            {t('common.change')}
-                        </div>
-                        <ChevronRight className={`w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-transform ${isRTL ? 'rotate-180' : ''}`} />
-                    </div>
-                </div>
-                {selectedKey && (
-                    <div className="mt-2 pt-2 border-t border-gray-50 dark:border-slate-800/50 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <code className="text-[9px] px-1.5 py-0.5 rounded bg-gray-50 dark:bg-slate-800 text-gray-400 dark:text-slate-500 font-mono">
-                                {selectedKey}
-                            </code>
-                        </div>
-                        <div className="flex items-center gap-1">
-                            {selectedSubject !== 'all' && <span className="w-1.5 h-1.5 rounded-full bg-purple-500" title={t('wizard.filtered_by_subject')} />}
-                            {selectedType !== 'all' && <span className="w-1.5 h-1.5 rounded-full bg-blue-500" title={t('wizard.filtered_by_activity_type')} />}
-                        </div>
-                    </div>
-                )}
-            </div>
+                <span className="text-gray-900 dark:text-white truncate flex-1" dir={isRTL ? 'rtl' : 'ltr'}>
+                    {displayLabel}
+                </span>
+                <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors shrink-0 ml-2" />
+            </button>
 
             {/* Modal Overlay */}
             {isOpen && (
@@ -141,7 +114,7 @@ export default function InstructionKeyPicker({
                             </button>
                         </div>
 
-                        {/* Search & Filters Area - Compact Single Line */}
+                        {/* Search & Filters Area */}
                         <div className="p-4 md:px-6 bg-gray-50/50 dark:bg-slate-900/50 border-b dark:border-slate-800 shrink-0">
                             <div className="flex flex-col md:flex-row gap-3 items-end">
                                 {/* Search */}
@@ -174,7 +147,7 @@ export default function InstructionKeyPicker({
                                         }}
                                         className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium h-[38px]"
                                     >
-                                        <option value="all">🌐 {t('wizard.show_all_templates')}</option>
+                                        <option value="all">🌍 {t('wizard.show_all_templates')}</option>
                                         {Object.entries(ACTIVITY_TYPE_INFO).map(([key, info]) => (
                                             <option key={key} value={key}>
                                                 {info.icon} {t(`wizard.activity_type_${key}`)}
@@ -196,7 +169,7 @@ export default function InstructionKeyPicker({
                                         }}
                                         className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-purple-500 transition-all font-medium h-[38px]"
                                     >
-                                        <option value="all">🌐 {t('wizard.show_all_templates')}</option>
+                                        <option value="all">🌍 {t('wizard.show_all_templates')}</option>
                                         {subjects?.map((s) => (
                                             <option key={s.id} value={s.code}>
                                                 {s.title}
@@ -296,7 +269,7 @@ export default function InstructionKeyPicker({
                             ) : (
                                 <div className="flex flex-col items-center justify-center py-20 text-center">
                                     <div className="w-20 h-20 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center mb-6 text-4xl shadow-inner border border-dashed dark:border-slate-700">
-                                        📭
+                                        🔭
                                     </div>
                                     <h4 className="text-base font-bold text-gray-900 dark:text-white">{t('wizard.no_templates_found')}</h4>
                                     <p className="text-xs text-gray-500 dark:text-slate-500 mt-2 max-w-[200px]">

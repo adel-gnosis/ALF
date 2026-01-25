@@ -31,8 +31,8 @@ export default function Step3_Settings({ state, updateState }: Step3Props) {
             <div className="bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/50 p-3 rounded-lg flex items-center gap-3">
                 <span className="text-xl">⚙️</span>
                 <div>
-                    <h3 className="text-xs font-bold text-emerald-900 dark:text-emerald-400 uppercase tracking-wider">Configuration</h3>
-                    <p className="text-[10px] text-emerald-700/70 dark:text-emerald-300/60 font-medium">Define the activity type and its parameters.</p>
+                    <h3 className="text-xs font-bold text-emerald-900 dark:text-emerald-400 uppercase tracking-wider">{t('wizard.config_title')}</h3>
+                    <p className="text-[10px] text-emerald-700/70 dark:text-emerald-300/60 font-medium">{t('wizard.config_desc')}</p>
                 </div>
             </div>
 
@@ -65,11 +65,11 @@ export default function Step3_Settings({ state, updateState }: Step3Props) {
                                     <div className="flex items-center gap-2 mb-1">
                                         <span className="text-base group-hover:scale-110 transition-transform">{info.icon}</span>
                                         <span className="font-bold text-[11px] text-gray-900 dark:text-white truncate">
-                                            {info.label}
+                                            {t(`wizard.activity_type_${type}`)}
                                         </span>
                                     </div>
                                     <p className="text-[9px] text-gray-500 dark:text-slate-400 leading-tight line-clamp-2">
-                                        {info.description}
+                                        {t(`wizard.activity_desc_${type}`)}
                                     </p>
                                     {isAdvanced && (
                                         <div className="absolute top-1 right-1 bg-yellow-100 dark:bg-yellow-900/50 text-[8px] px-1 py-0.5 rounded text-yellow-700 dark:text-yellow-500 font-bold uppercase">

@@ -10,6 +10,7 @@ export { default as api, setTokenProvider, setApiBaseUrl, API_BASE_URL } from '.
 export * from './services/auth';
 export * from './services/teacher';
 export * from './services/admin';
+export * from './services/conjugation';
 
 // Hooks
 export * from './hooks/useSession';
@@ -18,6 +19,7 @@ export * from './hooks/useAuth';
 export * from './hooks/useTeacher';
 export * from './hooks/useAdmin';
 export * from './hooks/useDicteeTTS';
+export * from './hooks/useConjugation';
 
 // Constants
 export * from './constants/activityCategories';

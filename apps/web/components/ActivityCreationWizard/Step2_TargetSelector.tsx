@@ -17,8 +17,8 @@ export default function Step2_TargetSelector({ state, updateState }: Step2Props)
             <div className="shrink-0 bg-purple-50/50 dark:bg-purple-900/10 border border-purple-100 dark:border-purple-900/30 rounded-lg px-4 py-2 flex items-center justify-between">
                 <span className="text-xl">🎯</span>
                 <div>
-                    <h3 className="text-xs font-bold text-purple-900 dark:text-purple-400 uppercase tracking-wider">Target Selection</h3>
-                    <p className="text-[10px] text-purple-700/70 dark:text-purple-300/60 font-medium">Choose exactly where this activity belongs.</p>
+                    <h3 className="text-xs font-bold text-purple-900 dark:text-purple-400 uppercase tracking-wider">{t('wizard.target_selection_title')}</h3>
+                    <p className="text-[10px] text-purple-700/70 dark:text-purple-300/60 font-medium">{t('wizard.target_selection_desc')}</p>
                 </div>
             </div>
 
@@ -115,7 +115,7 @@ export default function Step2_TargetSelector({ state, updateState }: Step2Props)
                                                         {lesson.title}
                                                     </div>
                                                     <div className="text-[9px] text-gray-400 uppercase tracking-wide">
-                                                        Lesson Unit
+                                                        {t('wizard.lesson_unit_label')}
                                                     </div>
                                                 </div>
                                                 {isSelected && (
@@ -130,8 +130,8 @@ export default function Step2_TargetSelector({ state, updateState }: Step2Props)
                                     <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mb-3">
                                         <span className="text-xl">📭</span>
                                     </div>
-                                    <p className="text-[11px] font-bold text-gray-500 dark:text-slate-400 uppercase">No Lessons Found</p>
-                                    <p className="text-[10px] text-gray-400 mt-1">Try another subject or contact support.</p>
+                                    <p className="text-[11px] font-bold text-gray-500 dark:text-slate-400 uppercase">{t('wizard.no_lessons_found')}</p>
+                                    <p className="text-[10px] text-gray-400 mt-1">{t('wizard.try_another_subject')}</p>
                                 </div>
                             )
                         ) : (
@@ -139,8 +139,8 @@ export default function Step2_TargetSelector({ state, updateState }: Step2Props)
                                 <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-3 border border-dashed border-gray-200 dark:border-slate-800">
                                     <span className="text-base grayscale">👈</span>
                                 </div>
-                                <p className="text-[11px] font-bold text-gray-400 tracking-wider uppercase">Select a Subject</p>
-                                <p className="text-[10px] text-gray-400/80 mt-1 italic">Waiting for your selection...</p>
+                                <p className="text-[11px] font-bold text-gray-400 tracking-wider uppercase">{t('wizard.select_subject_prompt')}</p>
+                                <p className="text-[10px] text-gray-400/80 mt-1 italic">{t('wizard.waiting_selection')}</p>
                             </div>
                         )}
                     </div>

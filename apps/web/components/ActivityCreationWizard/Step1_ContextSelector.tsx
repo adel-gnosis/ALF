@@ -26,7 +26,7 @@ export default function Step1_ContextSelector({ state, updateState }: Step1Props
                 <span className="text-xl">🌍</span>
                 <div>
                     <h3 className="text-xs font-bold text-blue-900 dark:text-blue-400 uppercase tracking-wider">{t('wizard.step1_title')}</h3>
-                    <p className="text-[10px] text-blue-700/70 dark:text-blue-300/60 font-medium">Configure the foundation for your new activity.</p>
+                    <p className="text-[10px] text-blue-700/70 dark:text-blue-300/60 font-medium">{t('wizard.step1_description')}</p>
                 </div>
             </div>
 
@@ -102,7 +102,7 @@ export default function Step1_ContextSelector({ state, updateState }: Step1Props
 
             {!state.courseId && (
                 <div className="text-center py-6 bg-gray-50 dark:bg-slate-800/50 rounded-lg border border-dashed border-gray-200 dark:border-slate-700">
-                    <p className="text-xs text-gray-500 dark:text-slate-400">Please select a course to continue...</p>
+                    <p className="text-xs text-gray-500 dark:text-slate-400">{t('wizard.select_course_prompt')}</p>
                 </div>
             )}
         </div>

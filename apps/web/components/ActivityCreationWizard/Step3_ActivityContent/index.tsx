@@ -1,6 +1,12 @@
 import { ActivityWizardState } from '@alf/shared';
 import DicteeActivityForm from './DicteeActivityForm';
 import FillBlankActivityForm from './FillBlankActivityForm';
+import DragOrderActivityForm from './DragOrderActivityForm';
+import MCQActivityForm from './MCQActivityForm';
+import MultipleAnswerActivityForm from './MultipleAnswerActivityForm';
+import ConjugationActivityForm from './ConjugationActivityForm';
+import TextInputActivityForm from './TextInputActivityForm';
+import MatchingActivityForm from './MatchingActivityForm';
 
 interface Step4Props {
     state: ActivityWizardState;
@@ -18,24 +24,23 @@ export default function Step4_ActivityContent({ state, updateState, onSuccess }:
             case 'FillBlankActivity':
                 return <FillBlankActivityForm state={state} updateState={updateState} onSuccess={onSuccess} />;
 
-            // Add other activity types here
-            case 'ConjugationActivity':
-            case 'TextInputActivity':
             case 'DragOrderActivity':
+                return <DragOrderActivityForm state={state} updateState={updateState} onSuccess={onSuccess} />;
+
             case 'MCQActivity':
-            case 'MatchingActivity':
+                return <MCQActivityForm state={state} updateState={updateState} onSuccess={onSuccess} />;
+
             case 'MultipleAnswerActivity':
-                return (
-                    <div className="text-center py-12">
-                        <div className="text-6xl mb-4">🚧</div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                            Formulaire en développement
-                        </h3>
-                        <p className="text-gray-600">
-                            Le formulaire pour {state.activityType} sera disponible bientôt.
-                        </p>
-                    </div>
-                );
+                return <MultipleAnswerActivityForm state={state} updateState={updateState} onSuccess={onSuccess} />;
+
+            case 'ConjugationActivity':
+                return <ConjugationActivityForm state={state} updateState={updateState} onSuccess={onSuccess} />;
+
+            case 'TextInputActivity':
+                return <TextInputActivityForm state={state} updateState={updateState} onSuccess={onSuccess} />;
+
+            case 'MatchingActivity':
+                return <MatchingActivityForm state={state} updateState={updateState} onSuccess={onSuccess} />;
 
             default:
                 return (

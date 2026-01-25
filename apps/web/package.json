@@ -11,6 +11,8 @@
   "dependencies": {
     "@alf/shared": "workspace:*",
     "@tanstack/react-query": "5.90.12",
+    "french-verbs": "^5.4.0",
+    "french-verbs-lefff": "^3.4.0",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
     "react": "19.1.0",

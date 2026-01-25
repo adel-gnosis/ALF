@@ -81,6 +81,14 @@ export interface TeacherActivity {
   };
 }
 
+export interface MediaFile {
+  name: string;
+  url: string;
+  type: 'image' | 'audio';
+  size: number;
+  modified_at: number;
+}
+
 export interface ActivityPerformance {
   activity_id: number;
   total_attempts: number;

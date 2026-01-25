@@ -106,6 +106,16 @@ class ActivityPolymorphicSerializer(PolymorphicSerializer):
             
             # Get base representation from polymorphic serializer
             data = super().to_representation(instance)
+            
+            # --- V2-only cleanup: never leak legacy MCQ/MultipleAnswer fields to clients ---
+            if isinstance(instance, MCQActivity):
+                for k in ("choices", "correct_answer_index", "choices_keys", "choices_are_translatable", "choices_i18n"):
+                    data.pop(k, None)
+
+            if isinstance(instance, MultipleAnswerActivity):
+                for k in ("choices", "correct_indices", "choices_keys", "choices_are_translatable", "choices_i18n"):
+                    data.pop(k, None)
+
 
             # Expose supported UI languages (useful for frontend debugging / logic)
             data['supported_ui_languages'] = instance.supported_ui_languages

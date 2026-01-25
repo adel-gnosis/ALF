@@ -906,7 +906,7 @@ export default function ActivityForm({ isOpen, onClose, onSuccess, editActivity,
                                             ) : t('wizard.generate_audio_btn')}
                                         </button>
                                         {isTimeout && (
-                                            <span className="text-[10px] leading-tight text-yellow-600 dark:text-yellow-400 font-medium max-w-[200px]">
+                                            <span className="text-[10px] leading-tight text-yellow-600 dark:text-yellow-400 font-medium max-w-50">
                                                 {t('wizard.tts_timeout')}
                                             </span>
                                         )}
