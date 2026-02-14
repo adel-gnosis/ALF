@@ -9,7 +9,13 @@ const envApiUrl =
   process.env.EXPO_PUBLIC_API_URL ||
   process.env.NEXT_PUBLIC_API_URL;
 
-export const API_BASE_URL = envApiUrl || 'http://localhost:8000/api';
+// ✅ Dev fallback allowed, but NEVER fallback to localhost in production builds
+export const API_BASE_URL =
+  envApiUrl ||
+  (process.env.NODE_ENV === "development"
+    ? "http://localhost:8000/api"
+    : "https://api.eduvia.ma/api");
+
 
 
 const api = axios.create({
