@@ -10,7 +10,29 @@
         "settings": "Paramètres",
         "logout": "Déconnexion",
         "switch_theme": "Changer le thème",
-        "error": "Erreur"
+        "error": "Erreur",
+        "course": "Cours",
+        "level": "Niveau",
+        "subject": "Sujet",
+        "lesson": "Leçon",
+        "select": "Sélectionner...",
+        "difficulty": "Difficulté",
+        "points": "Points",
+        "cancel": "Annuler",
+        "saving": "Enregistrement...",
+        "save_changes": "Enregistrer",
+        "optional": "optionnel"
+    },
+    "admin": {
+        "edit_activity": "Modifier l'activité",
+        "metadata": "Métadonnées",
+        "instruction": "Instruction",
+        "question_text": "Texte de la question",
+        "question_text_placeholder": "Entrez la question ou la consigne pour l'élève...",
+        "settings": "Paramètres",
+        "type_specific_data": "Contenu de l'activité",
+        "version_notes": "Notes de version",
+        "version_notes_placeholder": "Décrivez ce qui a changé dans cette version..."
     },
     "nav": {
         "home": "Accueil",

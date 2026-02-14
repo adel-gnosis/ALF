@@ -1,241 +1,373 @@
 'use client';
 
-'use client';
-
+import React, { useState, useMemo } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useBrowseActivities, useMe, ACTIVITY_CATEGORIES, ActivityCategory, TeacherActivity } from '@alf/shared';
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import ActivityFilters from '../../components/ActivityFilters';
-import ActivityForm from '../../components/ActivityForm';
 import {
     Library,
-    Eye,
-    Edit,
-    MessageSquare,
-    User,
-    BarChart3,
-    ChevronRight,
+    RefreshCw,
     SearchX
 } from 'lucide-react';
+import {
+    ActivityCard,
+    ActivityFilters,
+    ActivityPreviewModal,
+    ActivityEditModal,
+    ViewModeToggle,
+    PaginationControls,
+    type ViewMode
+} from '@/components/activities';
+import { useI18n } from '../../../../context/I18nContext';
 
 export default function BrowseActivitiesPage() {
     const { data: user } = useMe();
     const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+    const { t } = useI18n();
+
     const urlCategory = searchParams.get('category') as ActivityCategory | null;
 
-    const [category, setCategory] = useState<ActivityCategory>(urlCategory || 'all');
-    const [difficulty, setDifficulty] = useState('');
-    const [search, setSearch] = useState('');
+    // View mode state
+    const [viewMode, setViewMode] = useState<ViewMode>('table');
 
-    // Form state
-    const [selectedActivity, setSelectedActivity] = useState<TeacherActivity | undefined>(undefined);
-    const [isFormOpen, setIsFormOpen] = useState(false);
+    // Modal states
+    const [previewActivity, setPreviewActivity] = useState<TeacherActivity | null>(null);
+    const [editActivity, setEditActivity] = useState<TeacherActivity | null>(null);
     const [isSuggestion, setIsSuggestion] = useState(false);
 
-    // Update category when URL param changes
-    useEffect(() => {
-        if (urlCategory && urlCategory in ACTIVITY_CATEGORIES) {
-            setCategory(urlCategory);
-        } else if (!urlCategory) {
-            setCategory('all');
-        }
-    }, [urlCategory]);
+    // Pagination from URL
+    const currentPage = parseInt(searchParams.get('page') || '1');
+    const currentPageSize = parseInt(searchParams.get('page_size') || '30');
 
     // Build activity_type param from category
+    const category = urlCategory && urlCategory in ACTIVITY_CATEGORIES ? urlCategory : 'all';
     const activityType = category === 'all'
         ? undefined
         : ACTIVITY_CATEGORIES[category].types.join(',');
 
-    const { data, isLoading, refetch } = useBrowseActivities({
-        activity_type: activityType,
-        difficulty: difficulty || undefined,
-        search: search || undefined
-    });
+    // Convert string | null -> number | undefined safely for TS
+const parseOptionalInt = (v: string | null): number | undefined => {
+  if (!v) return undefined;
+  const n = parseInt(v, 10);
+  return Number.isNaN(n) ? undefined : n;
+};
 
-    const handleClearFilters = () => {
-        setCategory('all');
-        setDifficulty('');
-        setSearch('');
+
+    // Server-side query params
+    const queryParams = useMemo(() => ({
+  // numeric params - parsed to numbers (match hook types)
+  // If your hook actually expects course_id as string, change that line back.
+  course_id: parseOptionalInt(searchParams.get('course')),
+  level_id: parseOptionalInt(searchParams.get('level')),
+  subject_id: parseOptionalInt(searchParams.get('subject')),
+
+  // string params
+  activity_type: searchParams.get('type') || undefined,
+  difficulty: searchParams.get('difficulty') || undefined,
+  status: searchParams.get('status') || undefined,
+  search: searchParams.get('search') || undefined,
+
+  // pagination
+  page: currentPage,
+  page_size: currentPageSize,
+}), [searchParams, currentPage, currentPageSize]);
+
+
+
+    const { data, isLoading, refetch } = useBrowseActivities(queryParams);
+
+    // Pagination handlers
+    const handlePageChange = (page: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('page', String(page));
+        router.push(`${pathname}?${params.toString()}`);
     };
 
-    const handleSuggestEdit = (activity: TeacherActivity) => {
-        setSelectedActivity(activity);
-        setIsSuggestion(true);
-        setIsFormOpen(true);
+    const handlePageSizeChange = (pageSize: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('page_size', String(pageSize));
+        params.set('page', '1');
+        router.push(`${pathname}?${params.toString()}`);
     };
 
+    const activities = data?.activities || [];
+
+    // Handle activity preview navigation
+    const currentPreviewIndex = previewActivity
+        ? activities.findIndex(a => a.id === previewActivity.id)
+        : -1;
+
+    const handleNextPreview = () => {
+        if (currentPreviewIndex < activities.length - 1) {
+            setPreviewActivity(activities[currentPreviewIndex + 1]);
+        }
+    };
+
+    const handlePrevPreview = () => {
+        if (currentPreviewIndex > 0) {
+            setPreviewActivity(activities[currentPreviewIndex - 1]);
+        }
+    };
+
+    // Handle edit (own activity)
     const handleEdit = (activity: TeacherActivity) => {
-        setSelectedActivity(activity);
+        setEditActivity(activity);
         setIsSuggestion(false);
-        setIsFormOpen(true);
     };
 
-    if (isLoading) return (
-        <div className="flex flex-col items-center justify-center p-20 animate-pulse text-muted-foreground">
-            <div className="h-12 w-12 rounded-full bg-muted mb-4"></div>
-            <div className="h-4 w-48 bg-muted rounded mb-2"></div>
-            <div className="h-4 w-32 bg-muted rounded"></div>
-        </div>
-    );
+    // Handle suggest edit (another user's activity)
+    const handleSuggestEdit = (activity: TeacherActivity) => {
+        setEditActivity(activity);
+        setIsSuggestion(true);
+    };
+
+    // Handle edit success - simplified since modal doesn't pass response
+    const handleEditSuccess = () => {
+        refetch();
+        setEditActivity(null);
+        // Show simple confirmation
+        if (isSuggestion) {
+            alert('Suggestion sent for review');
+        }
+    };
+
+
+    // Group activities by lesson for grouped view
+    const groupedActivities = useMemo(() => {
+        if (viewMode !== 'grouped') return {};
+        return activities.reduce((acc, activity) => {
+            const lessonKey = activity.lesson?.title || 'Uncategorized';
+            if (!acc[lessonKey]) acc[lessonKey] = [];
+            acc[lessonKey].push(activity);
+            return acc;
+        }, {} as Record<string, TeacherActivity[]>);
+    }, [activities, viewMode]);
 
     return (
-        <div className="space-y-8 pb-10">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                            <Library className="h-6 w-6 text-primary" />
-                        </div>
-                        <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Bibliothèque d'Activités</h1>
+        <div className="space-y-6">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                        <Library className="h-6 w-6 text-primary" />
                     </div>
-                    <p className="text-muted-foreground font-medium">
-                        Parcourez et suggérez des modifications aux activités validées par la communauté.
-                    </p>
+                    <div>
+                        <h1 className="text-2xl font-bold text-foreground">
+                            {t('nav.public_library') || 'Public Library'}
+                        </h1>
+                        <p className="text-sm text-muted-foreground">
+                            {data?.total || 0} approved activities available
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={() => refetch()}
+                        className="p-2 rounded-lg border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 transition-colors"
+                        title="Refresh"
+                    >
+                        <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+                    </button>
+                    <ViewModeToggle mode={viewMode} onChange={setViewMode} />
                 </div>
             </div>
 
             {/* Filters */}
-            <ActivityFilters
-                category={category}
-                difficulty={difficulty}
-                search={search}
-                onCategoryChange={setCategory}
-                onDifficultyChange={setDifficulty}
-                onSearchChange={setSearch}
-                onClearFilters={handleClearFilters}
-            />
+            <ActivityFilters />
 
-            {/* Activities Table Container */}
-            <div className="space-y-4">
-                <div className="flex items-center justify-between px-2">
-                    <div className="flex items-center gap-2 text-sm font-bold text-muted-foreground uppercase tracking-widest">
-                        <BarChart3 className="h-4 w-4" />
-                        <span>Résultats : {data?.total || 0}</span>
-                    </div>
+            {/* Loading State */}
+            {isLoading && (
+                <div className="flex items-center justify-center py-12">
+                    <RefreshCw className="w-8 h-8 text-blue-500 animate-spin" />
                 </div>
+            )}
 
-                <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden transition-all">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-muted/50 border-b border-border">
-                                    <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase tracking-wider">Question & Détails</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase tracking-wider">Type / Leçon</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase tracking-wider">Auteur</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase tracking-wider text-center">Stats</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase tracking-wider text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-border/50">
-                                {data?.activities?.map((activity) => {
-                                    const isOwnActivity = activity.created_by?.id === user?.id;
+            {/* Empty State */}
+            {!isLoading && activities.length === 0 && (
+                <div className="text-center py-12 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700">
+                    <SearchX className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">No activities found</h3>
+                    <p className="text-sm text-gray-500 dark:text-slate-400">Try adjusting your filters.</p>
+                </div>
+            )}
 
-                                    return (
-                                        <tr key={activity.id} className="group hover:bg-muted/30 transition-colors">
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
-                                                        {activity.question_text || 'Instruction Sans Texte'}
-                                                    </span>
-                                                    <div className="flex items-center gap-2 mt-1">
-                                                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter ${activity.difficulty === 'HARD' ? 'bg-red-500/10 text-red-500' :
-                                                            activity.difficulty === 'MEDIUM' ? 'bg-amber-500/10 text-amber-500' :
-                                                                'bg-green-500/10 text-green-500'
-                                                            }`}>
-                                                            {activity.difficulty}
-                                                        </span>
-                                                        <span className="text-[10px] font-bold text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
-                                                            {activity.points} PTS
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-medium text-foreground">
-                                                        {activity.activity_type.replace('Activity', '')}
-                                                    </span>
-                                                    <span className="text-xs text-muted-foreground mt-0.5 italic">
-                                                        {activity.lesson.title}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-                                                        <User className="h-4 w-4" />
-                                                    </div>
-                                                    <div className="flex flex-col">
-                                                        <span className="text-xs font-bold text-foreground">
-                                                            {activity.created_by?.username || 'Système'}
-                                                        </span>
-                                                        {isOwnActivity && (
-                                                            <span className="text-[10px] text-blue-500 font-bold uppercase tracking-widest">Auteur</span>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col items-center">
-                                                    <span className="text-sm font-black text-foreground">
-                                                        {activity.average_accuracy?.toFixed(0)}%
-                                                    </span>
-                                                    <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-60">Réussite</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            {/* Card View */}
+            {!isLoading && viewMode === 'cards' && activities.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {activities.map(activity => {
+                        const isOwnActivity = activity.created_by?.id === user?.id;
+                        return (
+                            <ActivityCard
+                                key={activity.id}
+                                activity={activity}
+                                onPreview={setPreviewActivity}
+                                onEdit={isOwnActivity ? () => handleEdit(activity) : () => handleSuggestEdit(activity)}
+                            />
+                        );
+                    })}
+                </div>
+            )}
+
+            {/* Table View */}
+            {!isLoading && viewMode === 'table' && activities.length > 0 && (
+                <div className="bg-white dark:bg-slate-800 shadow rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700">
+                    <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
+                        <thead className="bg-gray-50 dark:bg-slate-700">
+                            <tr>
+                                <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Question & Details</th>
+                                <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Type / Lesson</th>
+                                <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Author</th>
+                                <th className="px-4 py-3 text-center text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Stats</th>
+                                <th className="px-4 py-3 text-right text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-slate-700">
+                            {activities.map(activity => {
+                                const isOwnActivity = activity.created_by?.id === user?.id;
+                                return (
+                                    <tr key={activity.id} className="group hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                                        <td className="px-4 py-4">
+                                            <div className="text-sm font-medium text-gray-900 dark:text-white line-clamp-1">
+                                                {activity.question_text || 'No text'}
+                                            </div>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded uppercase ${activity.difficulty === 'HARD' ? 'bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-400' :
+                                                    activity.difficulty === 'MEDIUM' ? 'bg-amber-100 text-amber-600 dark:bg-amber-900/50 dark:text-amber-400' :
+                                                        'bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-400'
+                                                    }`}>
+                                                    {activity.difficulty}
+                                                </span>
+                                                <span className="text-[10px] font-bold text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+                                                    {activity.points} PTS
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="text-sm font-medium text-gray-900 dark:text-white">
+                                                {activity.activity_type?.replace('Activity', '') || 'Activity'}
+                                            </div>
+                                            <div className="text-xs text-gray-500 dark:text-slate-400 italic">
+                                                {activity.lesson?.title}
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="text-xs font-bold text-gray-900 dark:text-white">
+                                                {activity.created_by?.username || 'System'}
+                                            </div>
+                                            {isOwnActivity && (
+                                                <span className="text-[10px] text-blue-500 font-bold uppercase">You</span>
+                                            )}
+                                        </td>
+                                        <td className="px-4 py-4 text-center">
+                                            <div className="text-sm font-black text-gray-900 dark:text-white">
+                                                {activity.average_accuracy?.toFixed(0) || 0}%
+                                            </div>
+                                            <div className="text-[10px] text-muted-foreground uppercase">Success</div>
+                                        </td>
+                                        <td className="px-4 py-4 text-right">
+                                            <div className="flex items-center justify-end gap-2">
+                                                <button
+                                                    onClick={() => setPreviewActivity(activity)}
+                                                    className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium"
+                                                >
+                                                    Preview
+                                                </button>
+                                                {isOwnActivity ? (
                                                     <button
-                                                        onClick={() => alert(`Détails: ${JSON.stringify(activity, null, 2)}`)}
-                                                        className="p-2 text-muted-foreground hover:text-foreground hover:bg-background rounded-lg border border-transparent hover:border-border transition-all"
-                                                        title="Voir les détails"
+                                                        onClick={() => handleEdit(activity)}
+                                                        className="px-2 py-1 bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/50 dark:text-green-400 dark:hover:bg-green-900 rounded text-xs font-bold transition-colors"
                                                     >
-                                                        <Eye className="h-4 w-4" />
+                                                        Edit
                                                     </button>
+                                                ) : (
+                                                    <button
+                                                        onClick={() => handleSuggestEdit(activity)}
+                                                        className="px-2 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/50 dark:text-blue-400 dark:hover:bg-blue-900 rounded text-xs font-bold transition-colors"
+                                                    >
+                                                        Suggest Edit
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )}
 
-                                                    {isOwnActivity ? (
-                                                        <button
-                                                            onClick={() => handleEdit(activity)}
-                                                            className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 text-green-600 hover:bg-green-500 hover:text-white rounded-lg text-xs font-bold transition-all border border-green-500/20"
-                                                        >
-                                                            <Edit className="h-3.5 w-3.5" />
-                                                            Éditer
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            onClick={() => handleSuggestEdit(activity)}
-                                                            className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 text-blue-600 hover:bg-blue-500 hover:text-white rounded-lg text-xs font-bold transition-all border border-blue-500/20"
-                                                        >
-                                                            <MessageSquare className="h-3.5 w-3.5" />
-                                                            Suggérer
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        </tr>
+            {/* Grouped View */}
+            {!isLoading && viewMode === 'grouped' && activities.length > 0 && (
+                <div className="space-y-6">
+                    {Object.entries(groupedActivities).map(([lessonTitle, lessonActivities]) => (
+                        <div key={lessonTitle} className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{lessonTitle}</h3>
+                                <span className="px-2 py-0.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-400 rounded-full text-xs font-medium">
+                                    {lessonActivities.length}
+                                </span>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                {lessonActivities.map(activity => {
+                                    const isOwnActivity = activity.created_by?.id === user?.id;
+                                    return (
+                                        <ActivityCard
+                                            key={activity.id}
+                                            activity={activity}
+                                            onPreview={setPreviewActivity}
+                                            onEdit={isOwnActivity ? () => handleEdit(activity) : () => handleSuggestEdit(activity)}
+                                        />
                                     );
                                 })}
-                            </tbody>
-                        </table>
-                    </div>
-                    {data?.activities?.length === 0 && (
-                        <div className="flex flex-col items-center justify-center py-20 bg-muted/20">
-                            <SearchX className="h-12 w-12 text-muted-foreground/30 mb-4" />
-                            <h3 className="text-lg font-bold text-foreground">Aucun résultat</h3>
-                            <p className="text-muted-foreground text-sm">Essayez de modifier vos filtres pour trouver ce que vous cherchez.</p>
+                            </div>
                         </div>
-                    )}
+                    ))}
                 </div>
-            </div>
+            )}
 
-            {/* Edit/Suggest Modal */}
-            <ActivityForm
-                isOpen={isFormOpen}
-                onClose={() => setIsFormOpen(false)}
-                editActivity={selectedActivity}
-                isSuggestion={isSuggestion}
-                onSuccess={() => refetch()}
+            {/* Pagination */}
+            {!isLoading && activities.length > 0 && data?.total_pages && data.total_pages > 1 && (
+                <PaginationControls
+                    page={currentPage}
+                    totalPages={data.total_pages}
+                    total={data.total}
+                    pageSize={currentPageSize}
+                    hasNext={data.has_next ?? currentPage < data.total_pages}
+                    hasPrev={data.has_prev ?? currentPage > 1}
+                    onPageChange={handlePageChange}
+                    onPageSizeChange={handlePageSizeChange}
+                />
+            )}
+
+            {/* ✅ Preview Modal (replaces alert) */}
+            <ActivityPreviewModal
+                activity={previewActivity}
+                isOpen={!!previewActivity}
+                onClose={() => setPreviewActivity(null)}
+                onEdit={(activity) => {
+                    const isOwn = activity.created_by?.id === user?.id;
+                    if (isOwn) handleEdit(activity);
+                    else handleSuggestEdit(activity);
+                }}
+                onNext={handleNextPreview}
+                onPrev={handlePrevPreview}
+                hasNext={currentPreviewIndex < activities.length - 1}
+                hasPrev={currentPreviewIndex > 0}
+                user={user}
             />
+
+            {/* ✅ Activity Edit Modal (replaces ActivityForm) */}
+            <ActivityEditModal
+                activity={editActivity}
+                isOpen={!!editActivity}
+                onClose={() => setEditActivity(null)}
+                onSuccess={handleEditSuccess}
+                isSuggestion={isSuggestion}
+            />
+
+
         </div>
     );
 }

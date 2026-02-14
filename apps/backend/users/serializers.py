@@ -7,7 +7,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'role', 'native_language', 'password', 'total_xp', 'current_streak', 'level_info', 'placement_completed')
+        fields = (
+            'id', 'username', 'email', 'role', 'native_language', 'password', 
+            'total_xp', 'current_streak', 'level_info', 'placement_completed',
+            'teacher_permission_level',  # ✅ For Lead/Basic badge
+            'can_publish_directly',      # ✅ For trusted teacher auto-publish
+            'is_staff', 'is_superuser'   # ✅ For admin detection
+        )
         extra_kwargs = {'password': {'write_only': True}}
 
     def get_placement_completed(self, obj):

@@ -41,7 +41,8 @@ export default function LessonScreen() {
                 queryClient.invalidateQueries({ queryKey: ['progress'] });
             } else {
                 setFeedback('error');
-                setFeedbackMessage(data.feedback || `Correct answer: ${JSON.stringify(data.correct_answer)}`);
+                // Show clean user-friendly message (correct answer shown via activity feedback UI)
+                setFeedbackMessage('Incorrect');
             }
         }
     });

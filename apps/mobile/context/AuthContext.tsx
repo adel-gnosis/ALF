@@ -45,7 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (isLoading) return;
 
         const inAuthGroup = segments[0] === 'auth';
-        const isRoot = segments.length === 0;
+        const isRoot = (segments.length as number) === 0;
 
         if (!user && !inAuthGroup && !isRoot) {
             router.replace('/auth/login');

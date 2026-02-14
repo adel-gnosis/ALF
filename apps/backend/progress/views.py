@@ -38,9 +38,9 @@ def _matching_expected_map(activity, user_lang: str) -> dict:
 
         right_value = (right.get("value") or "").strip()
 
-        # Your current behavior: if left.i18n has user_lang, the "right" displayed value is that translation,
-        # otherwise fallback to right.value (English)
-        i18n = left.get("i18n") or {}
+        # Fix: The expected "right" value is what is displayed on the right side.
+        # This comes from the 'right' object's i18n or value, NOT the 'left' object.
+        i18n = right.get("i18n") or {}
         if isinstance(i18n, dict) and isinstance(i18n.get(user_lang), str) and i18n.get(user_lang).strip():
             expected[pid] = i18n[user_lang].strip()
         else:

@@ -1,7 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../Button';
+import { resolveMediaUrl } from "../../services/api";
 
 interface MultipleAnswerActivityProps {
     activity: any;
@@ -17,8 +18,6 @@ export default function MultipleAnswerActivity({ activity, onAnswer, disabled, f
     const choices = activity?.choices_v2 || [];
     const questionText = activity?.question_text || '';
 
-    console.log('[MultipleAnswerActivity] Rendering:', { choices, disabled, selected: selectedIds });
-
     const toggleChoice = (id: string) => {
         if (disabled) return;
 
@@ -33,11 +32,41 @@ export default function MultipleAnswerActivity({ activity, onAnswer, disabled, f
 
     const handleSubmit = () => {
         if (disabled) return;
-        console.log('[MultipleAnswerActivity] Submitting:', selectedIds);
         onAnswer({ choice_ids: selectedIds });
     };
 
     const correctChoiceIds = correctAnswer?.format === 'v2' ? (correctAnswer.choice_ids || []) : [];
+
+    const renderChoiceContent = (choice: any, textColor: string) => {
+        const type = choice.content?.type || 'text';
+        const value = choice.content?.value || choice.rendered_value || '';
+
+        if (type === 'image') {
+            const imageUrl = resolveMediaUrl(value);
+            return (
+                <View className="flex-1">
+                    {imageUrl && (
+                        <View className="w-full h-32 rounded-lg bg-gray-50 items-center justify-center overflow-hidden mb-1">
+                            <Image
+                                source={{ uri: imageUrl }}
+                                className="w-full h-full"
+                                resizeMode="contain"
+                            />
+                        </View>
+                    )}
+                    {/* Keep label if available, or just image */}
+                </View>
+            );
+        }
+
+        return (
+            <Text
+                className={`flex-1 font-semibold ${textColor}`}
+            >
+                {choice.rendered_value || value}
+            </Text>
+        );
+    }
 
     return (
         <View className="w-full">
@@ -99,17 +128,13 @@ export default function MultipleAnswerActivity({ activity, onAnswer, disabled, f
                                 className={`w-6 h-6 rounded mr-3 border-2 items-center justify-center ${checkboxBg}`}
                             >
                                 {isSelected && (
-                                    <Ionicons name="checkmark" size={16} color="white" />
+                                    <Ionicons key="check-selected" name="checkmark" size={16} color="white" />
                                 )}
                                 {!isSelected && feedback === 'error' && isCorrect && (
-                                    <Ionicons name="checkmark" size={16} color="#10B981" />
+                                    <Ionicons key="check-correct" name="checkmark" size={16} color="#10B981" />
                                 )}
                             </View>
-                            <Text
-                                className={`flex-1 font-semibold ${textColor}`}
-                            >
-                                {choice.rendered_value}
-                            </Text>
+                            {renderChoiceContent(choice, textColor)}
                         </TouchableOpacity>
                     );
                 })}

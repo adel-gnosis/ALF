@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { Audio } from "expo-av";
 
 import { resolveMediaUrl } from "../../services/api";
@@ -12,25 +12,45 @@ type DicteeActivityProps = {
   correctAnswer?: any;
 };
 
+// Helper to guess label from filename (since we don't store labels explicitly yet)
+const getAudioLabel = (url: string, index: number) => {
+  const lower = url.toLowerCase();
+  if (lower.includes('male_slow')) return '👨‍🏫 Homme (Lent)';
+  if (lower.includes('male_default')) return '👨 Homme (Normal)';
+  if (lower.includes('female_slow')) return '👩‍🏫 Femme (Lent)';
+  if (lower.includes('female_default')) return '👩 Femme (Normal)';
+
+  if (lower.includes('slow')) return '🐢 Lent';
+  if (lower.includes('fast')) return '🐇 Rapide';
+
+  return `Audio ${index + 1}`;
+};
+
 export default function DicteeActivity({
   activity,
   onAnswer,
   disabled = false,
   feedback = null,
+  correctAnswer,
 }: DicteeActivityProps) {
   const [text, setText] = useState("");
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
 
-  // Resolve audio URL once (no require inside render)
-  const fullAudioUrl = useMemo(() => {
-    const rawPath =
-      activity?.audio_urls && Array.isArray(activity.audio_urls) && activity.audio_urls.length > 0
-        ? activity.audio_urls[0]
-        : null;
+  // Parse all available audio URLs
+  const audioOptions = useMemo(() => {
+    const urls = activity?.audio_urls || [];
+    if (!Array.isArray(urls)) return [];
 
-    return resolveMediaUrl(rawPath);
+    return urls.map((url: string, index: number) => ({
+      url: resolveMediaUrl(url),
+      label: getAudioLabel(url, index),
+      id: index
+    }));
   }, [activity]);
+
+  const currentAudioUrl = audioOptions[selectedAudioIndex]?.url;
 
   // Cleanup sound on unmount or when sound changes
   useEffect(() => {
@@ -41,8 +61,18 @@ export default function DicteeActivity({
     };
   }, [sound]);
 
+  // Reset sound when switching tracks
+  useEffect(() => {
+    if (sound) {
+      sound.unloadAsync().catch(() => null);
+      setSound(null);
+      setIsPlaying(false);
+    }
+  }, [selectedAudioIndex]);
+
+
   const playSound = async () => {
-    if (!fullAudioUrl) {
+    if (!currentAudioUrl) {
       console.error("[DicteeActivity] No audio URL available");
       return;
     }
@@ -57,7 +87,7 @@ export default function DicteeActivity({
       }
 
       const { sound: newSound } = await Audio.Sound.createAsync(
-        { uri: fullAudioUrl },
+        { uri: currentAudioUrl },
         { shouldPlay: true }
       );
 
@@ -85,7 +115,7 @@ export default function DicteeActivity({
   if (feedback === "success") borderColor = "border-green-500 bg-green-50";
   if (feedback === "error") borderColor = "border-red-500 bg-red-50";
 
-  if (!fullAudioUrl) {
+  if (audioOptions.length === 0) {
     return (
       <View className="p-4 bg-red-50 rounded-lg w-full items-center">
         <Text className="text-red-600 font-bold mb-1">Audio introuvable</Text>
@@ -103,9 +133,31 @@ export default function DicteeActivity({
           {activity.instruction}
         </Text>
       )}
-      <Text className="text-lg font-semibold text-gray-800 mb-8 text-center px-4">
+      <Text className="text-lg font-semibold text-gray-800 mb-6 text-center px-4">
         {activity?.question_text || "Écoutez et écrivez exactement ce que vous entendez"}
       </Text>
+
+      {/* Audio Selector (if multiple) */}
+      {audioOptions.length > 1 && (
+        <View className="flex-row flex-wrap justify-center gap-2 mb-6">
+          {audioOptions.map((opt) => (
+            <TouchableOpacity
+              key={opt.id}
+              onPress={() => setSelectedAudioIndex(opt.id)}
+              disabled={isPlaying}
+              className={`px-3 py-2 rounded-full border ${selectedAudioIndex === opt.id
+                ? "bg-blue-100 border-blue-500"
+                : "bg-white border-gray-200"
+                }`}
+            >
+              <Text className={`text-xs font-medium ${selectedAudioIndex === opt.id ? "text-blue-700" : "text-gray-600"
+                }`}>
+                {opt.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
 
       <TouchableOpacity
         onPress={playSound}
@@ -129,6 +181,13 @@ export default function DicteeActivity({
           textAlignVertical="top"
         />
       </View>
+
+      {feedback === 'error' && correctAnswer && (
+        <View className="bg-green-100 p-4 rounded-xl border-2 border-green-500 mb-4 w-full">
+          <Text className="text-green-800 font-semibold mb-1 text-center">Réponse Correcte :</Text>
+          <Text className="text-xl font-bold text-green-900 text-center">{correctAnswer}</Text>
+        </View>
+      )}
 
       {disabled && (
         <Text className="text-xs text-gray-400 mt-2">

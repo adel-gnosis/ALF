@@ -1,6 +1,6 @@
 'use client';
 
-import { useMe, useTeacherStats, UserRole, usePendingReviews, useAdminTeachers } from '@alf/shared';
+import { useMe, useTeacherStats, UserRole, usePendingReviews, useAdminTeachers, useDashboardStats } from '@alf/shared';
 import {
     Users,
     Layers,
@@ -9,9 +9,19 @@ import {
     CheckCircle2,
     AlertCircle,
     FileEdit,
-    BookOpen
+    BookOpen,
+    Activity as ActivityIcon
 } from 'lucide-react';
 import { useI18n } from '../../context/I18nContext';
+import {
+    RecentActivityTimeline,
+    WeekComparison,
+    TeacherLeaderboard,
+    ActivityTypeDistribution,
+    AlertsWidget,
+    StudentImpactWidget,
+    QuickActionsWidget
+} from './DashboardWidgets';
 
 function StatCard({ label, value, icon: Icon, colorClass, gradientClass }: { label: string; value: string | number; icon: any; colorClass: string; gradientClass: string }) {
     return (
@@ -28,12 +38,13 @@ function StatCard({ label, value, icon: Icon, colorClass, gradientClass }: { lab
 }
 
 function TeacherOverview() {
-    const { data: stats, isLoading } = useTeacherStats();
+    const { data: stats, isLoading: statsLoading } = useTeacherStats();
+    const { data: dashboardStats, isLoading: dashboardLoading } = useDashboardStats();
     const { t } = useI18n();
 
-    if (isLoading) return (
+    if (statsLoading || dashboardLoading) return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
-            {[1, 2, 3].map(i => <div key={i} className="h-32 bg-muted rounded-2xl"></div>)}
+            {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-32 bg-muted rounded-2xl"></div>)}
         </div>
     );
     if (!stats) return null;
@@ -45,6 +56,7 @@ function TeacherOverview() {
                 <p className="text-muted-foreground font-medium">{t('dashboard.stats_intro')}</p>
             </div>
 
+            {/* Main Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard
                     label={t('dashboard.total_activities')}
@@ -69,6 +81,7 @@ function TeacherOverview() {
                 />
             </div>
 
+            {/* Activity Distribution */}
             <div className="bg-card rounded-2xl p-8 border border-border shadow-sm">
                 <div className="flex items-center gap-3 mb-8">
                     <div className="h-8 w-1 bg-primary rounded-full"></div>
@@ -95,6 +108,23 @@ function TeacherOverview() {
                     ))}
                 </div>
             </div>
+
+            {/* Dashboard Widgets */}
+            {dashboardStats && (
+                <>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <RecentActivityTimeline timeline={dashboardStats.recent_timeline} />
+                        <StudentImpactWidget impact={dashboardStats.student_impact} />
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <ActivityTypeDistribution distribution={dashboardStats.activity_type_distribution} />
+                        <QuickActionsWidget userRole="teacher" />
+                    </div>
+
+                    <AlertsWidget alerts={dashboardStats.alerts} />
+                </>
+            )}
         </div>
     );
 }
@@ -102,31 +132,77 @@ function TeacherOverview() {
 function AdminOverview() {
     const { data: reviews } = usePendingReviews();
     const { data: teachersData } = useAdminTeachers();
+    const { data: dashboardStats, isLoading } = useDashboardStats();
     const { t } = useI18n();
+
+    if (isLoading) return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse">
+            {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-muted rounded-2xl"></div>)}
+        </div>
+    );
 
     return (
         <div className="space-y-8">
             <div className="flex flex-col gap-1">
                 <h2 className="text-3xl font-extrabold text-foreground tracking-tight">{t('dashboard.system_console')}</h2>
                 <p className="text-muted-foreground font-medium">{t('dashboard.system_monitor')}</p>
+                {teachersData?.user_breakdown && (
+                    <p className="text-sm text-muted-foreground mt-2">
+                        {teachersData.user_breakdown.teachers} Teachers • {teachersData.user_breakdown.admins} Admins • {teachersData.user_breakdown.superadmins} Superadmins
+                    </p>
+                )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Main Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <StatCard
-                    label={t('dashboard.pending')}
+                    label="Pending Review"
                     value={reviews?.total_pending || 0}
                     icon={Clock}
                     colorClass="bg-amber-500 text-amber-500"
                     gradientClass="bg-amber-600"
                 />
                 <StatCard
-                    label={t('dashboard.registered_teachers')}
-                    value={teachersData?.total_teachers || 0}
-                    icon={Layers}
+                    label="Teachers"
+                    value={teachersData?.user_breakdown?.teachers || 0}
+                    icon={Users}
                     colorClass="bg-blue-500 text-blue-500"
                     gradientClass="bg-blue-600"
                 />
+                <StatCard
+                    label="Total Activities"
+                    value={teachersData?.system_stats?.total_activities || 0}
+                    icon={Layers}
+                    colorClass="bg-purple-500 text-purple-500"
+                    gradientClass="bg-purple-600"
+                />
+                <StatCard
+                    label="Activities Today"
+                    value={teachersData?.system_stats?.activities_today || 0}
+                    icon={ActivityIcon}
+                    colorClass="bg-green-500 text-green-500"
+                    gradientClass="bg-green-600"
+                />
             </div>
+
+            {/* Dashboard Widgets */}
+            {dashboardStats && (
+                <>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <AlertsWidget alerts={dashboardStats.alerts} />
+                        <WeekComparison comparison={dashboardStats.week_comparison} />
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <TeacherLeaderboard leaderboard={dashboardStats.leaderboard} />
+                        <ActivityTypeDistribution distribution={dashboardStats.activity_type_distribution} />
+                    </div>
+
+                    <RecentActivityTimeline timeline={dashboardStats.recent_timeline} />
+
+                    <QuickActionsWidget userRole="admin" />
+                </>
+            )}
         </div>
     );
 }

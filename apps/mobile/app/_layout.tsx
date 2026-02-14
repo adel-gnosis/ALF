@@ -1,4 +1,3 @@
-import "../global.css";
 import "./../i18n"; // Higher level i18n initialization
 import { Stack } from 'expo-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

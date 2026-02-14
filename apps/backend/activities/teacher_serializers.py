@@ -252,6 +252,8 @@ class ActivityUpdateSerializer(serializers.Serializer):
     
     def validate(self, data):
         """Validate update data against activity schema (PATCH-safe, V2-friendly)."""
+
+        
         activity = self.context["activity"]
 
         # Always trust the instance type (PATCH requests shouldn't change it)
@@ -264,11 +266,17 @@ class ActivityUpdateSerializer(serializers.Serializer):
                 "type_specific_data": "Must be an object (JSON dict)."
             })
 
-        # Build merged data using existing instance fields as fallback
+        # Build merged data: start with existing instance fields, override with incoming data, then override with type_specific
         merged_data = {
             "activity_type": activity_type,
             "lesson_id": activity.lesson_id,
-            **type_specific,
+            "question_text": getattr(activity, "question_text", None),
+            "question_text_key": getattr(activity, "question_text_key", None),
+            "instruction_key": getattr(activity, "instruction_key", None),
+            "points": getattr(activity, "points", 10),
+            "difficulty": getattr(activity, "difficulty", "MEDIUM"),
+            **data, # Incoming top-level fields (to handle updates to question_text, etc.)
+            **type_specific, # Incoming type-specific fields (to handle updates to choices, etc.)
         }
 
         # Fallback required type fields from existing instance (so PATCH can be partial)
@@ -311,8 +319,17 @@ class ActivityUpdateSerializer(serializers.Serializer):
                 merged_data["audio_urls"] = getattr(activity, "audio_urls", None)
 
         # ✅ Validate via schema registry (this is where V2-only enforcement happens)
+        logger.info(
+            "[SER_VALIDATE] type=%s activity_id=%s fields=%s has_type_specific=%s",
+            activity_type,
+            activity.id,
+            sorted(list(data.keys())),
+            bool(type_specific),
+        )
+
         is_valid, error_msg = ActivitySchemaRegistry.validate_activity_data(activity_type, merged_data)
         if not is_valid:
+            logger.warning(f"Validation failed for {activity_type} #{activity.id}: {error_msg}")
             raise serializers.ValidationError({"type_specific_data": error_msg})
 
         # Extra safety: if i18n exists anywhere but intersection is empty → reject
@@ -350,6 +367,16 @@ class ActivityUpdateSerializer(serializers.Serializer):
         Update activity
         If already APPROVED, create new version (v2, v3, etc.)
         """
+
+        logger.info(
+            "[SER_UPDATE] START instance_id=%s type=%s status=%s version=%s prev=%s",
+            instance.id,
+            instance.__class__.__name__,
+            instance.status,
+            instance.version,
+            instance.previous_version_id,
+        )
+
         user = self.context['request'].user
         type_specific_data = validated_data.pop('type_specific_data', {})
         version_notes = validated_data.pop('version_notes', '')
@@ -357,8 +384,32 @@ class ActivityUpdateSerializer(serializers.Serializer):
         # If activity is APPROVED, create new version
         if instance.status == 'APPROVED':
             # Clone the activity as a new version
+
+            logger.info(
+                "[SER_UPDATE] APPROVED BRANCH: cloning instance_id=%s (pk=%s)",
+                instance.id,
+                instance.pk,
+            )
+
             new_version = instance.__class__.objects.get(pk=instance.pk)
-            new_version.pk = None  # Create new instance
+
+            # --- polymorphic clone: must clear BOTH pk and id, plus the
+            #     cached _polymorphic_ctype so Django issues an INSERT.
+            #     Setting only pk=None is not enough: the inherited `id`
+            #     column (the polymorphic base PK) survives and Django
+            #     treats save() as an UPDATE of the original row.
+            new_version.pk = None
+            new_version.id = None
+            # Ensure polymorphic machinery picks up the type fresh on save
+            if hasattr(new_version, '_polymorphic_ctype'):
+                del new_version._polymorphic_ctype
+
+            logger.info(
+                "[SER_UPDATE] AFTER pk/id=None new_version.pk=%s new_version.id=%s (both should be None)",
+                new_version.pk,
+                new_version.id,
+            )
+
             new_version.version = instance.version + 1
             new_version.previous_version = instance
             new_version.status = 'PENDING'  # Needs re-approval
@@ -379,9 +430,50 @@ class ActivityUpdateSerializer(serializers.Serializer):
             elif atype in ("MCQActivity", "MultipleAnswerActivity") and getattr(target_obj, "choices_v2", None):
                 target_obj.supported_ui_languages = _intersection_from_choices_v2(target_obj.choices_v2)
 
-            
-            new_version.save()
-            
+            logger.info(
+                "[SER_UPDATE] BEFORE save new_version.pk=%s new_version.id=%s version=%s prev_id=%s status=%s",
+                new_version.pk,
+                new_version.id,
+                new_version.version,
+                getattr(new_version, "previous_version_id", None),
+                new_version.status,
+            )
+
+            # Pre-flight: previous_version must still point to the original
+            # instance, not to None or to ourself (ourself is None here, so
+            # the real danger is previous_version_id being None after we
+            # cleared id — guard against that too).
+            if new_version.previous_version_id is None:
+                raise RuntimeError(
+                    f"Versioning setup error: previous_version was lost before save "
+                    f"(instance.id={instance.id})."
+                )
+
+            new_version.save(force_insert=True)
+
+
+            logger.info(
+                "[SER_UPDATE] AFTER save new_version.id=%s pk=%s version=%s prev_id=%s status=%s",
+                new_version.id,
+                new_version.pk,
+                new_version.version,
+                new_version.previous_version_id,
+                new_version.status,
+            )
+
+            # Post-save safety: should never happen now, but keep as a hard stop
+            if new_version.previous_version_id == new_version.id:
+                logger.error(
+                    "[SER_UPDATE] CORRUPTION: new_version.id=%s prev_id=%s instance_id=%s instance_prev=%s",
+                    new_version.id,
+                    new_version.previous_version_id,
+                    instance.id,
+                    instance.previous_version_id,
+                )
+                raise RuntimeError(
+                    f"Versioning corruption detected: activity {new_version.id} points to itself."
+                )
+
             logger.info(
                 f"Created v{new_version.version} of activity #{instance.id} "
                 f"(status=PENDING, awaiting re-approval)"
@@ -417,8 +509,17 @@ class TeacherActivityListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     activity_type = serializers.SerializerMethodField()
     lesson = serializers.SerializerMethodField()
+    
+    # Resolved text fields (translated)
     question_text = serializers.SerializerMethodField()
-
+    instruction_text = serializers.SerializerMethodField()
+    
+    # Raw i18n keys (for debugging/reference)
+    question_text_key = serializers.SerializerMethodField()
+    instruction_key = serializers.SerializerMethodField()
+    
+    # Type-specific data for previews
+    type_specific_data = serializers.SerializerMethodField()
 
     status = serializers.CharField()
     version = serializers.IntegerField()
@@ -464,22 +565,127 @@ class TeacherActivityListSerializer(serializers.Serializer):
     
     def get_question_text(self, obj):
         """
-        Legacy field 'question_text' was removed from DB.
-        For list previews, return:
-        - resolved legacy attr if it exists (safety)
-        - else the i18n key
-        - else empty string
+        Return the question text, resolved from i18n key if needed.
+        Uses Django's translation system to resolve the key in user's native language.
         """
-        if hasattr(obj, "question_text") and getattr(obj, "question_text"):
-            return getattr(obj, "question_text")
-
+        from django.utils import translation
+        from django.utils.translation import gettext as _
+        
+        # First check for legacy direct question_text attribute
+        legacy_text = getattr(obj, "question_text", None)
+        if legacy_text and isinstance(legacy_text, str) and legacy_text.strip():
+            return legacy_text
+        
+        # Try to resolve the question_text_key in user's language
         key = getattr(obj, "question_text_key", None)
         if key:
-            return key  # you can later resolve this to real text at frontend using your i18n endpoint
-
-        # some activities may only have instruction_key (ex: dictee)
-        instr = getattr(obj, "instruction_key", None)
-        return instr or ""
+            # Get user's preferred language from request context
+            request = self.context.get('request')
+            user_lang = 'fr'  # default
+            if request and hasattr(request, 'user') and request.user.is_authenticated:
+                user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
+            
+            # Activate the user's language and translate
+            with translation.override(user_lang):
+                translated = _(key)
+            
+            return translated if translated != key else key
+        
+        return ""
+    
+    def get_instruction_text(self, obj):
+        """
+        Return the instruction text, resolved from i18n key.
+        Uses Django's translation system to resolve the key in user's native language.
+        """
+        from django.utils import translation
+        from django.utils.translation import gettext as _
+        
+        # First check for legacy direct instruction attribute
+        legacy_text = getattr(obj, "instruction", None)
+        if legacy_text and isinstance(legacy_text, str) and legacy_text.strip():
+            return legacy_text
+        
+        # Try to resolve the instruction_key in user's language
+        key = getattr(obj, "instruction_key", None)
+        if key:
+            # Get user's preferred language from request context
+            request = self.context.get('request')
+            user_lang = 'fr'  # default
+            if request and hasattr(request, 'user') and request.user.is_authenticated:
+                user_lang = getattr(request.user, 'native_language', 'fr') or 'fr'
+            
+            # Activate the user's language and translate
+            with translation.override(user_lang):
+                translated = _(key)
+            
+            return translated if translated != key else key
+        
+        return ""
+    
+    def get_question_text_key(self, obj):
+        """Return the raw question_text_key for debugging"""
+        return getattr(obj, "question_text_key", None) or ""
+    
+    def get_instruction_key(self, obj):
+        """Return the raw instruction_key for debugging"""
+        return getattr(obj, "instruction_key", None) or ""
+    
+    def get_type_specific_data(self, obj):
+        """
+        Extract activity-type specific data for previews
+        Returns different fields based on the polymorphic activity type
+        """
+        activity_type = obj.__class__.__name__
+        data = {}
+        
+        # MCQ and MultipleAnswer activities
+        if hasattr(obj, 'choices_v2') and obj.choices_v2:
+            data['choices_v2'] = obj.choices_v2
+        if hasattr(obj, 'correct_choice_id') and obj.correct_choice_id:
+            data['correct_choice_id'] = obj.correct_choice_id
+        if hasattr(obj, 'correct_choice_ids') and obj.correct_choice_ids:
+            data['correct_choice_ids'] = obj.correct_choice_ids
+            
+        # Matching activities
+        if hasattr(obj, 'pairs_v2') and obj.pairs_v2:
+            data['pairs_v2'] = obj.pairs_v2
+            
+        # Dictee activities
+        if hasattr(obj, 'audio_urls') and obj.audio_urls:
+            data['audio_urls'] = obj.audio_urls
+        if hasattr(obj, 'correct_text') and obj.correct_text:
+            data['text'] = obj.correct_text  # Map to 'text' for frontend compatibility
+            
+        # FillBlank activities
+        if hasattr(obj, 'phrase') and obj.phrase:
+            data['phrase'] = obj.phrase
+        if hasattr(obj, 'correct_answer') and obj.correct_answer:
+            data['correct_answer'] = obj.correct_answer
+            
+        # DragOrder activities
+        if hasattr(obj, 'words') and obj.words:
+            data['words'] = obj.words
+        if hasattr(obj, 'correct_order') and obj.correct_order:
+            data['correct_order'] = obj.correct_order
+            
+        # Conjugation activities
+        if hasattr(obj, 'verb_infinitive') and obj.verb_infinitive:
+            data['verb_infinitive'] = obj.verb_infinitive
+        if hasattr(obj, 'tense') and obj.tense:
+            data['tense'] = obj.tense
+        if hasattr(obj, 'pronoun') and obj.pronoun:
+            data['pronoun'] = obj.pronoun
+        if hasattr(obj, 'correct_conjugation') and obj.correct_conjugation:
+            data['conjugation'] = obj.correct_conjugation  # Map to 'conjugation' for frontend
+            
+        # TextInput activities
+        if hasattr(obj, 'correct_answers') and obj.correct_answers:
+            data['correct_answers'] = obj.correct_answers
+        if hasattr(obj, 'case_sensitive'):
+            data['case_sensitive'] = obj.case_sensitive
+            
+        return data
 
 
 

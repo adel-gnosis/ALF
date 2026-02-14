@@ -5,7 +5,7 @@ import api from '../services/api';
 import Button from '../components/Button';
 import { getSubjectColor } from '../constants/subjectColors';
 import type { CompleteSessionResponse } from '../types/session';
-import { rehearseMissedSession } from '@/services/sessionService';
+import { rehearseMissedSession } from '../services/sessionService';
 
 export default function SessionCompleteScreen() {
     const router = useRouter();
@@ -14,7 +14,7 @@ export default function SessionCompleteScreen() {
     // Fetch session results
     const { data, isLoading } = useQuery({
 
-        
+
         queryKey: ['session-complete', sessionId],
         queryFn: async () => {
             const response = await api.post(`/sessions/${sessionId}/complete/`);
@@ -68,10 +68,10 @@ export default function SessionCompleteScreen() {
                                 <Text className="font-semibold">{item.subject}</Text>
                                 <Text
                                     className={`font-bold ${item.strength === 'STRONG'
-                                            ? 'text-green-600'
-                                            : item.strength === 'WEAK'
-                                                ? 'text-red-600'
-                                                : 'text-orange-600'
+                                        ? 'text-green-600'
+                                        : item.strength === 'WEAK'
+                                            ? 'text-red-600'
+                                            : 'text-orange-600'
                                         }`}
                                 >
                                     {Math.round(item.accuracy)}%

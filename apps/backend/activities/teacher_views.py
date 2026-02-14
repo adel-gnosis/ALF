@@ -103,23 +103,21 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         Query params:
         - status: DRAFT | PENDING | APPROVED | REJECTED | ARCHIVED
         - lesson_id: Filter by lesson
+        - level_id: Filter by level
         - activity_type: Comma-separated list of types
         - created_by_me: If true, filters by current user
+        - page: Page number (1-indexed, default: 1)
+        - page_size: Items per page (30, 50, or 100, default: 30)
         """
+        # ✅ CONSTRAINT #1: Unified admin detection
         role = (getattr(request.user, "role", "") or "").lower()
         is_admin = bool(request.user.is_superuser or request.user.is_staff or role == "admin")
 
-        if is_admin:
-
-            activities = Activity.objects.all()
-            
-            # Admins can filter to see only their own content
-            if request.query_params.get('created_by_me') == 'true':
-                activities = activities.filter(created_by=request.user)
-        else:
-            activities = Activity.objects.filter(
-                Q(status='APPROVED') | Q(created_by=request.user)
-            )
+        # ✅ CONSTRAINT #4: Teacher "My Activities" stays strict
+        # This endpoint ALWAYS returns only created_by=request.user
+        # Even admins using teacher UI see only their own
+        # (Admins have separate "All Content" page for everything)
+        activities = Activity.objects.filter(created_by=request.user)
         
         activities = activities.select_related(
             'lesson', 'lesson__level', 'lesson__subject', 'created_by', 'modified_by'
@@ -133,11 +131,50 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         lesson_id = request.query_params.get('lesson_id')
         if lesson_id:
             activities = activities.filter(lesson_id=lesson_id)
+        
+        # Level filter
+        level_id = request.query_params.get('level_id')
+        if level_id:
+            activities = activities.filter(lesson__level_id=level_id)
+
+        course_id = request.query_params.get('course_id')
+        if course_id:
+            activities = activities.filter(lesson__level__course=course_id)
+
+        subject_id = request.query_params.get('subject_id')
+        if subject_id:
+            activities = activities.filter(lesson__subject=subject_id)
+
+        difficulty = request.query_params.get('difficulty')
+        if difficulty:
+            activities = activities.filter(difficulty=difficulty)
+
+        search = request.query_params.get('search')
+        if search:
+            activities = activities.filter(
+                Q(question_text_key__icontains=search) |
+                Q(instruction_key__icontains=search) |
+                Q(explanation_key__icontains=search)
+            )
+
 
         activity_type = request.query_params.get('activity_type')
         if activity_type:
             types = [t.strip().lower() for t in activity_type.split(',')]
             activities = activities.filter(polymorphic_ctype__model__in=types)
+        
+        # Get total count before pagination
+        total_count = activities.count()
+        
+        # Pagination
+        page = int(request.query_params.get('page', 1))
+        page_size = int(request.query_params.get('page_size', 30))
+        # Validate page_size (allowed: 30, 50, 100)
+        if page_size not in [30, 50, 100]:
+            page_size = 30
+        
+        offset = (page - 1) * page_size
+        activities = activities[offset:offset + page_size]
         
         # Annotate with performance stats
         activities_with_stats = []
@@ -153,10 +190,18 @@ class TeacherActivityViewSet(viewsets.ViewSet):
             activity.average_accuracy = avg_accuracy
             activities_with_stats.append(activity)
         
-        serializer = TeacherActivityListSerializer(activities_with_stats, many=True)
+        serializer = TeacherActivityListSerializer(activities_with_stats, many=True, context={'request': request})
+        
+        # Calculate pagination metadata
+        total_pages = (total_count + page_size - 1) // page_size if total_count > 0 else 1
         
         return Response({
-            'total': activities.count(),
+            'total': total_count,
+            'page': page,
+            'page_size': page_size,
+            'total_pages': total_pages,
+            'has_next': page < total_pages,
+            'has_prev': page > 1,
             'activities': serializer.data
         })
     
@@ -171,10 +216,22 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         Query params:
         - activity_type: Comma-separated list (e.g., "MCQActivity,MultipleAnswerActivity")
         - lesson_id, subject_id, level_id, difficulty, search
+        - page: Page number (1-indexed, default: 1)
+        - page_size: Items per page (30, 50, or 100, default: 30)
         """
-        activities = Activity.objects.filter(
-            status='APPROVED'
-        ).select_related('lesson', 'lesson__level', 'lesson__subject', 'created_by', 'modified_by').order_by('-created_at')
+        # ✅ CONSTRAINT #1: Unified admin detection
+        role = (getattr(request.user, "role", "") or "").lower()
+        is_admin = bool(request.user.is_superuser or request.user.is_staff or role == "admin")
+        
+        # Teachers see APPROVED only, Admins see all statuses
+        if is_admin:
+            activities = Activity.objects.all()
+        else:
+            activities = Activity.objects.filter(status='APPROVED')
+        
+        activities = activities.select_related(
+            'lesson', 'lesson__level', 'lesson__subject', 'created_by', 'modified_by'
+        ).order_by('-created_at')
         
         # Filters
         activity_type = request.query_params.get('activity_type')
@@ -187,9 +244,13 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         if lesson_id:
             activities = activities.filter(lesson_id=lesson_id)
         
+        course_id = request.query_params.get('course_id')
+        if course_id:
+            activities = activities.filter(lesson__level__course=course_id)
+        
         subject_id = request.query_params.get('subject_id')
         if subject_id:
-            activities = activities.filter(lesson__subject_id=subject_id)
+            activities = activities.filter(lesson__subject=subject_id)
         
         level_id = request.query_params.get('level_id')
         if level_id:
@@ -207,6 +268,18 @@ class TeacherActivityViewSet(viewsets.ViewSet):
                 Q(explanation_key__icontains=search)
             )
 
+        # Get total count before pagination
+        total_count = activities.count()
+        
+        # Pagination
+        page = int(request.query_params.get('page', 1))
+        page_size = int(request.query_params.get('page_size', 30))
+        # Validate page_size (allowed: 30, 50, 100)
+        if page_size not in [30, 50, 100]:
+            page_size = 30
+        
+        offset = (page - 1) * page_size
+        activities = activities[offset:offset + page_size]
         
         # Annotate with performance stats
         activities_with_stats = []
@@ -222,10 +295,18 @@ class TeacherActivityViewSet(viewsets.ViewSet):
             activity.average_accuracy = avg_accuracy
             activities_with_stats.append(activity)
         
-        serializer = TeacherActivityListSerializer(activities_with_stats, many=True)
+        serializer = TeacherActivityListSerializer(activities_with_stats, many=True, context={'request': request})
+        
+        # Calculate pagination metadata
+        total_pages = (total_count + page_size - 1) // page_size if total_count > 0 else 1
         
         return Response({
-            'total': activities.count(),
+            'total': total_count,
+            'page': page,
+            'page_size': page_size,
+            'total_pages': total_pages,
+            'has_next': page < total_pages,
+            'has_prev': page > 1,
             'activities': serializer.data
         })
     
@@ -261,6 +342,17 @@ class TeacherActivityViewSet(viewsets.ViewSet):
         Body: Same as create, but all fields optional
         """
         activity = get_object_or_404(Activity, id=pk)
+
+        logger.info(
+            "[ACTIVITY_EDIT] user=%s activity_id=%s type=%s status=%s version=%s created_by=%s",
+            request.user.id,
+            activity.id,
+            activity.__class__.__name__,
+            activity.status,
+            activity.version,
+            activity.created_by_id,
+        )
+
         
         # Check permission
         self.check_object_permissions(request, activity)
@@ -270,42 +362,121 @@ class TeacherActivityViewSet(viewsets.ViewSet):
             context={'request': request, 'activity': activity}
         )
         serializer.is_valid(raise_exception=True)
+        vd = serializer.validated_data
+        logger.info(
+            "[ACTIVITY_EDIT] validated fields=%s has_type_specific=%s",
+            list(vd.keys()),
+            bool(vd.get("type_specific_data")),
+        )
+
+
         
         # Determine if this is the creator or someone suggesting changes
         is_creator = activity.created_by == request.user
         is_approved = activity.status == 'APPROVED'
         
+        # ✅ CONSTRAINT #1: Unified admin detection
+        role = (getattr(request.user, "role", "") or "").lower()
+        is_admin = bool(request.user.is_superuser or request.user.is_staff or role == "admin")
+        
         if is_approved:
-            # Always create new version for APPROVED activities
+            # ✅ CONSTRAINT #2: Approved edit must always create new version
+            # Always create new version for APPROVED activities (never update in place)
             updated_activity = serializer.update(activity, serializer.validated_data)
+
+            logger.info(
+                "[ACTIVITY_EDIT] created new_version id=%s version=%s prev=%s status=%s",
+                updated_activity.id,
+                updated_activity.version,
+                updated_activity.previous_version_id,
+                updated_activity.status,
+            )
+
+            is_creator = (activity.created_by_id == request.user.id)
+            logger.info(
+                "[ACTIVITY_EDIT] is_creator=%s (created_by=%s user=%s)",
+                is_creator,
+                activity.created_by_id,
+                request.user.id,
+            )
+
             
             if is_creator:
-                # Creator editing their own APPROVED activity → Auto-approve
-                updated_activity.status = 'APPROVED'
-                updated_activity.modified_by = request.user
-                updated_activity.save()
-                
-                # Archive old version
-                activity.status = 'ARCHIVED'
-                activity.save()
-                
-                message = f'Activity updated (v{updated_activity.version}). Auto-approved.'
+                # ✅ CONSTRAINT #3: Auto-publish check
+                # Use is_admin OR user.can_publish_directly
+                can_auto_publish = is_admin or getattr(request.user, 'can_publish_directly', False)
+
+                if can_auto_publish:
+                    logger.info(
+                        "[ACTIVITY_EDIT] CREATOR AUTO-PUBLISH: approve new_version=%s, archive old=%s (can_publish=%s admin=%s)",
+                        updated_activity.id,
+                        activity.id,
+                        getattr(request.user, 'can_publish_directly', False),
+                        is_admin
+                    )
+
+                    # Auto-publish: new version APPROVED, old version ARCHIVED
+                    updated_activity.status = 'APPROVED'
+                    updated_activity.modified_by = request.user
+                    updated_activity.save()
+                    
+                    # Archive old version
+                    activity.status = 'ARCHIVED'
+                    activity.save()
+
+                    logger.info(
+                        "[ACTIVITY_EDIT] old activity now status=%s id=%s",
+                        activity.status,
+                        activity.id,
+                    )
+
+                    message = f'Activity updated (v{updated_activity.version}). Published.'
+                    needs_approval = False
+                else:
+                    logger.info(
+                        "[ACTIVITY_EDIT] CREATOR PENDING: new_version=%s to PENDING, old=%s stays APPROVED (not trusted)",
+                        updated_activity.id,
+                        activity.id,
+                    )
+
+                    # Non-trusted creator: new version PENDING, old version stays APPROVED
+                    updated_activity.status = 'PENDING'
+                    updated_activity.modified_by = request.user
+                    updated_activity.save()
+                    
+                    # ✅ Old version stays APPROVED (not archived) until new version is reviewed
+                    # activity.status remains 'APPROVED'
+                    
+                    message = f'Activity updated (v{updated_activity.version}). Awaiting admin approval.'
+                    needs_approval = True
             else:
+
+                logger.info(
+                    "[ACTIVITY_EDIT] SUGGESTION FLOW: set new_version=%s to PENDING, keep old=%s APPROVED",
+                    updated_activity.id,
+                    activity.id,
+                )
+
                 # Teacher suggesting modification → Needs approval
                 updated_activity.status = 'PENDING'
                 updated_activity.modified_by = request.user
                 updated_activity.save()
                 
+                # Old version stays APPROVED
                 message = f'Modification suggested (v{updated_activity.version}). Awaiting admin approval.'
+                needs_approval = True
             
             is_new_version = True
+            is_suggestion = not is_creator
         else:
-            # DRAFT or PENDING - update in place
+            # DRAFT or PENDING - update in place (no versioning)
             updated_activity = serializer.update(activity, serializer.validated_data)
             updated_activity.modified_by = request.user
             updated_activity.save()
             message = 'Activity updated.'
             is_new_version = False
+            needs_approval = False
+            is_suggestion = False
         
         return Response({
             'id': updated_activity.id,
@@ -313,8 +484,8 @@ class TeacherActivityViewSet(viewsets.ViewSet):
             'version': updated_activity.version,
             'message': message,
             'is_new_version': is_new_version,
-            'needs_approval': updated_activity.status == 'PENDING',
-            'is_suggestion': is_approved and not is_creator
+            'needs_approval': needs_approval,  # ✅ Use variable set in logic
+            'is_suggestion': is_suggestion    # ✅ Use variable set in logic
         })
     
     @action(detail=True, methods=['delete'], permission_classes=[permissions.IsAuthenticated, CanDeleteActivity])

@@ -10,7 +10,29 @@
         "settings": "إعدادات",
         "logout": "تسجيل الخروج",
         "switch_theme": "تبديل المظهر",
-        "error": "خطأ"
+        "error": "خطأ",
+        "course": "الدورة",
+        "level": "المستوى",
+        "subject": "الموضوع",
+        "lesson": "الدرس",
+        "select": "اختر...",
+        "difficulty": "الصعوبة",
+        "points": "النقاط",
+        "cancel": "إلغاء",
+        "saving": "جاري الحفظ...",
+        "save_changes": "حفظ التغييرات",
+        "optional": "اختياري"
+    },
+    "admin": {
+        "edit_activity": "تعديل النشاط",
+        "metadata": "البيانات الوصفية",
+        "instruction": "التعليمات",
+        "question_text": "نص السؤال",
+        "question_text_placeholder": "أدخل السؤال أو التعليمات للطالب...",
+        "settings": "الإعدادات",
+        "type_specific_data": "محتوى النشاط",
+        "version_notes": "ملاحظات الإصدار",
+        "version_notes_placeholder": "صف ما تغير في هذا الإصدار..."
     },
     "nav": {
         "home": "الرئيسية",

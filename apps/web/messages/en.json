@@ -10,7 +10,29 @@
         "settings": "Settings",
         "logout": "Logout",
         "switch_theme": "Switch theme",
-        "error": "Error"
+        "error": "Error",
+        "course": "Course",
+        "level": "Level",
+        "subject": "Subject",
+        "lesson": "Lesson",
+        "select": "Select...",
+        "difficulty": "Difficulty",
+        "points": "Points",
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "save_changes": "Save Changes",
+        "optional": "optional"
+    },
+    "admin": {
+        "edit_activity": "Edit Activity",
+        "metadata": "Metadata",
+        "instruction": "Instruction",
+        "question_text": "Question Text",
+        "question_text_placeholder": "Enter the question or prompt for the student...",
+        "settings": "Settings",
+        "type_specific_data": "Activity Content",
+        "version_notes": "Version Notes",
+        "version_notes_placeholder": "Describe what changed in this version..."
     },
     "nav": {
         "home": "Home",

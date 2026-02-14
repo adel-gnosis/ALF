@@ -8,36 +8,56 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
+  Image,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { resolveMediaUrl } from "../../services/api";
+
+type ActivityPair = {
+  id: string;
+  left: {
+    value: string;
+    rendered_value?: string;
+    type?: 'text' | 'image';
+  };
+  right: {
+    value: string;
+    rendered_value?: string;
+    type?: 'text' | 'image';
+  };
+};
+
+type PairItem = {
+  id: string;
+  text: string;
+  value: string;
+  type: 'text' | 'image';
+};
+
+type MatchResult = {
+  pair_id: string;
+  right_value: string;
+};
 
 type Props = {
   activity: any;
   onAnswer: (answer: any) => void;
   disabled?: boolean;
   feedback?: 'success' | 'error' | null;
-  correctAnswer?: Record<string, string>;
+  correctAnswer?: any;
 };
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-function shuffleArray<T>(arr: T[]) {
+function shuffleArray<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
-}
-
-function tinyHash(str: string) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) {
-    h = (h * 31 + str.charCodeAt(i)) | 0;
-  }
-  return Math.abs(h).toString(36);
 }
 
 const COLORS = [
@@ -54,38 +74,70 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
   const activityId = String(activity?.id ?? 'unknown');
 
   // Use pairs_v2
-  const pairs = activity?.pairs_v2 || [];
+  const pairs: ActivityPair[] = activity?.pairs_v2 || [];
 
-  const leftItems = useMemo(() => {
-    return pairs.map((pair: any) => ({
+  const leftItems = useMemo<PairItem[]>(() => {
+    return pairs.map((pair) => ({
       id: pair.id,
       text: pair.left?.rendered_value || pair.left?.value || '',
+      type: pair.left?.type || 'text',
+      value: pair.left?.value || ''
     }));
-  }, [activityId]);
+  }, [pairs]); // Changed dependency to pairs content
 
-  const rightItems = useMemo(() => {
-    const base = pairs.map((pair: any) => ({
-      id: pair.id, // We'll keep the pair ID to know what it SHOULD match to easily on the frontend if needed, but we shuffle.
+  const rightItems = useMemo<PairItem[]>(() => {
+    const base = pairs.map((pair) => ({
+      id: pair.id, // Keep ID for tracking correct match logic if needed
       text: pair.right?.rendered_value || pair.right?.value || '',
+      type: pair.right?.type || 'text',
+      value: pair.right?.value || ''
     }));
     return shuffleArray(base);
-  }, [activityId]);
+  }, [pairs]);
 
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null);
-  const [matches, setMatches] = useState<Record<string, string>>({}); // leftId -> rightId (in this case both are same if correct, but user can match any)
+  const [matches, setMatches] = useState<Record<string, string>>({}); // leftId -> rightId (original pair ID of the right item)
   const [submittedAnswer, setSubmittedAnswer] = useState<any>(null);
 
   const usedRightIds = useMemo(() => new Set(Object.values(matches)), [matches]);
 
+  // ANIMATIONS
   const entranceAnim = useRef(new Animated.Value(0)).current;
-  const itemAnims = useRef<Record<string, Animated.Value>>({}).current;
   const pulseAnim = useRef(new Animated.Value(0)).current;
+
+  // Render content helper (supports Text or Image)
+  const renderItemContent = (item: PairItem) => {
+    if (item.type === 'image') {
+      const imageUrl = resolveMediaUrl(item.value);
+      if (!imageUrl) {
+        return (
+          <View className="w-full h-16 rounded-lg overflow-hidden bg-gray-100 items-center justify-center">
+            <Text className="text-gray-400 text-xs">No Image</Text>
+          </View>
+        );
+      }
+      return (
+        <View className="w-full h-16 rounded-lg overflow-hidden bg-gray-100 items-center justify-center">
+          <Image
+            source={{ uri: imageUrl }}
+            className="w-full h-full"
+            resizeMode="cover"
+          />
+        </View>
+      );
+    }
+    // Default Text
+    return (
+      <Text className="font-bold text-gray-900 text-sm md:text-base flex-1 pr-2">
+        {item.text}
+      </Text>
+    );
+  };
 
   useEffect(() => {
     setSelectedLeftId(null);
     setMatches({});
     setSubmittedAnswer(null);
-    Object.keys(itemAnims).forEach(key => delete itemAnims[key]);
 
     entranceAnim.setValue(0);
     pulseAnim.setValue(0);
@@ -123,12 +175,6 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
     ).start();
   }, [selectedLeftId]);
 
-  const getItemAnim = (key: string) => {
-    if (!itemAnims[key]) {
-      itemAnims[key] = new Animated.Value(0);
-    }
-    return itemAnims[key];
-  };
 
   const handleLeftPress = (leftId: string) => {
     if (disabled) return;
@@ -171,12 +217,11 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
 
     if (Object.keys(newMatches).length === leftItems.length) {
       // Generate the matches array for the backend
-      // Format: {"matches":[{"pair_id":"p_001","right_value":"and"}, ...]}
       const finalMatches = Object.entries(newMatches).map(([lId, rId]) => {
         const rightItem = rightItems.find(r => r.id === rId);
         return {
           pair_id: lId,
-          right_value: rightItem?.text || ''
+          right_value: rightItem?.value || rightItem?.text || ''
         };
       });
 
@@ -199,8 +244,11 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
   const pulseOpacity = pulseAnim.interpolate({ inputRange: [0, 1], outputRange: [1, 0.7] });
 
   // Parsing correct answer from backend for feedback
-  // Format: { format: 'pairs_v2', expected: [...], readable: {...} }
-  const correctExpected = feedback && correctAnswer?.format === 'pairs_v2' ? correctAnswer.expected : null;
+  // Safe cast or optional chaining
+  const correctExpected: MatchResult[] | null =
+    feedback && correctAnswer?.format === 'pairs_v2' && Array.isArray(correctAnswer.expected)
+      ? correctAnswer.expected
+      : null;
 
   return (
     <Animated.View
@@ -233,14 +281,23 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
             let isIncorrect = false;
             let correctRightValue = null;
 
-            if (feedback && submittedAnswer) {
+            if (feedback && submittedAnswer && Array.isArray(submittedAnswer.matches) && correctExpected) {
               const userMatch = submittedAnswer.matches.find((m: any) => m.pair_id === item.id);
-              const expectedMatch = correctExpected?.find((m: any) => m.pair_id === item.id);
+              const expectedMatch = correctExpected.find((m) => m.pair_id === item.id);
 
               if (userMatch && expectedMatch) {
-                isCorrect = userMatch.right_value === expectedMatch.right_value;
+                // Approximate check
+                const userVal = userMatch.right_value;
+                const expectedVal = expectedMatch.right_value;
+                isCorrect = userVal === expectedVal;
                 isIncorrect = !isCorrect;
-                correctRightValue = expectedMatch.right_value;
+                correctRightValue = expectedVal;
+
+                if (isIncorrect) {
+                  console.warn(`[Matching Debug] Mismatch for pair ${item.id} (${item.text}):
+                    User sent: "${userVal}" (Type: ${typeof userVal})
+                    Expected:  "${expectedVal}" (Type: ${typeof expectedVal})`);
+                }
               }
             }
 
@@ -264,7 +321,7 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
                   onPress={() => handleLeftPress(item.id)}
                   activeOpacity={0.8}
                   disabled={disabled}
-                  className="mb-3 rounded-2xl p-5 relative overflow-hidden"
+                  className="mb-3 rounded-2xl p-4 relative overflow-hidden flex-row items-center"
                   style={{
                     backgroundColor: isMatched ? colorSet.light : 'white',
                     borderWidth: 3,
@@ -274,6 +331,7 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
                     shadowOpacity: isSelected && !isMatched ? 0.25 : isMatched ? 0.15 : 0.08,
                     shadowRadius: isSelected && !isMatched ? 12 : 8,
                     elevation: isSelected && !isMatched ? 6 : 3,
+                    minHeight: item.type === 'image' ? 80 : 60,
                   }}
                 >
                   {/* Glow effect when selected */}
@@ -287,7 +345,7 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
                         bottom: 0,
                         backgroundColor: colorSet.glow,
                         opacity: pulseOpacity.interpolate({
-                          range: [0.7, 1],
+                          inputRange: [0.7, 1],
                           outputRange: [0.15, 0],
                         }),
                         borderRadius: 12,
@@ -295,44 +353,33 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
                     />
                   )}
 
-                  <View className="flex-row items-center justify-between">
-                    <Text className="font-bold text-gray-900 text-base flex-1 pr-2">
-                      {item.text}
-                    </Text>
-                    {isCorrect && (
-                      <View
-                        className="w-8 h-8 rounded-full items-center justify-center"
-                        style={{ backgroundColor: '#10B981' }}
-                      >
-                        <Text className="text-white text-lg font-bold">✓</Text>
-                      </View>
-                    )}
-                    {isIncorrect && (
-                      <View
-                        className="w-8 h-8 rounded-full items-center justify-center"
-                        style={{ backgroundColor: '#EF4444' }}
-                      >
-                        <Text className="text-white text-lg font-bold">✗</Text>
+                  <View className="flex-1">
+                    <View className="flex-row items-center justify-between">
+                      {renderItemContent(item)}
+
+                      {isCorrect && (
+                        <View className="w-6 h-6 rounded-full items-center justify-center bg-green-500 ml-2">
+                          <Text className="text-white text-sm font-bold">✓</Text>
+                        </View>
+                      )}
+                      {isIncorrect && (
+                        <View className="w-6 h-6 rounded-full items-center justify-center bg-red-500 ml-2">
+                          <Text className="text-white text-sm font-bold">✗</Text>
+                        </View>
+                      )}
+                    </View>
+
+                    {/* Correction display */}
+                    {isIncorrect && correctRightValue && (
+                      <View className="mt-2 pt-2 border-t border-red-100">
+                        <Text className="text-xs text-green-600 font-medium">
+                          Correct: {correctRightValue}
+                        </Text>
+                        {/* Debug info for user to screenshot if needed */}
+                        {/* <Text className="text-[10px] text-gray-400">Sent: {submittedAnswer?.matches?.find((m: any) => m.pair_id === item.id)?.right_value}</Text> */}
                       </View>
                     )}
                   </View>
-
-                  {isIncorrect && correctRightValue && (
-                    <View className="mt-3 pt-3 border-t border-red-300">
-                      <Text className="text-xs text-gray-500 mb-2">{t('activities.matching.shouldMatch')}</Text>
-                      <View
-                        className="px-4 py-3 rounded-xl border-2"
-                        style={{
-                          backgroundColor: '#D1FAE5',
-                          borderColor: '#10B981'
-                        }}
-                      >
-                        <Text className="font-bold text-green-800 text-center">
-                          {correctRightValue}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
                 </TouchableOpacity>
               </Animated.View>
             );
@@ -352,13 +399,16 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
             let isCorrect = false;
             let isIncorrect = false;
 
-            if (feedback && matchedLeftId && submittedAnswer) {
+            if (feedback && matchedLeftId && submittedAnswer && Array.isArray(submittedAnswer.matches) && correctExpected) {
               const userMatch = submittedAnswer.matches.find((m: any) => m.pair_id === matchedLeftId);
-              const expectedMatch = correctExpected?.find((m: any) => m.pair_id === matchedLeftId);
+              const expectedMatch = correctExpected.find((m) => m.pair_id === matchedLeftId);
 
               if (userMatch && expectedMatch) {
-                isCorrect = userMatch.right_value === item.text && item.text === expectedMatch.right_value;
-                isIncorrect = userMatch.right_value === item.text && item.text !== expectedMatch.right_value;
+                isCorrect = userMatch.right_value === expectedMatch.right_value; // weak check
+                if (userMatch.right_value === item.value) { // this item was chosen
+                  isCorrect = userMatch.right_value === expectedMatch.right_value;
+                  isIncorrect = !isCorrect;
+                }
               }
             }
 
@@ -375,7 +425,7 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
 
             return (
               <Animated.View
-                key={`right_${item.id}_${index}`} // Use index in key because multiple right items could have same text (though unlikely with pairs_v2)
+                key={`right_${item.id}`}
                 style={{
                   opacity: entranceAnim,
                   transform: [
@@ -387,7 +437,7 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
                   onPress={() => handleRightPress(item.id)}
                   activeOpacity={0.8}
                   disabled={disabled || (!selectedLeftId && !isUsed)}
-                  className="mb-3 rounded-2xl p-5 relative overflow-hidden"
+                  className="mb-3 rounded-2xl p-4 relative overflow-hidden flex-row items-center"
                   style={{
                     backgroundColor: isUsed ? colorSet.light : 'white',
                     borderWidth: 3,
@@ -398,6 +448,7 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
                     shadowOpacity: isUsed ? 0.15 : 0.08,
                     shadowRadius: 8,
                     elevation: isUsed ? 3 : 2,
+                    minHeight: item.type === 'image' ? 80 : 60,
                   }}
                 >
                   {/* Subtle pulse when waiting for selection */}
@@ -419,24 +470,17 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
                     />
                   )}
 
-                  <View className="flex-row items-center justify-between">
-                    <Text className="font-bold text-gray-900 text-base flex-1 pr-2">
-                      {item.text}
-                    </Text>
+                  <View className="flex-1 flex-row items-center justify-between">
+                    {renderItemContent(item)}
+
                     {isCorrect && (
-                      <View
-                        className="w-8 h-8 rounded-full items-center justify-center"
-                        style={{ backgroundColor: '#10B981' }}
-                      >
-                        <Text className="text-white text-lg font-bold">✓</Text>
+                      <View className="w-6 h-6 rounded-full items-center justify-center bg-green-500 ml-2">
+                        <Text className="text-white text-sm font-bold">✓</Text>
                       </View>
                     )}
                     {isIncorrect && (
-                      <View
-                        className="w-8 h-8 rounded-full items-center justify-center"
-                        style={{ backgroundColor: '#EF4444' }}
-                      >
-                        <Text className="text-white text-lg font-bold">✗</Text>
+                      <View className="w-6 h-6 rounded-full items-center justify-center bg-red-500 ml-2">
+                        <Text className="text-white text-sm font-bold">✗</Text>
                       </View>
                     )}
                   </View>
@@ -447,7 +491,7 @@ export default function MatchingActivity({ activity, onAnswer, disabled, feedbac
         </View>
       </View>
 
-      {/* Elegant progress indicator */}
+      {/* Progress */}
       <View className="mt-6 mb-2">
         <View className="flex-row items-center justify-between mb-2">
           <Text className="text-sm font-medium text-gray-500">

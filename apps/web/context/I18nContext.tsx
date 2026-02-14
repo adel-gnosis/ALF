@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useSelectLanguage, useMe } from '@alf/shared';
+import { useQueryClient } from '@tanstack/react-query';
 
 // Import our translation files
 import en from '../messages/en.json';
@@ -31,6 +32,7 @@ const I18nContext = createContext<I18nContextType | undefined>(undefined);
 export function I18nProvider({ children }: { children: React.ReactNode }) {
     const { data: user } = useMe();
     const selectLangMutation = useSelectLanguage();
+    const queryClient = useQueryClient();
 
     // Default to 'fr' or user's preferred language
     const [locale, setLocaleState] = useState<Locale>('fr');
@@ -45,10 +47,15 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
         setLocaleState(newLocale);
         try {
             await selectLangMutation.mutateAsync(newLocale);
+            // Invalidate queries that depend on i18n translations
+            // This ensures activity instruction/question texts are refetched in the new language
+            queryClient.invalidateQueries({ queryKey: ['teacher-activities'] });
+            queryClient.invalidateQueries({ queryKey: ['teacher-browse-activities'] });
+            queryClient.invalidateQueries({ queryKey: ['admin-activities'] });
         } catch (error) {
             console.error('Failed to sync language to backend:', error);
         }
-    }, [selectLangMutation]);
+    }, [selectLangMutation, queryClient]);
 
     // Handle RTL
     const isRTL = locale === 'ar';

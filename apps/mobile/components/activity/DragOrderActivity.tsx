@@ -1,20 +1,9 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
-import Animated, {
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
-import {
-  Gesture,
-  GestureDetector,
-  GestureHandlerRootView,
-} from 'react-native-gesture-handler';
 import { useTranslation } from 'react-i18next';
 import Button from '../Button';
 
-interface DragOrderActivityProps {
+interface TapOrderActivityProps {
   activity: any;
   onAnswer: (answer: string[]) => void;
   disabled?: boolean;
@@ -33,11 +22,13 @@ function shuffleArray<T>(arr: T[]): T[] {
   return copy;
 }
 
-export default function DragOrderActivity({
+export default function TapOrderActivity({
   activity,
   onAnswer,
   disabled,
-}: DragOrderActivityProps) {
+  feedback,
+  correctAnswer,
+}: TapOrderActivityProps) {
   const { t } = useTranslation();
 
   // Handle both old format (activity.data.words) and new format (activity.words)
@@ -49,18 +40,11 @@ export default function DragOrderActivity({
   const questionText =
     activity?.question_text || t('activities.dragOrder.instruction');
 
-  // Slots = target positions (wraps to multiple rows automatically)
+  // Slots = target positions
   const [slots, setSlots] = useState<Slot[]>(() => words.map(() => null));
 
-  // Bank = draggable chips remaining
+  // Bank = available words to select
   const [bank, setBank] = useState<string[]>(() => shuffleArray(words));
-
-  // Layout measuring (2D) to support wrap (multiple rows)
-  const dropZoneRef = useRef<View>(null);
-  const [zoneAbs, setZoneAbs] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [slotRects, setSlotRects] = useState<
-    { x: number; y: number; width: number; height: number }[]
-  >([]);
 
   const allFilled = useMemo(() => slots.every(Boolean), [slots]);
 
@@ -71,190 +55,105 @@ export default function DragOrderActivity({
     onAnswer(answer);
   };
 
-  const placeWordInSlot = (word: string, slotIndex: number) => {
+  const handleWordTap = (word: string) => {
+    if (disabled) return;
+
+    // Find first empty slot
+    const firstEmptyIndex = slots.findIndex(slot => slot === null);
+
+    if (firstEmptyIndex === -1) return; // No empty slots
+
+    // Place word in first empty slot
     setSlots((prev) => {
-      if (prev[slotIndex]) return prev; // occupied
       const next = [...prev];
-      next[slotIndex] = word;
+      next[firstEmptyIndex] = word;
       return next;
     });
+
+    // Remove from bank
     setBank((prev) => prev.filter((w) => w !== word));
   };
 
   const removeFromSlot = (slotIndex: number) => {
+    if (disabled) return;
+
     setSlots((prev) => {
       const next = [...prev];
       const w = next[slotIndex];
       if (!w) return prev;
       next[slotIndex] = null;
-      // return to bank (front)
-      setBank((b) => [w, ...b]);
+      // Return to bank at the end
+      setBank((b) => [...b, w]);
       return next;
     });
   };
 
-  const findNearestSlotIndex2D = (absX: number, absY: number) => {
-    if (!slotRects.length) return -1;
-
-    // Convert absolute drop point to dropZone-local coordinates
-    const localX = absX - zoneAbs.x;
-    const localY = absY - zoneAbs.y;
-
-    let bestIdx = -1;
-    let bestDist = Infinity;
-
-    for (let i = 0; i < slotRects.length; i++) {
-      const r = slotRects[i];
-      if (!r) continue;
-
-      const cx = r.x + r.width / 2;
-      const cy = r.y + r.height / 2;
-
-      const dx = localX - cx;
-      const dy = localY - cy;
-      const dist = dx * dx + dy * dy;
-
-      if (dist < bestDist) {
-        bestDist = dist;
-        bestIdx = i;
-      }
-    }
-
-    return bestIdx;
-  };
-
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        {activity?.instruction && (
-          <Text className="text-sm font-medium text-gray-500 mb-1 italic">
-            {activity.instruction}
-          </Text>
-        )}
-        <Text style={styles.questionText}>{questionText}</Text>
-        {!activity?.instruction && (
-          <Text style={styles.subText}>{t('activities.dragOrder.subInstruction')}</Text>
-        )}
+    <View style={styles.container}>
+      {activity?.instruction && (
+        <Text className="text-sm font-medium text-gray-500 mb-1 italic">
+          {activity.instruction}
+        </Text>
+      )}
+      <Text style={styles.questionText}>{questionText}</Text>
+      {!activity?.instruction && (
+        <Text style={styles.subText}>{t('activities.dragOrder.subInstruction')}</Text>
+      )}
 
-        {/* DROP ZONE (slots) */}
-        <View
-          ref={dropZoneRef}
-          style={styles.dropZone}
-          onLayout={() => {
-            dropZoneRef.current?.measureInWindow((x, y) => {
-              setZoneAbs({ x, y });
-            });
-          }}
-        >
-          {slots.map((slot, idx) => (
-            <View
-              key={`slot-${idx}`}
-              style={styles.slotWrapper}
-              onLayout={(e) => {
-                const { x, y, width, height } = e.nativeEvent.layout;
-                setSlotRects((prev) => {
-                  const next = [...prev];
-                  next[idx] = { x, y, width, height };
-                  return next;
-                });
-              }}
+      {/* SLOTS (ordered sequence) */}
+      <View style={styles.dropZone}>
+        {slots.map((slot, idx) => (
+          <View key={`slot-${idx}`} style={styles.slotWrapper}>
+            <Pressable
+              disabled={!!disabled || !slot}
+              onPress={() => removeFromSlot(idx)}
+              style={[
+                styles.slot,
+                slot ? styles.slotFilled : styles.slotEmpty,
+                disabled ? styles.slotDisabled : null,
+              ]}
             >
-              <Pressable
-                disabled={!!disabled || !slot}
-                onPress={() => removeFromSlot(idx)}
-                style={[
-                  styles.slot,
-                  slot ? styles.slotFilled : styles.slotEmpty,
-                  disabled ? styles.slotDisabled : null,
-                ]}
-              >
-                <Text style={slot ? styles.slotText : styles.slotPlaceholder}>
-                  {slot ?? '—'}
-                </Text>
-                {!!slot && !disabled && (
-                  <Text style={styles.slotHint}>{t('activities.dragOrder.tapToRemove')}</Text>
-                )}
-              </Pressable>
-            </View>
-          ))}
-        </View>
-
-        {/* BANK */}
-        <Text style={styles.bankTitle}>{t('activities.dragOrder.wordBank')}</Text>
-
-        <View style={styles.bank}>
-          {bank.map((word) => (
-            <DraggableChip
-              key={word}
-              word={word}
-              disabled={!!disabled}
-              onDrop={(absX, absY) => {
-                // if we haven't measured yet, ignore
-                if (!slotRects.length) return;
-
-                const idx = findNearestSlotIndex2D(absX, absY);
-                if (idx === -1) return;
-
-                // Only place if empty
-                if (slots[idx]) return;
-
-                placeWordInSlot(word, idx);
-              }}
-            />
-          ))}
-        </View>
-
-        <Button title={t('activities.dragOrder.check')} onPress={handleSubmit} disabled={!!disabled || !allFilled} />
+              <Text style={slot ? styles.slotText : styles.slotPlaceholder}>
+                {slot ?? '—'}
+              </Text>
+              {!!slot && !disabled && (
+                <Text style={styles.slotHint}>{t('activities.dragOrder.tapToRemove')}</Text>
+              )}
+            </Pressable>
+          </View>
+        ))}
       </View>
-    </GestureHandlerRootView>
-  );
-}
 
-function DraggableChip({
-  word,
-  disabled,
-  onDrop,
-}: {
-  word: string;
-  disabled: boolean;
-  onDrop: (absX: number, absY: number) => void;
-}) {
-  const tx = useSharedValue(0);
-  const ty = useSharedValue(0);
-  const dragging = useSharedValue(false);
+      {/* WORD BANK */}
+      <Text style={styles.bankTitle}>{t('activities.dragOrder.wordBank')}</Text>
 
-  const gesture = Gesture.Pan()
-    .enabled(!disabled)
-    .onStart(() => {
-      dragging.value = true;
-    })
-    .onUpdate((e) => {
-      tx.value = e.translationX;
-      ty.value = e.translationY;
-    })
-    .onEnd((e) => {
-      runOnJS(onDrop)(e.absoluteX, e.absoluteY);
+      <View style={styles.bank}>
+        {bank.map((word) => (
+          <Pressable
+            key={word}
+            disabled={!!disabled}
+            onPress={() => handleWordTap(word)}
+            style={[styles.chip, disabled && styles.chipDisabled]}
+          >
+            <Text style={styles.chipText}>{word}</Text>
+          </Pressable>
+        ))}
+      </View>
 
-      tx.value = withSpring(0, { damping: 16, stiffness: 180 });
-      ty.value = withSpring(0, { damping: 16, stiffness: 180 });
-      dragging.value = false;
-    });
+      {/* Correct Answer Display on Error */}
+      {feedback === 'error' && correctAnswer && (
+        <View className="bg-green-100 p-4 rounded-xl border-2 border-green-500 mb-4 w-full">
+          <Text className="text-green-800 font-semibold mb-1 text-center">Réponse Correcte :</Text>
+          <Text className="text-lg font-bold text-green-900 text-center">{correctAnswer}</Text>
+        </View>
+      )}
 
-  const style = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: tx.value },
-      { translateY: ty.value },
-      { scale: withSpring(dragging.value ? 1.06 : 1, { damping: 16 }) },
-    ],
-    zIndex: dragging.value ? 50 : 1,
-  }));
-
-  return (
-    <GestureDetector gesture={gesture}>
-      <Animated.View style={[styles.chip, style, disabled && styles.chipDisabled]}>
-        <Text style={styles.chipText}>{word}</Text>
-      </Animated.View>
-    </GestureDetector>
+      <Button
+        title={t('activities.dragOrder.check')}
+        onPress={handleSubmit}
+        disabled={!!disabled || !allFilled}
+      />
+    </View>
   );
 }
 

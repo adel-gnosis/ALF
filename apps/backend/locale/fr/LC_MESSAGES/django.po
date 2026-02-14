@@ -274,7 +274,7 @@ msgstr "Choisis la bonne réponse."
 
 #. i18n key
 msgid "activity.multiple_answer.instruction.CONJUGATION"
-msgstr "Sélectionne جميع التصريفات الصحيحة."
+msgstr "Sélectionne toutes les conjugaisons correctes."
 
 #. i18n key
 msgid "activity.multiple_answer.instruction.DIALOGUES"

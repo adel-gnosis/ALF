@@ -1,9 +1,22 @@
-import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
 import { useNextActivity, useSubmitActivity, useCompleteSession } from '@alf/shared';
 import Button from '../../components/Button';
 import type { Session, Activity } from '@alf/shared';
+
+// Hooks
+import { useGamification } from '../../hooks/useGamification';
+import { useAudioFeedback } from '../../hooks/useAudioFeedback';
+import { useHaptics } from '../../hooks/useHaptics';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Gamification Components
+import FloatingXP from '../../components/gamification/FloatingXP';
+import ComboBadge from '../../components/gamification/ComboBadge';
+import SessionBonus from '../../components/gamification/SessionBonus';
+import GameHUD from '../../components/session/GameHUD';
+import ActivityStage from '../../components/session/ActivityStage';
 
 // Activity renderers
 import MCQActivity from '../../components/activity/MCQActivity';
@@ -29,14 +42,23 @@ function genUUIDv4() {
 export default function SessionScreen() {
     const { id: sessionId } = useLocalSearchParams<{ id: string }>();
     const router = useRouter();
+    const insets = useSafeAreaInsets();
 
     const [currentAnswer, setCurrentAnswer] = useState<any>(null);
+    const [tapPosition, setTapPosition] = useState<{ x: number; y: number } | undefined>(undefined);
+
     const [feedback, setFeedback] = useState<'success' | 'error' | null>(null);
     const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
     const [explanation, setExplanation] = useState<string | null>(null);
     const [correctAnswer, setCorrectAnswer] = useState<any>(null);
 
     const [startTime, setStartTime] = useState<number>(Date.now());
+    const [sessionXP, setSessionXP] = useState<number>(0); // Track actual XP from server
+
+    // Gamification
+    const gamification = useGamification();
+    const { playSuccess, playError } = useAudioFeedback();
+    const haptics = useHaptics();
 
     // Fetch session data (which contains next activity)
     const { data: sessionData, isLoading, refetch } = useNextActivity(sessionId);
@@ -50,23 +72,28 @@ export default function SessionScreen() {
     // Log activity loading
     useEffect(() => {
         if (activity) {
-            console.log('[SessionScreen] New activity loaded:', {
-                id: activity.id,
-                type: activity.resourcetype,
-                question: activity.question_text?.substring(0, 50)
-            });
             setCurrentAnswer(null);
             setFeedback(null);
             setFeedbackMessage(null);
             setStartTime(Date.now());
             setExplanation(null);
             setCorrectAnswer(null);
+            setTapPosition(undefined);
         }
     }, [activity?.id]);
 
-    const handleAnswer = (answer: any) => {
-        console.log('[SessionScreen] Answer received:', { answer, type: typeof answer });
+    // Handle Bonus Trigger
+    useEffect(() => {
+        if (gamification.shouldTriggerBonus) {
+            gamification.awardSessionBonus();
+        }
+    }, [gamification.shouldTriggerBonus]);
+
+    const handleAnswer = (answer: any, layout?: { x: number; y: number }) => {
         setCurrentAnswer(answer);
+        if (layout) {
+            setTapPosition(layout);
+        }
 
         // Auto-submit for activities with built-in verify buttons
         const activityType = activity?.resourcetype;
@@ -85,16 +112,10 @@ export default function SessionScreen() {
         const answerToSubmit = answerOverride !== undefined ? answerOverride : currentAnswer;
 
         if (!activity || answerToSubmit === null) {
-            console.log('[SessionScreen] Cannot submit - missing activity or answer');
             return;
         }
 
         const timeSpent = Math.floor((Date.now() - startTime) / 1000);
-        console.log('[SessionScreen] Submitting answer:', {
-            activity_id: activity.id,
-            answer: answerToSubmit,
-            timeSpent
-        });
 
         submitMutation.mutate(
             {
@@ -105,29 +126,37 @@ export default function SessionScreen() {
             },
             {
                 onSuccess: (data) => {
-                    console.log('[SessionScreen] Submit response:', data);
                     setExplanation(data.explanation || null);
                     setCorrectAnswer(data.correct_answer ?? null);
+
+                    // Track actual XP from server
+                    const pointsEarned = data.points_earned || 0;
+                    setSessionXP(prev => prev + pointsEarned);
+                    gamification.registerAnswer(data.is_correct, pointsEarned, tapPosition);
 
                     if (data.is_correct) {
                         setFeedback('success');
                         setFeedbackMessage('Correct! 🎉');
+                        playSuccess();
+                        haptics.success();
                     } else {
                         setFeedback('error');
-                        setFeedbackMessage(data.feedback || 'Incorrect');
+                        // Show clean user-friendly message (explanation is shown separately)
+                        setFeedbackMessage('Incorrect');
+                        playError();
+                        haptics.error();
                     }
                 },
                 onError: (error: any) => {
-                    console.error('[SessionScreen] Submit error:', error);
                     setFeedback('error');
                     setFeedbackMessage('Erreur lors de la soumission');
+                    haptics.error();
                 },
             }
         );
     };
 
     const handleNext = () => {
-        console.log('[SessionScreen] Moving to next activity');
         setFeedback(null);
         setFeedbackMessage(null);
         setCurrentAnswer(null);
@@ -135,10 +164,9 @@ export default function SessionScreen() {
     };
 
     const handleComplete = async () => {
-        console.log('[SessionScreen] Completing session');
         completeMutation.mutate(sessionId, {
             onSuccess: (data) => {
-                console.log('[SessionScreen] Session complete:', data);
+                gamification.resetSession();
                 router.push({
                     pathname: '/session-complete',
                     params: {
@@ -160,19 +188,12 @@ export default function SessionScreen() {
         );
     }
 
-    // Session complete or No Activity
     if (sessionData?.session_complete || (!isLoading && !activity)) {
         return (
             <View className="flex-1 items-center justify-center p-4">
                 <Text className="text-2xl font-bold mb-4">
                     {sessionData?.session_complete ? "Session Terminée!" : "Aucune activité"}
                 </Text>
-                <Text className="text-lg text-gray-700 mb-6 text-center">
-                    {sessionData?.session_complete
-                        ? "Vous avez complété toutes les activités."
-                        : "Aucune activité disponible pour ce niveau."}
-                </Text>
-
                 {sessionData?.session_complete ? (
                     <Button
                         title="Voir les Résultats"
@@ -189,7 +210,6 @@ export default function SessionScreen() {
         );
     }
 
-    // Determine if activity has built-in verify button
     const activityType = activity?.resourcetype;
     const hasBuiltInVerify = [
         'TextInputActivity',
@@ -198,110 +218,115 @@ export default function SessionScreen() {
     ].includes(activityType || '');
 
     return (
-        <ScrollView className="flex-1 bg-gray-50">
-            {/* Progress bar */}
-            {progress && (
-                <View className="bg-white p-4 border-b border-gray-200">
-                    <View className="flex-row justify-between mb-2">
-                        <Text className="text-sm text-gray-600">
-                            Activité {progress.completed + 1}/{progress.target}
-                        </Text>
-                        <Text className="text-sm text-gray-600">
-                            {Math.round(progress.percentage)}%
-                        </Text>
-                    </View>
-                    <View className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                        <View
-                            className="h-full bg-blue-500"
-                            style={{ width: `${progress.percentage}%` }}
-                        />
-                    </View>
-                    {isRetry && (
-                        <Text className="text-xs text-orange-600 mt-2">
-                            🔄 Activité échouée précédemment - Essayez encore!
-                        </Text>
-                    )}
-                </View>
-            )}
+        <View className="flex-1 bg-slate-50">
+            {/* Gamification Overlays */}
+            <ComboBadge streak={gamification.correctStreak} />
 
-            {/* Activity */}
-            <View className="p-4">
-                {activity && renderActivity(
-                    activity,
-                    handleAnswer,
-                    feedback !== null,
-                    feedback,
-                    correctAnswer
-                )}
-            </View>
+            {gamification.xpAwards.map(award => (
+                <FloatingXP
+                    key={award.id}
+                    id={award.id}
+                    amount={award.amount}
+                    startPosition={award.position}
+                    onComplete={gamification.removeXpAward}
+                />
+            ))}
 
-            {/* Feedback with specialized components */}
-            {feedback && (
-                <View className="mx-4 mb-4">
-                    <View
-                        className={`p-6 rounded-xl mb-4 ${feedback === 'success'
-                                ? 'bg-green-100 border-2 border-green-500'
-                                : 'bg-red-100 border-2 border-red-500'
-                            }`}
-                    >
-                        <Text
-                            className={`text-xl font-bold text-center mb-2 ${feedback === 'success' ? 'text-green-700' : 'text-red-700'
-                                }`}
-                        >
-                            {feedback === 'success' ? '✅ Correct!' : '❌ Incorrect'}
-                        </Text>
+            <SessionBonus
+                visible={gamification.showBonusOverlay}
+                isPerfect={gamification.isPerfectStart}
+                onDismiss={gamification.dismissBonusOverlay}
+            />
 
-                        {/* Explanation (for all activities) */}
-                        {!!explanation && (
-                            <View className="mt-4 p-4 rounded-lg bg-white border border-gray-200">
-                                <Text className="text-sm font-semibold text-gray-800 mb-1">
-                                    Explication
-                                </Text>
-                                <Text className="text-sm text-gray-700">
-                                    {explanation}
-                                </Text>
-                            </View>
-                        )}
-                    </View>
+            {/* Game HUD (Fixed Top) */}
+            <GameHUD
+                levelTitle={activity?.topic_title || "Session"}
+                currentProgress={progress?.completed ?? 0}
+                totalProgress={progress?.target ?? 0}
+                xp={sessionXP}
+                onClose={() => router.back()}
+            />
 
-                    {/* Activity-specific feedback */}
-                    {feedback === 'error' && renderActivityFeedback(
+            {/* Main Content Area (Scrollable Stage) */}
+            <View className="flex-1 relative">
+                <ActivityStage key={activity?.id || 'loading'}>
+                    {activity && renderActivity(
                         activity,
-                        currentAnswer,
+                        handleAnswer,
+                        feedback !== null,
+                        feedback,
                         correctAnswer
                     )}
-                </View>
-            )}
+                </ActivityStage>
+            </View>
 
-            {/* Actions */}
-            <View className="p-4 pb-8">
+            {/* Bottom Action Bar (Fixed) */}
+            <View
+                className="bg-white border-t border-gray-100 shadow-lg"
+                style={{
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: -4 },
+                    shadowOpacity: 0.05,
+                    shadowRadius: 10,
+                    elevation: 10,
+                    paddingTop: 16,
+                    paddingHorizontal: 16,
+                    paddingBottom: Math.max(insets.bottom, 24) // Dynamic safe area + min padding
+                }}
+            >
+                {/* Immediate Feedback Toast (In Action Bar) */}
+                {feedback && (
+                    <View className={`mb-4 flex-row items-center p-3 rounded-xl ${feedback === 'success' ? 'bg-green-100' : 'bg-red-100'
+                        }`}>
+                        <Text className="text-2xl mr-2">{feedback === 'success' ? '🎉' : '❌'}</Text>
+                        <View className="flex-1">
+                            <Text className={`font-bold ${feedback === 'success' ? 'text-green-800' : 'text-red-800'
+                                }`}>
+                                {feedbackMessage}
+                            </Text>
+                            {!!explanation && (
+                                <Text className="text-xs text-gray-600 mt-1">{explanation}</Text>
+                            )}
+                        </View>
+                    </View>
+                )}
+
+                {/* Primary Action Button */}
                 {feedback ? (
                     <Button
-                        title="Suivant →"
+                        key="continue-button"
+                        title="CONTINUER"
                         onPress={handleNext}
+                        variant="primary"
                     />
-                ) : !hasBuiltInVerify ? (
+                ) : (
                     <Button
-                        title="Vérifier"
+                        key="submit-button"
+                        title={hasBuiltInVerify ? "..." : "VALIDER"}
                         onPress={() => handleSubmit()}
-                        disabled={currentAnswer === null}
+                        disabled={currentAnswer === null || hasBuiltInVerify}
                         loading={submitMutation.isPending}
                     />
-                ) : null}
+                )}
+
+                {/* Secondary Actions (Skip, etc.) - Placeholder */}
+                {!feedback && !hasBuiltInVerify && (
+                    <TouchableOpacity onPress={handleNext} className="mt-4 items-center">
+                        <Text className="text-slate-400 font-bold text-xs uppercase tracking-widest">Passer</Text>
+                    </TouchableOpacity>
+                )}
             </View>
-        </ScrollView>
+        </View>
     );
 }
 
 function renderActivity(
     activity: Activity,
-    onAnswer: (answer: any) => void,
+    onAnswer: (answer: any, layout?: { x: number; y: number }) => void,
     disabled: boolean,
     feedbackStatus: 'success' | 'error' | null,
     correctAnswer: any
 ) {
-    console.log('[SessionScreen] Rendering activity:', activity.resourcetype);
-
     switch (activity.resourcetype) {
         case 'MCQActivity':
             return (
@@ -317,6 +342,7 @@ function renderActivity(
         case 'FillBlankActivity':
             return (
                 <FillBlankActivity
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
@@ -338,6 +364,7 @@ function renderActivity(
         case 'DragOrderActivity':
             return (
                 <DragOrderActivity
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
@@ -348,6 +375,7 @@ function renderActivity(
         case 'ConjugationActivity':
             return (
                 <ConjugationActivity
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
@@ -358,6 +386,7 @@ function renderActivity(
         case 'MultipleAnswerActivity':
             return (
                 <MultipleAnswerActivity
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
@@ -368,6 +397,7 @@ function renderActivity(
         case 'TextInputActivity':
             return (
                 <TextInputActivity
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
@@ -378,6 +408,7 @@ function renderActivity(
         case 'DicteeActivity':
             return (
                 <DicteeActivity
+                    key={activity.id}
                     activity={activity}
                     onAnswer={onAnswer}
                     disabled={disabled}
@@ -403,8 +434,6 @@ function renderActivityFeedback(
                     correctAnswer={correctAnswer}
                 />
             );
-        // MatchingActivity feedback is built into the component itself
-        // Other activities can be added here as needed
         default:
             return null;
     }

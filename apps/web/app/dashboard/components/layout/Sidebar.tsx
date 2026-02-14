@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
     LayoutDashboard,
     BookOpen,
@@ -18,7 +18,7 @@ import {
     Plus,
     ChevronDown
 } from 'lucide-react';
-import { useLogout, UserRole, useMe, ACTIVITY_CATEGORIES } from '@alf/shared';
+import { useLogout, UserRole, useMe, useSidebarNavigation, CourseWithSubjects } from '@alf/shared';
 import ActivityCreationWizard from '@/components/ActivityCreationWizard';
 import { useI18n } from '../../../../context/I18nContext';
 
@@ -29,20 +29,48 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
+
     const logout = useLogout();
     const { data: user } = useMe();
     const { t, isRTL } = useI18n();
 
-    // Manage expansion of the category list
-    const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(true);
+    // Manage expansion of courses and their subjects
+    const [expandedCourses, setExpandedCourses] = useState<Set<number>>(new Set());
+
+    // Fetch courses with subjects for navigation
+    const { data: courseNav, isLoading: loadingCourses } = useSidebarNavigation();
 
     // NEW: Wizard modal state
     const [showWizard, setShowWizard] = useState(false);
 
     const isActive = (path: string) => pathname === path;
-    const isCategoryActive = (categoryId: string) => {
-        const searchParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
-        return (pathname.includes('/browse') || pathname.includes('/admin/activities')) && searchParams.get('category') === categoryId;
+    const isSubjectActive = (courseId: number, subjectId: number) => {
+        return (
+            (pathname.includes('/browse') || pathname.includes('/admin/activities')) &&
+            searchParams.get('course') === String(courseId) &&
+            searchParams.get('subject') === String(subjectId)
+        );
+    };
+
+    const isCourseActive = (courseId: number) => {
+        return (
+            (pathname.includes('/browse') || pathname.includes('/admin/activities')) &&
+            searchParams.get('course') === String(courseId)
+        );
+    };
+
+
+    const toggleCourse = (courseId: number) => {
+        setExpandedCourses(prev => {
+            const next = new Set(prev);
+            if (next.has(courseId)) {
+                next.delete(courseId);
+            } else {
+                next.add(courseId);
+            }
+            return next;
+        });
     };
 
     const MenuItem = ({ href, icon: Icon, label, active, variant = 'default' }: {
@@ -67,54 +95,91 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </Link>
     );
 
-    const CategoryList = ({ basePath, label, icon: Icon }: { basePath: string; label: string; icon: any }) => {
-        const isHeaderActive = isActive(basePath) && !pathname.includes('category=');
+    // Course Navigation component - shows courses with expandable subjects
+    const CourseNavigation = ({ basePath, label, icon: Icon }: { basePath: string; label: string; icon: any }) => {
+        const isHeaderActive = isActive(basePath) && !searchParams.get('course');
+
+
+        if (loadingCourses) {
+            return (
+                <div className="space-y-2 px-4">
+                    <div className="h-10 bg-muted animate-pulse rounded-xl" />
+                    <div className="h-8 bg-muted/50 animate-pulse rounded-lg ml-4" />
+                    <div className="h-8 bg-muted/50 animate-pulse rounded-lg ml-4" />
+                </div>
+            );
+        }
 
         return (
             <div className="space-y-1">
-                <div className="flex items-center group">
-                    <Link
-                        href={basePath}
-                        onClick={() => { if (window.innerWidth < 1024) onClose(); }}
-                        className={`flex-1 flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all rounded-xl ${isHeaderActive
-                            ? 'bg-blue-600/10 text-blue-600 shadow-sm ring-1 ring-blue-500/20'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                            }`}
-                    >
-                        <Icon className={`h-5 w-5 ${isHeaderActive ? 'text-blue-600' : 'text-muted-foreground'}`} />
-                        <span>{label}</span>
-                    </Link>
-                    <button
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setIsCategoriesExpanded(!isCategoriesExpanded);
-                        }}
-                        className="p-2 ml-1 text-muted-foreground hover:text-foreground transition-colors"
-                        title={isCategoriesExpanded ? t('nav.collapse') : t('nav.expand')}
-                    >
-                        <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isCategoriesExpanded ? '' : '-rotate-90'}`} />
-                    </button>
-                </div>
+                {/* Main header link */}
+                <Link
+                    href={basePath}
+                    onClick={() => { if (window.innerWidth < 1024) onClose(); }}
+                    className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all rounded-xl ${isHeaderActive
+                        ? 'bg-blue-600/10 text-blue-600 shadow-sm ring-1 ring-blue-500/20'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                        }`}
+                >
+                    <Icon className={`h-5 w-5 ${isHeaderActive ? 'text-blue-600' : 'text-muted-foreground'}`} />
+                    <span>{label}</span>
+                </Link>
 
-                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isCategoriesExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                    <div className="mt-1 pl-4 py-1 border-l-2 border-primary/10 space-y-1 ml-6">
-                        {Object.entries(ACTIVITY_CATEGORIES)
-                            .filter(([id]) => id !== 'all')
-                            .map(([id, cat]) => (
-                                <Link
-                                    key={id}
-                                    href={`${basePath}?category=${id}`}
-                                    onClick={() => { if (window.innerWidth < 1024) onClose(); }}
-                                    className={`flex items-center gap-3 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${isCategoryActive(id)
-                                        ? 'text-primary bg-primary/10'
-                                        : 'text-muted-foreground/80 hover:text-foreground hover:bg-muted'
-                                        }`}
-                                >
-                                    <div className={`h-1.5 w-1.5 rounded-full transition-colors ${isCategoryActive(id) ? 'bg-primary' : 'bg-muted-foreground/30'}`} />
-                                    {cat.label}
-                                </Link>
-                            ))}
-                    </div>
+                {/* Course list */}
+                <div className="mt-1 pl-4 space-y-1">
+                    {courseNav?.map(course => {
+                        const courseActive = isCourseActive(course.id);
+                        const isExpanded = expandedCourses.has(course.id) || courseActive;
+
+
+                        return (
+                            <div key={course.id} className="space-y-0.5">
+                                {/* Course header */}
+                                <div className="flex items-center">
+                                    <Link
+                                        href={`${basePath}?course=${course.id}`}
+                                        onClick={() => { if (window.innerWidth < 1024) onClose(); }}
+                                        className={`flex-1 flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-all ${courseActive
+                                            ? 'text-primary bg-primary/10'
+                                            : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                                            }`}
+                                    >
+                                        <span className="text-base">{course.flag_icon || (course.course_type === 'MATH' ? '🔢' : '📚')}</span>
+                                        <span>{course.title}</span>
+                                    </Link>
+                                    {course.subjects.length > 0 && (
+                                        <button
+                                            onClick={() => toggleCourse(course.id)}
+                                            className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                                            title={isExpanded ? t('nav.collapse') : t('nav.expand')}
+                                        >
+                                            <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${isExpanded ? '' : '-rotate-90'}`} />
+                                        </button>
+                                    )}
+                                </div>
+
+                                {/* Subjects list */}
+                                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <div className="pl-4 py-1 border-l-2 border-primary/10 space-y-0.5 ml-3">
+                                        {course.subjects.map(subject => (
+                                            <Link
+                                                key={subject.id}
+                                                href={`${basePath}?course=${course.id}&subject=${subject.id}`}
+                                                onClick={() => { if (window.innerWidth < 1024) onClose(); }}
+                                                className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${isSubjectActive(course.id, subject.id)
+                                                    ? 'text-primary bg-primary/10'
+                                                    : 'text-muted-foreground/80 hover:text-foreground hover:bg-muted'
+                                                    }`}
+                                            >
+                                                <div className={`h-1.5 w-1.5 rounded-full transition-colors ${isSubjectActive(course.id, subject.id) ? 'bg-primary' : 'bg-muted-foreground/30'}`} />
+                                                {subject.title}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         );
@@ -187,7 +252,18 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         label={t('nav.my_activities')}
                                         active={isActive('/dashboard/teacher/activities')}
                                     />
-                                    <CategoryList
+
+                                    {/* ✅ Review Queue - Lead Teachers + Admins */}
+                                    {user.teacher_permission_level === 'LEAD' && (
+                                        <MenuItem
+                                            href="/dashboard/admin/review"
+                                            icon={ClipboardList}
+                                            label={t('nav.review_queue')}
+                                            active={isActive('/dashboard/admin/review')}
+                                        />
+                                    )}
+
+                                    <CourseNavigation
                                         basePath="/dashboard/teacher/browse"
                                         label={t('nav.public_library')}
                                         icon={Library}
@@ -218,7 +294,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         active={isActive('/dashboard/admin/review')}
                                     />
 
-                                    <CategoryList
+                                    <CourseNavigation
                                         basePath="/dashboard/admin/activities"
                                         label={t('nav.all_content')}
                                         icon={ClipboardList}

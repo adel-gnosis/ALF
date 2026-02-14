@@ -7,18 +7,12 @@ const ENV_API =
   process.env.EXPO_PUBLIC_API_URL ||
   process.env.NEXT_PUBLIC_API_URL;
 
-// Smart defaults:
-// - Web on your PC should use localhost
-// - Native phone should use LAN IP (you can change it in .env.local)
-// - Fallback stays localhost
-const DEFAULT_WEB = 'http://127.0.0.1:8000/api';
-const DEFAULT_NATIVE = 'http://192.168.1.235:8000/api';
+// We strictly use the environment variable for production/standalone builds.
+// Hardcoded LAN IPs cause "Network Error" when the server is not reachable.
+// If ENV_API is missing (common in direct gradlew builds), we fallback to the production URL in non-dev mode.
+export const API_URL = ENV_API || (__DEV__ ? 'http://localhost:8000/api' : 'https://api.eduvia.ma/api');
 
-export const API_URL =
-  ENV_API ||
-  (Platform.OS === 'web' ? DEFAULT_WEB : DEFAULT_NATIVE);
-
-console.log(`[API] Configuration: OS=${Platform.OS}, URL=${API_URL}`);
+console.log(`[API] Configuration: OS=${Platform.OS}, URL=${API_URL}, ENV_SET=${!!ENV_API}, DEV=${__DEV__}`);
 
 const api = axios.create({
   baseURL: API_URL,

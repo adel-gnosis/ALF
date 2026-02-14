@@ -5,6 +5,11 @@ const path = require("path");
 const projectRoot = __dirname;
 const workspaceRoot = path.resolve(projectRoot, "../..");
 
+// Force expo-router to find the app directory in this project
+// We set both absolute and relative paths to cover all bases in the monorepo
+process.env.EXPO_ROUTER_ABS_APP_DIR = path.resolve(projectRoot, "app");
+process.env.EXPO_ROUTER_APP_ROOT = path.relative(workspaceRoot, path.resolve(projectRoot, "app"));
+
 const config = getDefaultConfig(projectRoot);
 
 // 1. Watch all files in the monorepo
@@ -16,6 +21,9 @@ config.resolver.nodeModulesPaths = [
     path.resolve(workspaceRoot, "node_modules"),
 ];
 
+// Ensure mp3 files are treated as assets
+config.resolver.assetExts.push("mp3");
+
 // Pre-resolve core libraries to their canonical physical paths 
 // This avoids the 'SHA-1' error by pointing directly to the physical files under .pnpm
 let coreModules = {};
@@ -25,6 +33,7 @@ try {
         "react-dom": require.resolve("react-dom", { paths: [projectRoot] }),
         "@tanstack/react-query": require.resolve("@tanstack/react-query", { paths: [projectRoot] }),
     };
+
 } catch (e) {
     console.warn("Metro config: Could not pre-resolve core modules", e.message);
 }
@@ -44,6 +53,7 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
             type: "sourceFile",
         };
     }
+
     return context.resolveRequest(context, moduleName, platform);
 };
 

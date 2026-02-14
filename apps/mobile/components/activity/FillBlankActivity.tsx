@@ -14,9 +14,14 @@ export default function FillBlankActivity({
     activity,
     onAnswer,
     disabled,
+    feedback,
+    correctAnswer,
 }: FillBlankActivityProps) {
     const { t } = useTranslation();
     const [text, setText] = useState('');
+
+    // Debug: log when feedback/correctAnswer change
+    console.log('[FillBlankActivity] feedback:', feedback, 'correctAnswer:', correctAnswer);
 
     const handleChange = (val: string) => {
         setText(val);
@@ -78,11 +83,11 @@ export default function FillBlankActivity({
 
             {/* Phrase with blank */}
             <View className="flex-row flex-wrap items-center justify-center mb-8">
-                <Text className="text-xl font-bold text-gray-800">
+                <Text key="part-0" className="text-xl font-bold text-gray-800">
                     {parts[0]}
                 </Text>
 
-                <View className="bg-gray-100 px-4 py-2 rounded-lg border-b-2 border-blue-500 mx-1 min-w-[100px]">
+                <View key="blank-container" className="bg-gray-100 px-4 py-2 rounded-lg border-b-2 border-blue-500 mx-1 min-w-[100px]">
                     <TextInput
                         className="text-xl font-bold text-center text-blue-600 p-0"
                         placeholder={t('activities.fillBlank.placeholder')}
@@ -94,11 +99,20 @@ export default function FillBlankActivity({
                 </View>
 
                 {parts[1] && (
-                    <Text className="text-xl font-bold text-gray-800">
+                    <Text key="part-1" className="text-xl font-bold text-gray-800">
                         {parts[1]}
                     </Text>
                 )}
             </View>
+
+            {feedback === 'error' && correctAnswer && (
+                <View className="bg-green-100 p-4 rounded-xl border-2 border-green-500 mb-4 w-full">
+                    <Text className="text-green-800 font-semibold mb-1 text-center">Réponse Correcte :</Text>
+                    <Text className="text-xl font-bold text-green-900 text-center">
+                        {typeof correctAnswer === 'string' ? correctAnswer : JSON.stringify(correctAnswer)}
+                    </Text>
+                </View>
+            )}
         </View>
     );
 }

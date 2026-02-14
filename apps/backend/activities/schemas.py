@@ -157,6 +157,16 @@ class FillBlankActivitySchema(ActivitySchema):
     def __init__(self):
         super().__init__('FillBlankActivity')
         self.type_specific_fields = {
+            'phrase': {
+                'type': 'str',
+                'required': False,
+                'help': 'Sentence containing blank(s), e.g. "Je ___ à l\'école."'
+            },
+            'phrase_key': {
+                'type': 'str',
+                'required': False,
+                'help': 'i18n key for the phrase (alternative to raw phrase)'
+            },
             'correct_answer': {
                 'type': 'str',
                 'required': True,
