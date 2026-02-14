@@ -4,10 +4,13 @@
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc -p tsconfig.json",
+        "prepare": "pnpm run build",
         "lint": "eslint src/",
-        "dev": "tsc -w"
+        "dev": "tsc -p tsconfig.json -w"
     },
+
+
     "peerDependencies": {
         "@tanstack/react-query": "^5.0.0",
         "react": ">=18"

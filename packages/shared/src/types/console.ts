@@ -36,9 +36,11 @@ export interface User {
     current_level: number;
     level_id: number;
   };
-  // Admin fields
+  // Admin/permission fields
   teacher_permission_level?: TeacherPermissionLevel;
   can_publish_directly?: boolean;
+  is_staff?: boolean;
+  is_superuser?: boolean;
 }
 
 export interface LoginResponse {
@@ -56,7 +58,12 @@ export interface TeacherActivity {
     level: string;
     subject: string;
   };
+  // Resolved text (translated)
   question_text: string;
+  instruction_text: string;
+  // Raw i18n keys (for debugging)
+  question_text_key?: string;
+  instruction_key?: string;
   status: ActivityStatus;
   version: number;
   difficulty: Difficulty;
@@ -126,7 +133,7 @@ export interface AdminReviewItem {
     id: number;
     username: string;
     permission_level: string;
-  };
+  } | null;
   submitted_at: string;
   version: number;
   version_notes?: string;
@@ -134,20 +141,101 @@ export interface AdminReviewItem {
     id: number;
     username: string;
   } | null;
+  // NEW: For version diff feature
+  previous_version_id: number | null;
+  is_edit: boolean;
 }
 
 export interface TeacherSummary {
   id: number;
   username: string;
   email: string;
+  user_type: 'teacher' | 'admin' | 'superadmin';
+  is_superuser: boolean;
+  is_staff: boolean;
+  role: string;
   is_teacher_approved: boolean;
   teacher_permission_level: TeacherPermissionLevel;
   can_publish_directly: boolean;
   date_joined: string;
+  last_activity_date?: string;
+  is_active?: boolean;
+  has_pending?: boolean;
+  has_rejected?: boolean;
   stats: {
     total_activities: number;
     approved: number;
     pending: number;
     rejected: number;
   };
+}
+
+export interface AdminTeachersResponse {
+  total_users: number;
+  teachers: TeacherSummary[];
+  can_manage_admins: boolean;
+  user_breakdown?: {
+    teachers: number;
+    admins: number;
+    superadmins: number;
+    students: number;
+  };
+  system_stats?: {
+    total_activities: number;
+    pending_review: number;
+    approved_activities: number;
+    rejected_activities: number;
+    activities_today: number;
+    teachers_active_this_week: number;
+  };
+}
+
+export interface DashboardStats {
+  recent_timeline: Array<{
+    id: number;
+    activity_type: string;
+    status: ActivityStatus;
+    created_by: {
+      id: number;
+      username: string;
+    } | null;
+    created_at: string;
+    lesson_title: string;
+  }>;
+  week_comparison: {
+    this_week: {
+      activities_created: number;
+      approvals: number;
+    };
+    last_week: {
+      activities_created: number;
+      approvals: number;
+    };
+    changes: {
+      activities: number;
+      approvals: number;
+    };
+  };
+  leaderboard: Array<{
+    id: number;
+    username: string;
+    activity_count: number;
+    approved_count: number;
+  }>;
+  activity_type_distribution: Record<string, {
+    count: number;
+    percentage: number;
+  }>;
+  alerts: Array<{
+    type: string;
+    message: string;
+    count: number;
+    priority: 'high' | 'medium' | 'low';
+  }>;
+  student_impact: {
+    students_reached: number;
+    total_attempts: number;
+    average_success_rate: number;
+    total_points_earned: number;
+  } | null;
 }

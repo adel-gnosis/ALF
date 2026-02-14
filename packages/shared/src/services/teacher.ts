@@ -7,7 +7,22 @@ export const teacherApi = {
         return response.data;
     },
 
-    getMyContent: async (params?: { status?: string, lesson_id?: number }): Promise<{ total: number, activities: TeacherActivity[] }> => {
+    getMyContent: async (params?: {
+        status?: string;
+        lesson_id?: number;
+        level_id?: number;
+        activity_type?: string;
+        page?: number;
+        page_size?: number;
+    }): Promise<{
+        total: number;
+        page: number;
+        page_size: number;
+        total_pages: number;
+        has_next: boolean;
+        has_prev: boolean;
+        activities: TeacherActivity[];
+    }> => {
         const response = await api.get('/teacher/activities/my-content/', { params });
         return response.data;
     },
@@ -24,7 +39,17 @@ export const teacherApi = {
         level_id?: number;
         difficulty?: string;
         search?: string;
-    }): Promise<{ total: number, activities: TeacherActivity[] }> => {
+        page?: number;
+        page_size?: number;
+    }): Promise<{
+        total: number;
+        page: number;
+        page_size: number;
+        total_pages: number;
+        has_next: boolean;
+        has_prev: boolean;
+        activities: TeacherActivity[];
+    }> => {
         const response = await api.get('/teacher/activities/browse/', { params });
         return response.data;
     },

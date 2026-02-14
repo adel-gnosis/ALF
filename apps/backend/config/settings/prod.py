@@ -18,3 +18,18 @@ else:
     }
 
 DEBUG = config("DEBUG", default=False, cast=bool)
+
+
+# --- Security / HTTPS hardening (Nginx terminates SSL) ---
+
+# Tell Django it is behind a proxy that sets the original scheme
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Secure cookies over HTTPS only
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# HSTS (start small)
+SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=3600, cast=int)  # 1 hour
+SECURE_HSTS_INCLUDE_SUBDOMAINS = config("SECURE_HSTS_INCLUDE_SUBDOMAINS", default=False, cast=bool)
+SECURE_HSTS_PRELOAD = config("SECURE_HSTS_PRELOAD", default=False, cast=bool)

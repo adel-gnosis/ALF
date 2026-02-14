@@ -1,7 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { teacherApi } from '../services/teacher';
 
-export const useTeacherActivities = (params?: { status?: string, lesson_id?: number }) => {
+export const useTeacherActivities = (params?: {
+    status?: string;
+    lesson_id?: number;
+    level_id?: number;
+    course_id?: number;
+    subject_id?: number;
+    difficulty?: string;
+    search?: string;
+    activity_type?: string;
+    page?: number;
+    page_size?: number;
+}) => {
+
     return useQuery({
         queryKey: ['teacher-activities', params],
         queryFn: () => teacherApi.getMyContent(params)
@@ -68,9 +80,11 @@ export const useBrowseActivities = (params?: {
     level_id?: number;
     difficulty?: string;
     search?: string;
+    page?: number;
+    page_size?: number;
 }) => {
     return useQuery({
-        queryKey: ['browse-activities', params],
+        queryKey: ['teacher-browse-activities', params],
         queryFn: () => teacherApi.browseActivities(params)
     });
 };

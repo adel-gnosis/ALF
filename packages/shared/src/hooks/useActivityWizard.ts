@@ -121,3 +121,32 @@ export const useAvailableActivityTypes = (subjectCode: string | null) => {
         ).filter((v, i, a) => a.indexOf(v) === i); // unique
     }, [subjectCode]);
 };
+
+// Course with embedded subjects for sidebar navigation
+export interface CourseWithSubjects extends Course {
+    subjects: Subject[];
+}
+
+// Fetch courses with their subjects for sidebar navigation
+export const useSidebarNavigation = () => {
+    const { data: courses, isLoading: loadingCourses } = useCourses();
+
+    return useQuery<CourseWithSubjects[]>({
+        queryKey: ['sidebar-navigation', courses?.map(c => c.id)],
+        queryFn: async () => {
+            if (!courses) return [];
+
+            // Fetch all subjects at once
+            const response = await api.get('/subjects/');
+            const allSubjects: Subject[] = response.data;
+
+            // Group subjects by course
+            return courses.map(course => ({
+                ...course,
+                subjects: allSubjects.filter(s => s.course === course.id)
+            }));
+        },
+        enabled: !!courses && courses.length > 0,
+        staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    });
+};
