@@ -13,7 +13,16 @@ export default function AdminTeachersPage() {
         ordering: '-date_joined'
     });
 
-    const { data, isLoading } = useAdminTeachers(filters);
+    const apiFilters = {
+    ...filters,
+        has_activities:
+            filters.has_activities === '' 
+                ? undefined 
+                : filters.has_activities === 'true'
+    };
+
+    const { data, isLoading } = useAdminTeachers(apiFilters);
+
     const setPermission = useSetPermissionLevel();
     const [updatingId, setUpdatingId] = useState<number | null>(null);
 
