@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { useTheme } from './ThemeContext';
 import { Sun, Moon, Bell, Search, Menu, User } from 'lucide-react';
 import { useMe, UserRole } from '@alf/shared';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '../../../../context/I18nContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useTheme } from '@/context/ThemeContext';
 
 interface HeaderProps {
     onMenuClick: () => void;
